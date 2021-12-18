@@ -47,6 +47,10 @@ module baseline (
     input vec_we,
     input [`VRF_AWIDTH-1:0] vrf_wr_addr,
     input [`VRF_DWIDTH-1:0] vec,
+    output[`VRF_DWIDTH-1:0] vrf_data_out,
+    input [`MRF_DWIDTH-1:0] mrf_in,
+    input mrf_we,
+    input [`MRF_AWIDTH-1:0] mrf_addr,
     output [`ORF_DWIDTH*`NUM_LDPES-1:0] result
 );
 
@@ -79,6 +83,9 @@ module baseline (
                 .rst(rst),
                 .done(done),
                 .vec(vrf_outa_wire),
+                .mrf_in(mrf_in),
+                .mrf_we(mrf_we),
+                .mrf_addr(mrf_addr),
                 .result(result[i*`ORF_DWIDTH-1:(i-1)*`ORF_DWIDTH])
             );
         end
@@ -104,12 +111,15 @@ module compute_unit (
     input rst,
     input done,
     input [`VRF_DWIDTH-1:0] vec,
+    input [`MRF_DWIDTH-1:0] mrf_in,
+    input mrf_we,
+    input [`MRF_AWIDTH-1:0] mrf_addr,
     output [`ORF_DWIDTH-1:0] result
 );
 
     // Port A of BRAMs is used for feed DSPs and Port B is used to load matrix from off-chip memory
 
-    wire [`MRF_DWIDTH-1:0] ina_fake;
+  
     wire [`MRF_DWIDTH-1:0] mrf_outa_wire;
 
     wire [`LDPE_USED_INPUT_WIDTH-1:0] ax_wire;
@@ -140,7 +150,7 @@ module compute_unit (
     always@(posedge clk or posedge rst) begin
         if (rst) begin
             out_wr_addr <= 0;
-            mrf_rd_addr <= 0;
+            mrf_rd_addr <= mrf_addr;
         end
         else begin
             if (start) begin
@@ -155,8 +165,8 @@ module compute_unit (
     MRF mrf (
         .clk(clk),
         .addr(mrf_rd_addr),
-        .in(ina_fake),
-        .we(1'b0),
+        .in(mrf_in),
+        .we(mrf_we),
         .out(mrf_outa_wire)
     );
 

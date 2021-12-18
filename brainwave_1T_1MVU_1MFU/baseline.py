@@ -4,17 +4,17 @@ import math
 from gen_compute_unit_for_reduction import generate_compute_unit
 from gen_compute_unit_for_reduction import generate_instance
 
-NUM_MAT_COLS = 8
-LOG_NUM_MAT_COLS = 3
-NUM_MAT_ROWS_PER_LDPE = 2
-LOG_NUM_MAT_ROWS_PER_LDPE = 1
+NUM_MAT_COLS = 401
+LOG_NUM_MAT_COLS = 9
+NUM_MAT_ROWS_PER_LDPE = 9
+LOG_NUM_MAT_ROWS_PER_LDPE = 4
 
 IN_PRECISION = 8
-OUT_PRECISION = 8
+OUT_PRECISION = 32
 
-NUM_LDPES = 2
-DSPS_PER_LDPE = 2
-DSPS_PER_SUB_LDPE = 2
+NUM_LDPES = 24
+DSPS_PER_LDPE = 16
+DSPS_PER_SUB_LDPE = 4
 SUB_LDPES_PER_LDPE = int(DSPS_PER_LDPE/DSPS_PER_SUB_LDPE)
 
 MULTS_PER_DSP = 2
@@ -845,6 +845,6 @@ endmodule
 
 final = comment + defines + baseline + compute_unit + ldpe + reduction_unit +adder + sub_ldpe + orf + vrf + mrf + dsp_block_18_18_int_sop_2 + dp_ram + sp_ram
 
-verilog_file = open("baseline_gen.v", "w")
+verilog_file = open(args.vtr, "w")
 verilog_file.write(final)
 verilog_file.close()

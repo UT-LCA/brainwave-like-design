@@ -60,11 +60,12 @@ module adder_tree(
     # print("")
     compute_stages_gen = ''''''
     for i in reversed(range(self.num_compute_stages_in_reduction_unit)):
-      stageN = i;
+      stageN = i
       if i == 0:
         # print("  wire   [`DWIDTH+`LOGDWIDTH-1 : 0] compute0_out_stage0;")
         compute_stage0 = '''
   wire   [`DSP_USED_OUTPUT_WIDTH-1 : 0] compute0_out_stage0;'''
+        computer_gen = ''''''
         computer_gen += compute_stage0
         compute_stages_gen_temp = compute_stage0
         compute_stages_gen += compute_stages_gen_temp

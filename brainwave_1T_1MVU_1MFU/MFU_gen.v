@@ -1,12 +1,8 @@
-`define DESIGN_SIZE 10
-`define DWIDTH 16
-`define MASK_WIDTH 8
-`define VRF_AWIDTH 10
+`include "includes.v"
 
-`define BRAMS_PER_VRF 10
-`define VRF_DWIDTH 160
-`define VEC_BRAM_AWIDTH 10
-`define VEC_BRAM_DWIDTH 16
+`define DESIGN_SIZE `NUM_LDPES
+`define DWIDTH `OUT_PRECISION
+`define MASK_WIDTH `OUT_PRECISION
 
 `define ACTIVATION 2'b00
 `define ELT_WISE_MULTIPY 2'b10
@@ -23,11 +19,11 @@ module MFU(
     input[1:0] operation,
     input in_data_available,
     input [`VRF_AWIDTH-1:0] vrf_addr_read_add,
-    //input [`VRF_AWIDTH-1:0] vrf_addr_rw_add,
+    input [`VRF_AWIDTH-1:0] vrf_addr_rw_add,
     input vrf_read_enable_add,
     input vrf_rw_enable_add,
     input [`VRF_AWIDTH-1:0] vrf_addr_read_mul,
-    //input [`VRF_AWIDTH-1:0] vrf_addr_rw_mul,
+    input [`VRF_AWIDTH-1:0] vrf_addr_rw_mul,
     input vrf_read_enable_mul,
     input vrf_rw_enable_mul,
     input [`DESIGN_SIZE*`DWIDTH-1:0] primary_inp,
@@ -37,16 +33,17 @@ module MFU(
     input clk,
     output [`VRF_DWIDTH-1:0] out_vrf_add,
     output [`VRF_DWIDTH-1:0] out_vrf_mul,
-    input resetn);
+    input reset);
 
     wire enable_add;
     wire enable_activation;
     wire enable_mul;
     wire done;
 
-    assign enable_activation = (~operation[0])&(~operation[1])&resetn;
-    assign enable_add = (operation[0])&(~operation[1])&resetn;
-    assign enable_mul = (~operation[0])&(operation[1])&resetn;
+    assign enable_activation = (~operation[0])&(~operation[1])&(~reset);
+    
+    assign enable_add = (operation[0])&(~operation[1])&(~reset);
+    assign enable_mul = (~operation[0])&(operation[1])&(~reset);
 
     wire [`VRF_DWIDTH-1:0] ina_fake;
     wire [`VRF_DWIDTH-1:0] outa_add;
@@ -57,67 +54,11 @@ module MFU(
     wire [`DESIGN_SIZE*`DWIDTH-1:0] out_data_mul;
     wire [`DESIGN_SIZE*`DWIDTH-1:0] out_data_act;
 
-    reg[`VRF_AWIDTH-1:0] vrf_addr_rw_add;
-    reg[`VRF_AWIDTH-1:0] vrf_addr_rw_mul;
-
-    reg[`VRF_AWIDTH-1:0] vrf_external_port_write_add;
-    reg[`VRF_AWIDTH-1:0] vrf_external_port_read_add;
-
-    reg[`VRF_AWIDTH-1:0] vrf_external_port_write_mul;
-    reg[`VRF_AWIDTH-1:0] vrf_external_port_read_mul;
 
     VRF v0(.clk(clk),.addra(vrf_addr_rw_add),.addrb(vrf_addr_read_add),.inb(ina_fake),.ina(secondary_inp),.wea(vrf_rw_enable_add),.web(vrf_read_enable_add),.outb(outa_add),.outa(out_vrf_add));
 
     VRF v1(.clk(clk),.addra(vrf_addr_rw_mul),.addrb(vrf_addr_read_mul),.inb(ina_fake),.ina(secondary_inp),.wea(vrf_rw_enable_mul),.web(vrf_read_enable_mul),.outb(outa_mul),.outa(out_vrf_mul));
  
-    always @(*) begin
-        if(vrf_rw_enable_add) begin
-           vrf_addr_rw_add = vrf_external_port_write_add;
-        end
-        else begin
-          vrf_addr_rw_add = vrf_external_port_read_add;
-        end
-    end
-
-    always @(posedge clk) begin
-        if(resetn) begin
-          vrf_external_port_write_add <= 0;
-          vrf_external_port_read_add <= 0;
-        end
-        else begin
-            if(vrf_rw_enable_add) begin
-                vrf_external_port_write_add <= vrf_external_port_write_add + 1;
-            end
-            else begin
-                vrf_external_port_read_add <= vrf_external_port_read_add + 1;
-            end
-        end
-    end
-
-    always @(*) begin
-        if(vrf_rw_enable_mul) begin
-           vrf_addr_rw_mul = vrf_external_port_write_mul;
-        end
-        else begin
-          vrf_addr_rw_mul = vrf_external_port_read_mul;
-        end
-    end
-
-    always @(posedge clk) begin
-        if(resetn) begin
-          vrf_external_port_write_mul <= 0;
-          vrf_external_port_read_mul <= 0;
-        end
-        else begin
-            if(vrf_rw_enable_mul) begin
-                vrf_external_port_write_mul <= vrf_external_port_write_mul + 1;
-            end
-            else begin
-                vrf_external_port_read_mul <= vrf_external_port_read_mul + 1;
-            end
-        end
-    end
-
     always@(*) begin
     //$display("enable_add '%'d enable_mul '%'d enable_act '%'d",enable_add,enable_mul,enable_activation);
     
@@ -172,7 +113,7 @@ module MFU(
    //TODO: demarcate the nomenclature for out_data_available and done signal separately - DONE.
 endmodule
     
-
+/*
 module VRF (
     input clk,
     input [`VRF_AWIDTH-1:0] addra, addrb,
@@ -202,7 +143,7 @@ module VRF (
         end
     endgenerate
 endmodule
-
+*/
 
 module mult(p,x,y); 
     output reg [`DWIDTH-1:0] p;
@@ -438,7 +379,7 @@ assign dummy = validity_mask;
 //endgenerate
 
 endmodule
-
+/*
 module dp_ram # (
     parameter AWIDTH = 10,
     parameter DWIDTH = 16
@@ -473,6 +414,7 @@ always @(posedge clk)  begin
 
     outb <= ram[addrb];
 end
+*/
 /*
 `else
 
@@ -490,7 +432,7 @@ dual_port_ram u_dual_port_ram(
 
 `endif
 */
-endmodule
+//endmodule
 
 module elt_wise_add(
     input enable_add,
