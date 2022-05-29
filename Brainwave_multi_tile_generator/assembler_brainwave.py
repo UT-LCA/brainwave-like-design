@@ -1,9 +1,13 @@
+import struct
+import math
+
 AWIDTH = 10
-TWIDTH = 8
 num_ldpes = 32
 num_tiles = 4
 max_mem_to_initialize = 300
 data_width = 32
+TWIDTH = int(math.log2(num_ldpes*num_tiles+8)+1)
+print(TWIDTH)
 
 opcode_dict = {
     "VRD":"0000",
@@ -20,18 +24,17 @@ opcode_dict = {
     "ENDCHAIN":"1011"
 }
 
-vrf_id_dict = {
-    "VMV0":bin(0).replace("0b",'').zfill(TWIDTH),
-    "VMV1":bin(1).replace("0b",'').zfill(TWIDTH),
-    "VMV2":bin(2).replace("0b",'').zfill(TWIDTH),
-    "VMV3":bin(3).replace("0b",'').zfill(TWIDTH),
-    "V0ADD":bin(4).replace("0b",'').zfill(TWIDTH),
-    "V0MUL":bin(5).replace("0b",'').zfill(TWIDTH),
-    "V1ADD":bin(6).replace("0b",'').zfill(TWIDTH),
-    "V1MUL":bin(7).replace("0b",'').zfill(TWIDTH),
-    "VMUX":bin(8).replace("0b",'').zfill(TWIDTH),
-    "VNULL":bin(9).replace("0b",'').zfill(TWIDTH)
-}
+vrf_id_dict = dict({
+    "V0ADD":bin(num_tiles).replace("0b",'').zfill(TWIDTH),
+    "V0MUL":bin(num_tiles+1).replace("0b",'').zfill(TWIDTH),
+    "V1ADD":bin(num_tiles+2).replace("0b",'').zfill(TWIDTH),
+    "V1MUL":bin(num_tiles+3).replace("0b",'').zfill(TWIDTH),
+    "VMUX":bin(num_tiles+4).replace("0b",'').zfill(TWIDTH),
+    "VNULL":bin(num_tiles+5).replace("0b",'').zfill(TWIDTH)
+})
+
+for i in range(num_tiles):
+    vrf_id_dict["VMV"+str(i)] = bin(i).replace("0b",'').zfill(TWIDTH)
 
 mrf_id_dict = dict(zip([("M"+str(int(i))) for i in range(num_ldpes*num_tiles)],[bin(int(i)).replace("0b",'').zfill(TWIDTH) for i in range(num_ldpes*num_tiles)]))
 
@@ -40,21 +43,19 @@ mfu_id_dict = {
     "MF1": bin(1).replace("0b",'').zfill(TWIDTH)
 }
 
-dstn_id_dict = {
-    "VMV0":bin(0).replace("0b",'').zfill(TWIDTH),
-    "VMV1":bin(1).replace("0b",'').zfill(TWIDTH),
-    "VMV2":bin(2).replace("0b",'').zfill(TWIDTH),
-    "VMV3":bin(3).replace("0b",'').zfill(TWIDTH),
-    "V0ADD":bin(4).replace("0b",'').zfill(TWIDTH),
-    "V0MUL":bin(5).replace("0b",'').zfill(TWIDTH),
-    "V1ADD":bin(6).replace("0b",'').zfill(TWIDTH),
-    "V1MUL":bin(7).replace("0b",'').zfill(TWIDTH),
-    "VMUX":bin(8).replace("0b",'').zfill(TWIDTH),
-    "DRAM":bin(9).replace("0b",'').zfill(TWIDTH),
-    "MF0":bin(10).replace("0b",'').zfill(TWIDTH),
-    "MF1":bin(11).replace("0b",'').zfill(TWIDTH)
-}
+dstn_id_dict = dict({
+    "V0ADD":bin(num_tiles).replace("0b",'').zfill(TWIDTH),
+    "V0MUL":bin(num_tiles+1).replace("0b",'').zfill(TWIDTH),
+    "V1ADD":bin(num_tiles+2).replace("0b",'').zfill(TWIDTH),
+    "V1MUL":bin(num_tiles+3).replace("0b",'').zfill(TWIDTH),
+    "VMUX":bin(num_tiles+4).replace("0b",'').zfill(TWIDTH),
+    "DRAM":bin(num_tiles+5).replace("0b",'').zfill(TWIDTH),
+    "MF0":bin(num_tiles+6).replace("0b",'').zfill(TWIDTH),
+    "MF1":bin(num_tiles+7).replace("0b",'').zfill(TWIDTH)
+})
 
+for i in range(num_tiles):
+    dstn_id_dict["VMV"+str(i)] = bin(i).replace("0b",'').zfill(TWIDTH)
 
 data = None
 with open("program_gen.bwave",'r') as assembly_code, open("instructions_binary.txt",'w') as machine_code:
@@ -86,34 +87,43 @@ with open("program_gen.bwave",'r') as assembly_code, open("instructions_binary.t
             elif(opcode=="MRD"):
                 instruction += opcode_dict[opcode] + "0".zfill(TWIDTH) + bin(int(a[1])).replace("0b",'').zfill(AWIDTH) + "0".zfill(AWIDTH) + mrf_id_dict[a[2]].zfill(TWIDTH) + bin(int(a[3])).replace("0b",'').zfill(AWIDTH)
             elif(opcode=="MVMUL"):
-                instruction += opcode_dict[opcode] + "0".zfill(TWIDTH) + bin(int(a[1])).replace("0b",'').zfill(AWIDTH) +  bin(int(a[2])).replace("0b",'').zfill(AWIDTH) + dstn_id_dict[a[3]].zfill(TWIDTH) + bin(int(a[4])).replace("0b",'').zfill(AWIDTH)
+                if(a[3]!="MF0" and a[3]!="MF1"):
+                    instruction += opcode_dict[opcode] + "0".zfill(TWIDTH) + bin(int(a[1])).replace("0b",'').zfill(AWIDTH) +  bin(int(a[2])).replace("0b",'').zfill(AWIDTH) + dstn_id_dict[a[3]].zfill(TWIDTH) + bin(int(a[4])).replace("0b",'').zfill(AWIDTH)
+                else:
+                    instruction += opcode_dict[opcode] + "0".zfill(TWIDTH) + bin(int(a[1])).replace("0b",'').zfill(AWIDTH) +  bin(int(a[2])).replace("0b",'').zfill(AWIDTH) + dstn_id_dict[a[3]].zfill(TWIDTH) + "0".zfill(AWIDTH)
             elif(opcode=="VVADD" or opcode=="VVMUL" or opcode=="VVSUB" or opcode=="VVPASS" or opcode=="VVRELU" or opcode=="VVSIGM" or opcode=="VVTANH"):
                 if(a[1]=="MF0"):
-                    if(a[4]=="MF0" or a[4]=="MF1"):
-                        vrf_mfu_id = ""
-                        if(opcode=="VVADD"):
-                            vrf_mfu_id = "V0ADD"
-                        elif(opcode=="VVMUL"):
-                            vrf_mfu_id = "V0MUL"
-                        else:
-                            vrf_mfu_id = "VNULL"
-
-                        instruction += opcode_dict[opcode] + vrf_id_dict[vrf_mfu_id].zfill(TWIDTH) + bin(int(a[2])).replace("0b",'').zfill(AWIDTH) + bin(int(a[3])).replace("0b",'').zfill(AWIDTH) + dstn_id_dict[a[4]].zfill(TWIDTH) +  "0".zfill(AWIDTH)
-                    else:
-                        instruction += opcode_dict[opcode] + vrf_id_dict[vrf_mfu_id].zfill(TWIDTH) + bin(int(a[2])).replace("0b",'').zfill(AWIDTH) + bin(int(a[3])).replace("0b",'').zfill(AWIDTH) + dstn_id_dict[a[4]].zfill(TWIDTH) +  bin(int(a[5])).replace("0b").zfill(AWIDTH)
-                elif(a[1]=="MF1"):
                     vrf_mfu_id = ""
-                    if(opcode=="VVADD"):
-                        vrf_mfu_id = "V1ADD"
+
+                    if(opcode=="VVADD" or opcode=="VVSUB"):
+                        vrf_mfu_id = vrf_id_dict["V0ADD"]
                     elif(opcode=="VVMUL"):
-                        vrf_mfu_id = "V1MUL"
+                        vrf_mfu_id = vrf_id_dict["V0MUL"]
+                    elif(opcode=="VVRELU" or opcode=="VVSIGM" or opcode=="VVTANH"):
+                        vrf_mfu_id = mfu_id_dict["MF0"]
                     else:
                         vrf_mfu_id = "VNULL"
 
-                    if(a[3]=="MF0" or a[3]=="MF1"):
-                        instruction += opcode_dict[opcode] + vrf_id_dict[vrf_mfu_id].zfill(TWIDTH) + bin(int(a[2])).replace("0b",'').zfill(AWIDTH) + "0".zfill(AWIDTH) + dstn_id_dict[a[3]].zfill(TWIDTH) +  "0".zfill(AWIDTH)
+                    if(a[4]=="MF0" or a[4]=="MF1"):
+                        instruction += opcode_dict[opcode] + vrf_mfu_id.zfill(TWIDTH) + bin(int(a[2])).replace("0b",'').zfill(AWIDTH) + bin(int(a[3])).replace("0b",'').zfill(AWIDTH) + dstn_id_dict[a[4]].zfill(TWIDTH) +  "0".zfill(AWIDTH)
                     else:
-                        instruction += opcode_dict[opcode] + vrf_id_dict[vrf_mfu_id].zfill(TWIDTH) + bin(int(a[2])).replace("0b",'').zfill(AWIDTH) + "0".zfill(AWIDTH) + dstn_id_dict[a[3]].zfill(TWIDTH) +  bin(int(a[4])).replace("0b",'').zfill(AWIDTH)
+                        instruction += opcode_dict[opcode] + vrf_mfu_id.zfill(TWIDTH) + bin(int(a[2])).replace("0b",'').zfill(AWIDTH) + bin(int(a[3])).replace("0b",'').zfill(AWIDTH) + dstn_id_dict[a[4]].zfill(TWIDTH) +  bin(int(a[5])).replace("0b","").zfill(AWIDTH)
+                elif(a[1]=="MF1"):
+                    vrf_mfu_id = ""
+                    
+                    if(opcode=="VVADD" or opcode=="VVSUB"):
+                            vrf_mfu_id = vrf_id_dict["V1ADD"]
+                    elif(opcode=="VVMUL"):
+                            vrf_mfu_id = vrf_id_dict["V1MUL"]
+                    elif(opcode=="VVRELU" or opcode=="VVSIGM" or opcode=="VVTANH"):
+                            vrf_mfu_id = mfu_id_dict["MF1"]
+                    else:
+                            vrf_mfu_id = "VNULL"
+
+                    if(a[3]=="MF0" or a[3]=="MF1"):
+                        instruction += opcode_dict[opcode] + vrf_mfu_id.zfill(TWIDTH) + bin(int(a[2])).replace("0b",'').zfill(AWIDTH) + "0".zfill(AWIDTH) + dstn_id_dict[a[3]].zfill(TWIDTH) +  "0".zfill(AWIDTH)
+                    else:
+                        instruction += opcode_dict[opcode] + vrf_mfu_id.zfill(TWIDTH) + bin(int(a[2])).replace("0b",'').zfill(AWIDTH) + "0".zfill(AWIDTH) + dstn_id_dict[a[3]].zfill(TWIDTH) +  bin(int(a[4])).replace("0b",'').zfill(AWIDTH)
                 else:
                     raise Exception
             else:
@@ -124,7 +134,7 @@ with open("program_gen.bwave",'r') as assembly_code, open("instructions_binary.t
             line = assembly_code.readline()
 
     data = [[None for i in range(data_width)] for j in range(max_mem_to_initialize)]
-    print(len(data),len(data[0]))
+
     f = assembly_code
     while (line and line != ".mem\n"): 
         line = f.readline()
@@ -144,14 +154,14 @@ with open("program_gen.bwave",'r') as assembly_code, open("instructions_binary.t
                 line = f.readline()
                 continue
             
-            a = [int(k) for k in t[1].split(',')]
+            a = [float(k) for k in t[1].split(',')]
 
             data[int(t[0])] = a
 
             line = f.readline()
 
 
-hex_len = 2
+hex_len = 4
 
 with open("dram_data.txt",'w') as f:
     '''
@@ -160,12 +170,19 @@ with open("dram_data.txt",'w') as f:
     f.write("\n")
     '''
     if data:
-        print(len(data),len(data[0]))
+      
         for k in range(len(data)):
             for m in range(data_width):
                 
                 if(data[k][m]==None):
                     f.write("X".rjust(hex_len,"X"))
                 else:
-                    f .write(hex(data[k][m]).replace('0x','').zfill(hex_len))
+                    hexa = struct.unpack('H',struct.pack('e',float(data[k][m])))[0]
+                    hexa = hex(hexa)
+                    hexa = hexa[2:]
+            
+                    if(data[k][m]==0):
+                        f.write("0".zfill(hex_len))
+                    else:
+                        f .write(hexa)
             f.write("\n")

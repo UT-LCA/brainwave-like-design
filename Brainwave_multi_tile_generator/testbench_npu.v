@@ -9,9 +9,9 @@ module testbench;
     wire dram_write_enable;
     wire get_instr_enable;
     reg push_instr_enable;
-    reg[`INSTR_WIDTH-1:0] push_instruction;
+    reg[`INSTR_WIDTH-1:0] push_instr;
     wire[`INSTR_WIDTH-1:0] instruction_fake;
-    wire[`INSTR_WIDTH-1:0] push_instruction_fake;
+    wire[`INSTR_WIDTH-1:0] push_instr_fake;
     wire[`INSTR_MEM_AWIDTH-1:0] get_instr_addr;
     reg[`INSTR_MEM_AWIDTH-1:0] push_instr_addr;
     //wire[`NUM_LDPES*`OUT_PRECISION-1:0] output_final_stage; 
@@ -48,7 +48,7 @@ module testbench;
             //get_instr_addr <= 0;
             push_instr_addr <= 0;
             push_instr_enable <= 0;
-            push_instruction <= 'bX;
+            push_instr <= 'bX;
         end
     end
     
@@ -89,7 +89,8 @@ module testbench;
         
         #2000 $finish;
     end 
-    
+
+
 endmodule
 
 
@@ -108,7 +109,7 @@ module dram # (
 reg [DWIDTH-1:0] ram [((1<<AWIDTH)-1):0];
 
 initial begin
-    $readmemh("/home/tanmay/Koios++ - Copy/dram_data.txt", ram,0); //MAKE THIS DATA RANDOM
+    $readmemh("/home/tanmay/Koios++ - Copy/Multi_tile_design/dram_data.txt", ram,0); //MAKE THIS DATA RANDOM
 end
 
 always @(posedge clk)  begin
@@ -140,7 +141,7 @@ reg [DWIDTH-1:0] ram [((1<<AWIDTH)-1):0];
 // Port A
 
 initial begin
-    $readmemb("/home/tanmay/Koios++ - Copy/instructions_binary.txt", ram); //MAKE THIS DATA RANDOM
+    $readmemb("/home/tanmay/Koios++ - Copy/Multi_tile_design/instructions_binary.txt", ram); //MAKE THIS DATA RANDOM
 end
 
 always @(posedge clk)  begin
@@ -166,181 +167,3 @@ end
 //assign outb = ram[addrb];
 
 endmodule
-
-/*
-        //VECTOR READ INSTRUCTIONS WITH INPUT DATA
-        
-        //TODO - INSTANTIATE A BRAM IN THIS TESTBENCH TO MODEL DRAM
-        #10 opcode = `V_RD; op1_address = 0; src_id = 0; op2_address = 0;
-        
-        #10 opcode = `V_RD; op1_address = 0; src_id = 0; op2_address = 0;
-        //input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `V_RD; op1_address = 0; src_id = 1; op2_address = 0;
-        //input_data_DRAM = {8'd1,8'd2,8'd2,8'd2,8'd2,8'd2,8'd2,8'd2};
-        
-        #10 opcode = `V_RD; op1_address = 0; src_id = 2; op2_address = 0;
-        //input_data_DRAM = {8'd1,8'd3,8'd3,8'd3,8'd3,8'd3,8'd3,8'd3};
-        
-        #10 opcode = `V_RD; op1_address = 0; src_id = 3; op2_address = 0;
-        //input_data_DRAM = {8'd1,8'd4,8'd4,8'd4,8'd4,8'd4,8'd4,8'd4};
-        
-        #10 opcode = `V_RD; op1_address = 0; src_id = 4; op2_address = 0;
-        //input_data_DRAM = {8'd1,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5};
-        
-        #10 opcode = `V_RD; op1_address = 0; src_id = 5; op2_address = 0;
-       // input_data_DRAM = {8'd1,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5};
-        
-        #10 opcode = `V_RD; op1_address = 0; src_id = 6; op2_address = 0;
-       // input_data_DRAM = {8'd1,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5};
-        
-        #10 opcode = `V_RD; op1_address = 1; src_id = 0; op2_address = 0;
-        
-        #10 opcode = `V_RD; op1_address = 1; src_id = 1; op2_address = 0;
-        
-        #10 opcode = `V_RD; op1_address = 1; src_id = 2; op2_address = 0;
-        
-        #10 opcode = `V_RD; op1_address = 1; src_id = 3; op2_address = 0;
-        
-        #10 opcode = `V_RD; op1_address = 1; src_id = 4; op2_address = 0;
-       
-        #10 opcode = `V_RD; op1_address = 1; src_id = 5; op2_address = 0;
-//input_data_DRAM = {8'd1,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5};   
-                                                                 
-        #10 opcode = `V_RD; op1_address = 1; src_id = 6; op2_address = 0;
-        // input_data_DRAM = {8'd1,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5};   
-                                                                         
-        #10 opcode = `V_RD; op1_address = 2; src_id = 0; op2_address = 0;
-        // input_data_DRAM = {8'd1,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5};   
-                                                                         
-        #10 opcode = `V_RD; op1_address = 2; src_id = 1; op2_address = 0;
-                                                                         
-        #10 opcode = `V_RD; op1_address = 2; src_id = 2; op2_address = 0;
-                                                                         
-        #10 opcode = `V_RD; op1_address = 2; src_id = 3; op2_address = 0;
-                                                                         
-        #10 opcode = `V_RD; op1_address = 2; src_id = 4; op2_address = 0;
-                                                                         
-        #10 opcode = `V_RD; op1_address = 2; src_id = 5; op2_address = 0;
-        
-        #10 opcode = `V_RD; op1_address = 2; src_id = 6; op2_address = 0;
-       // input_data_DRAM = {8'd1,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5,8'd5};
-        
-        //WRITE DATA TO DRAM FROM VRF 
-        
-       // #10 opcode = `V_WR; op1_address = 0; mem_id = 0; op2_address = 0;
-        
-        
-        //READ DATA FROM DRAM TO MRF 
-        #20 opcode = `M_RD; op1_address = 0; src_id = 0; op2_address = 0;
-       // input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 0; src_id = 1; op2_address = 0;
-      //  input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 0; src_id = 2; op2_address = 0;
-       // input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 0; src_id = 3; op2_address = 0;
-      //  input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 1; src_id = 0; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 1; src_id = 1; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 1; src_id = 2; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 1; src_id = 3; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 2; src_id = 0; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 2; src_id = 1; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 2; src_id = 2; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 2; src_id = 3; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 3; src_id = 0; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 3; src_id = 1; op2_address = 0;
-        
-     //   input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-
-        
-        #10 opcode = `M_RD; op1_address = 3; src_id = 2; op2_address = 0;
-      //  input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 3; src_id = 3; op2_address = 0;
-     //   input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 4; src_id = 0; op2_address = 0;
-      //  input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 4; src_id = 1; op2_address = 0;
-      //  input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 4; src_id = 2; op2_address = 0;
-      //  input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 4; src_id = 3; op2_address = 0;
-       // input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-       #10 opcode = `M_RD; op1_address = 5; src_id = 0; op2_address = 0;
-       
-       #10 opcode = `M_RD; op1_address = 5; src_id = 1; op2_address = 0;
-       
-       #10 opcode = `M_RD; op1_address = 5; src_id = 2; op2_address = 0;
-       
-       #10 opcode = `M_RD; op1_address = 5; src_id = 3; op2_address = 0;
-       
-       #10 opcode = `M_RD; op1_address = 6; src_id = 0; op2_address = 0;
-       
-       #10 opcode = `M_RD; op1_address = 6; src_id = 1; op2_address = 0;       
-       
-        #10 opcode = `M_RD; op1_address = 6; src_id = 2; op2_address = 0;
-      //  input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 6; src_id = 3; op2_address = 0;
-      //  input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 7; src_id = 0; op2_address = 0;
-      //  input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 7; src_id = 1; op2_address = 0;
-       // input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 7; src_id = 2; op2_address = 0;
-       // input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 7; src_id = 3; op2_address = 0;
-       // input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `M_RD; op1_address = 8; src_id = 0; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 8; src_id = 1; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 8; src_id = 2; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 8; src_id = 3; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 9; src_id = 0; op2_address = 0;
-        
-        #10 opcode = `M_RD; op1_address = 9; src_id = 1; op2_address = 0;
-        
-       // input_data_DRAM = {8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1,8'd1};
-        //WORKS-----------------------------------------------------
-        
-        //READ DATA FROM DRAM TO MFU VRFs
-        #10 opcode = `V_RD; op1_address = 0; src_id = 1; op2_address = 0;
-       // input_data_DRAM = {8'd1,8'd2,8'd3,8'd1,8'd1,8'd1,8'd1,8'd1};
-        
-        #10 opcode = `V_RD; op1_address = 0; src_id = 2; op2_address = 0;
-       // input_data_DRAM = {8'd2,8'd3,8'd4,8'd1,8'd0,8'd0,8'd0,8'd1};
-        //ADD READMEMH - TRY IT for VRF AND MRF
-        //START MVM
-        
-        #10 opcode = `MV_MUL; op1_address = 2; dstn_id = `MFU_0_DSTN_ID; dstn_address = 0;
-        
-        #70 opcode = `VV_ADD; op1_address = 0; src_id = 2; dstn_id = `MFU_1_DSTN_ID; op2_address = 0;
-        
-        #40 opcode = `END_CHAIN;
-        */

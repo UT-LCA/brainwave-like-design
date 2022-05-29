@@ -609,12 +609,13 @@ module controller(
                vrf_readn_enable_mvu_3 <= 1'b0;
                mrf_wr_enable <= 0;
             end
-            `VV_ADD,`VV_SUB:begin
+            `VV_ADD:begin
             
               //MFU_STAGE-0 DESIGNATED FOR ELTWISE ADD
               state <= 2;
-              get_instr<=1'b0;
-              operation<=`ELT_WISE_ADD;      //NOTE - 2nd VRF INDEX IS FOR ADD UNITS ELT WISE
+              get_instr <= 1'b0;
+              operation <= `ELT_WISE_ADD;      //NOTE - 2nd VRF INDEX IS FOR ADD UNITS ELT WISE
+              activation <= 0;
 
               case(src1_id) 
               
@@ -622,7 +623,50 @@ module controller(
                 start_mfu_0 <= 1'b1;
 
                 vrf_muxed_readn_enable <= 1'b0;
-                vrf_muxed_wr_addr_dram <= op2_address;
+                vrf_muxed_read_addr <= op2_address;
+
+                in_data_available_mfu_0 <= 1'b1;
+                vrf_addr_read_mfu_add_0 <= op1_address;
+                vrf_readn_enable_mfu_add_0 <= 1'b0; 
+               end
+              
+               
+               `VRF_6: begin 
+                start_mfu_1 <= 1'b1;
+                in_data_available_mfu_1 <= 1'b1;
+                vrf_addr_read_mfu_add_1 <= op1_address;
+                vrf_readn_enable_mfu_add_1 <= 1'b0; 
+               end
+               
+               
+               default: begin
+                start_mfu_0 <= 1'bX;
+                in_data_available_mfu_0 <= 1'bX;
+                vrf_addr_read_mfu_add_0 <= 'bX;
+                vrf_readn_enable_mfu_add_0 <= 1'bX; 
+                vrf_addr_read_mfu_add_1 <= 'bX;
+                vrf_readn_enable_mfu_add_1 <= 1'bX;
+               end
+               
+             endcase
+
+            end
+            `VV_SUB:begin
+            
+              //MFU_STAGE-0 DESIGNATED FOR ELTWISE ADD
+              state <= 2;
+              get_instr<=1'b0;
+              operation<=`ELT_WISE_ADD;      //NOTE - 2nd VRF INDEX IS FOR ADD UNITS ELT WISE
+
+              activation <= 1;
+
+              case(src1_id) 
+              
+               `VRF_4: begin 
+                start_mfu_0 <= 1'b1;
+
+                vrf_muxed_readn_enable <= 1'b0;
+                vrf_muxed_read_addr <= op2_address;
 
                 in_data_available_mfu_0 <= 1'b1;
                 vrf_addr_read_mfu_add_0 <= op1_address;
@@ -661,7 +705,7 @@ module controller(
                 start_mfu_0 <= 1'b1;
 
                 vrf_muxed_readn_enable <= 1'b0;
-                vrf_muxed_wr_addr_dram <= op2_address;
+                vrf_muxed_read_addr <= op2_address;
 
                 in_data_available_mfu_0 <= 1'b1;
                 vrf_addr_read_mfu_mul_0 <= op1_address;
@@ -697,7 +741,7 @@ module controller(
                 in_data_available_mfu_0<=1'b1;
 
                 vrf_muxed_readn_enable <= 1'b0;
-                vrf_muxed_wr_addr_dram <= op2_address;
+                vrf_muxed_read_addr <= op2_address;
                end
                
                `MFU_1: begin
@@ -726,7 +770,7 @@ module controller(
                 in_data_available_mfu_0<=1'b1;
 
                 vrf_muxed_readn_enable <= 1'b0;
-                vrf_muxed_wr_addr_dram <= op2_address;
+                vrf_muxed_read_addr <= op2_address;
                end
                
                `MFU_1: begin
@@ -754,7 +798,7 @@ module controller(
                 in_data_available_mfu_0<=1'b1;
 
                 vrf_muxed_readn_enable <= 1'b0;
-                vrf_muxed_wr_addr_dram <= op2_address;
+                vrf_muxed_read_addr <= op2_address;
                end
                
                `MFU_1: begin

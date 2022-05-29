@@ -5,6 +5,7 @@
 
 
 `include "includes_gen.v"
+`include "floating_pt_gen.v"
 
 `define DESIGN_SIZE `NUM_LDPES
 `define DWIDTH `OUT_PRECISION
@@ -15,15 +16,16 @@
 `define ELT_WISE_ADD 2'b01
 `define BYPASS 2'b11
 
-`define ADD_LATENCY 1
-`define LOG_ADD_LATENCY 1
-`define MUL_LATENCY 1
-`define LOG_MUL_LATENCY 1 
-`define ACTIVATION_LATENCY 1
-`define TANH_LATENCY `ACTIVATION_LATENCY+1
+`define ADD_LATENCY 5
+`define LOG_ADD_LATENCY 3
+`define MUL_LATENCY 5
+`define LOG_MUL_LATENCY 3 
+`define ACTIVATION_LATENCY 3
+`define TANH_LATENCY (`ACTIVATION_LATENCY+1)
+`define SIGMOID_LATENCY (`ACTIVATION_LATENCY+1)
 
 module MFU( 
-    input activation_type,
+    input[1:0] activation_type,
     input[1:0] operation,
     input in_data_available,
     input [`ORF_AWIDTH-1:0] vrf_addr_read_add,
@@ -66,17 +68,21 @@ module MFU(
     wire [`DESIGN_SIZE*`DWIDTH-1:0] out_data_mul;
     wire [`DESIGN_SIZE*`DWIDTH-1:0] out_data_act;
     
-    wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_1;
+    wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_1_add;
+    wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_1_mul;
+    wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_1_act;
     
-    assign compute_operand_1 = (in_data_available==1'b1)?primary_inp:'bX;
-    
+    assign compute_operand_1_add = ((in_data_available==1'b1)&enable_add) ? primary_inp : 'bX;
+    assign compute_operand_1_mul = ((in_data_available==1'b1)&enable_mul) ? primary_inp : 'bX;
+    assign compute_operand_1_act = ((in_data_available==1'b1)&enable_activation) ? primary_inp : 'bX;
+
     wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_2_add;                    
                                                                          
-    assign compute_operand_2_add = (in_data_available==1'b1)?vrf_outa_add_for_compute:'bX;
+    assign compute_operand_2_add = ((in_data_available==1'b1)&enable_add) ?vrf_outa_add_for_compute:'bX;
     
     wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_2_mul;                    
                                                                          
-    assign compute_operand_2_mul = (in_data_available==1'b1)?vrf_outa_mul_for_compute:'bX;
+    assign compute_operand_2_mul = ((in_data_available==1'b1)&enable_mul) ?vrf_outa_mul_for_compute:'bX;
     
     VRF #(.VRF_DWIDTH(`ORF_DWIDTH),.VRF_AWIDTH(`ORF_AWIDTH)) v0(.clk(clk),.addra(vrf_addr_wr_add),.addrb(vrf_addr_read_add),.inb(ina_fake),.ina(secondary_inp),.wea(vrf_wr_enable_add),.web(vrf_readn_enable_add),.outb(vrf_outa_add_for_compute),.outa(out_vrf_add));
 
@@ -104,12 +110,16 @@ module MFU(
     //FOR ELTWISE ADD-MUL, THE OPERATION IS DONE WHEN THE OUTPUT IS AVAILABLE AT THE OUTPUT PORT
     
     wire done_add;
+    wire add_or_sub;
+    assign add_or_sub = activation_type[0];
+
     elt_wise_add elt_add_unit(
         .enable_add(enable_add),
-        .primary_inp(compute_operand_1),
+        .primary_inp(compute_operand_1_add),
         .in_data_available(in_data_available),
         .secondary_inp(compute_operand_2_add),
         .out_data(out_data_add),
+        .add_or_sub(add_or_sub), //IMP
         .output_available_add(done_add),
         .clk(clk)
       );
@@ -118,7 +128,7 @@ module MFU(
     elt_wise_mul elt_mul_unit(
         .enable_mul(enable_mul),
         .in_data_available(in_data_available),
-        .primary_inp(compute_operand_1),
+        .primary_inp(compute_operand_1_mul),
         .secondary_inp(compute_operand_2_mul),
         .out_data(out_data_mul),
         .output_available_mul(done_mul),
@@ -133,10 +143,9 @@ module MFU(
     .activation_type(activation_type),
     .enable_activation(enable_activation),
     .in_data_available(in_data_available),
-    .inp_data(compute_operand_1),
+    .inp_data(compute_operand_1_act),
     .out_data(out_data_act),
     .out_data_available(out_data_available_act),
-    .validity_mask(8'b00000000), //TODO: Should this be all 1s ?
     .done_activation(done_activation),
     .clk(clk),
     .reset(reset)
@@ -151,54 +160,13 @@ module MFU(
    //TODO: demarcate the nomenclature for out_data_available and done signal separately - DONE.
 endmodule
 
-
-module mult(
-    input [(`DWIDTH-1)-1:0] x, 
-    input [(`DWIDTH-1)-1:0] y,
-    input clk,
-    input reset,
-    output [`DWIDTH-1:0] p
- );
-    reg [2*`DWIDTH-1:0] mult_result;
-
-    always @(posedge clk) begin 
-    //$display("p '%'d a '%'d b '%'d",p,x,y);
-        if(reset==0) begin
-            mult_result <= x*y;
-        end
-    end
-    
-    //GET TRUNCATED RESULT 
-    assign p = mult_result[`DWIDTH-1:0];
-    
-endmodule
-
-module add( 
-    input [`DWIDTH-1:0] x,
-    input [`DWIDTH-1:0] y,
-    input clk,
-    input reset,
-    output reg [`DWIDTH-1:0] p
- );
-    
-
-    always @(posedge clk) begin 
-    //$display("p '%'d a '%'d b '%'d",p,x,y);
-        if(reset==0) begin
-            p <= x + y;
-        end
-    end
-    
-endmodule
-
 module activation(
-    input activation_type,
+    input[1:0] activation_type,
     input enable_activation,
     input in_data_available,
     input [`DESIGN_SIZE*`DWIDTH-1:0] inp_data,
     output [`DESIGN_SIZE*`DWIDTH-1:0] out_data,
     output out_data_available,
-    input [`MASK_WIDTH-1:0] validity_mask,
     output done_activation,
     input clk,
     input reset
@@ -207,17 +175,22 @@ module activation(
 reg  done_activation_internal;
 reg  out_data_available_internal;
 wire [`DESIGN_SIZE*`DWIDTH-1:0] out_data_internal;
-reg [`DESIGN_SIZE*`DWIDTH-1:0] slope_applied_data_internal;
-reg [`DESIGN_SIZE*`DWIDTH-1:0] intercept_applied_data_internal;
 reg [`DESIGN_SIZE*`DWIDTH-1:0] relu_applied_data_internal;
+
 integer i;
 integer cycle_count;
 reg activation_in_progress;
 
-reg [(`DESIGN_SIZE*4)-1:0] address;
-reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_slope;
-reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept;
-reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept_delayed;
+reg [(`DESIGN_SIZE*`DWIDTH)-1:0] sigmoid_applied_data_internal;
+reg [(`DESIGN_SIZE*`DWIDTH)-1:0] tanh_applied_data_internal;
+
+
+wire [(`DESIGN_SIZE*`DWIDTH)-1:0] sigmoid_activation_file_output;
+wire [(`DESIGN_SIZE*`DWIDTH)-1:0] tanh_activation_file_output;
+
+//reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_slope;
+//reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept;
+//reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept_delayed;
 
 // If the activation block is not enabled, just forward the input data
 assign out_data             = enable_activation ? out_data_internal : 'bX;
@@ -226,29 +199,30 @@ assign out_data_available   = enable_activation ? out_data_available_internal : 
 
 always @(posedge clk) begin
    if (reset || ~enable_activation) begin
-      slope_applied_data_internal     <= 0;
-      intercept_applied_data_internal <= 0; 
-      relu_applied_data_internal      <= 0; 
-      data_intercept_delayed      <= 0;
+      relu_applied_data_internal  <= 'bX; 
       done_activation_internal    <= 0;
       out_data_available_internal <= 0;
       cycle_count                 <= 0;
       activation_in_progress      <= 0;
+      sigmoid_applied_data_internal <= 'bX;
+      tanh_applied_data_internal <= 'bX;
    end else if(in_data_available || activation_in_progress) begin
       cycle_count = cycle_count + 1;
 
       for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-         if(activation_type==1'b1) begin // tanH
-            slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
-            data_intercept_delayed[i*8 +: 8] <= data_intercept[i*8 +: 8];
-            intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
-         end else begin // ReLU
-            relu_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= inp_data[i*`DWIDTH] ? {`DWIDTH{1'b0}} : inp_data[i*`DWIDTH +:`DWIDTH];
+         if(activation_type==2) begin // tanH
+            sigmoid_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= sigmoid_activation_file_output[i*`DWIDTH +:`DWIDTH];
+         end 
+         else if (activation_type==1) begin
+            tanh_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= tanh_activation_file_output[i*`DWIDTH +:`DWIDTH];
+         end
+         else begin // ReLU
+            relu_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= inp_data[i*`DWIDTH+`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[i*`DWIDTH +:`DWIDTH];
          end
       end   
 
       //TANH needs 1 extra cycle
-      if (activation_type==1'b1) begin
+      if (activation_type==1) begin
          if (cycle_count==`TANH_LATENCY-1) begin
             out_data_available_internal <= 1;
          end
@@ -278,10 +252,7 @@ always @(posedge clk) begin
       end
    end
    else begin
-      slope_applied_data_internal     <= 0;
-      intercept_applied_data_internal <= 0; 
       relu_applied_data_internal      <= 0; 
-      data_intercept_delayed      <= 0;
       done_activation_internal    <= 0;
       out_data_available_internal <= 0;
       cycle_count                 <= 0;
@@ -289,105 +260,57 @@ always @(posedge clk) begin
    end
 end
 
-assign out_data_internal = (activation_type) ? intercept_applied_data_internal : relu_applied_data_internal;
+assign out_data_internal = (activation_type==2) ? sigmoid_applied_data_internal : 
+                           ((activation_type==1) ? tanh_applied_data_internal:
+                           relu_applied_data_internal);
 
-//Our equation of tanh is Y=AX+B
-//A is the slope and B is the intercept.
-//We store A in one LUT and B in another.
-//LUT for the slope
-always @(address) begin
-    for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-    case (address[i*4+:4])
-      4'b0000: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0001: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0010: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
-      4'b0011: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
-      4'b0100: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
-      4'b0101: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0110: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
-      4'b0111: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
-      4'b1000: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
-      4'b1001: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b1010: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      default: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-    endcase  
-    end
-end
 
-//LUT for the intercept
-always @(address) begin
-    for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-    case (address[i*4+:4])
-      4'b0000: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd127;
-      4'b0001: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd99;
-      4'b0010: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd46;
-      4'b0011: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd18;
-      4'b0100: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0101: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0110: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0111: data_intercept[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd18;
-      4'b1000: data_intercept[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd46;
-      4'b1001: data_intercept[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd99;
-      4'b1010: data_intercept[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd127;
-      default: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-    endcase  
-    end
-end
+genvar j;
 
-//Logic to find address
-always @(inp_data) begin
-    for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-        if((inp_data[i*`DWIDTH +:`DWIDTH])>=90) begin
-           address[i*4+:4] = 4'b0000;
-        end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>=39 && (inp_data[i*`DWIDTH +:`DWIDTH])<90) begin
-           address[i*4+:4] = 4'b0001;
-        end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>=28 && (inp_data[i*`DWIDTH +:`DWIDTH])<39) begin
-           address[i*4+:4] = 4'b0010;
-        end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>=16 && (inp_data[i*`DWIDTH +:`DWIDTH])<28) begin
-           address[i*4+:4] = 4'b0011;
-        end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>=1 && (inp_data[i*`DWIDTH +:`DWIDTH])<16) begin
-           address[i*4+:4] = 4'b0100;
-        end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])==0) begin
-           address[i*4+:4] = 4'b0101;
-        end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>-16 && (inp_data[i*`DWIDTH +:`DWIDTH])<=-1) begin
-           address[i*4+:4] = 4'b0110;
-        end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>-28 && (inp_data[i*`DWIDTH +:`DWIDTH])<=-16) begin
-           address[i*4+:4] = 4'b0111;
-        end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>-39 && (inp_data[i*`DWIDTH +:`DWIDTH])<=-28) begin
-           address[i*4+:4] = 4'b1000;
-        end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>-90 && (inp_data[i*`DWIDTH +:`DWIDTH])<=-39) begin
-           address[i*4+:4] = 4'b1001;
-        end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])<=-90) begin
-           address[i*4+:4] = 4'b1010;
-        end
-        else begin
-           address[i*4+:4] = 4'b0101;
-        end
-    end
-end
+wire[`DWIDTH*`NUM_LDPES-1:0] tanh_ina_fake;
+wire[`DWIDTH*`NUM_LDPES-1:0] tanh_inb_fake;
+wire[`DWIDTH*`NUM_LDPES-1:0] tanh_outa_fake;
+wire[10*`NUM_LDPES-1:0] tanh_addr_fake_a;
 
-//Adding a dummy signal to use validity_mask input, to make ODIN happy
-//TODO: Need to correctly use validity_mask
-wire [`MASK_WIDTH-1:0] dummy;
-assign dummy = validity_mask;
+generate   
 
-// generate multiple ReLU block based on the DESIGN_SIZE
-//genvar i;
-//generate 
-//  for (i = 1; i <= `DESIGN_SIZE; i = i + 1) begin : loop_gen_ReLU
-//        ReLU ReLUinst (.inp_data(inp_data[i*`DWIDTH-1 -:`DWIDTH]), .out_data(temp[i*`DWIDTH-1 -:`DWIDTH]));
-//  end
-//endgenerate
+   for(j=1;j<=`NUM_LDPES;j=j+1) begin
+      tanh_dp_ram tanh_activation_mem (
+            .clk(clk),
+            .addra(tanh_addr_fake_a[(j*10)-1: (j-1)*10]),
+            .ina(tanh_ina_fake[j*`DWIDTH-1:(j-1)*`DWIDTH]),
+            .wea(1'b0),
+            .outa(tanh_outa_fake[j*`DWIDTH-1:(j-1)*`DWIDTH]),
+            .addrb(inp_data[(j*`DWIDTH)-1: (j*`DWIDTH)-10]),
+            .inb(tanh_inb_fake[j*`DWIDTH-1:(j-1)*`DWIDTH]),
+            .web(1'b0),
+            .outb(tanh_activation_file_output[j*`DWIDTH-1:(j-1)*`DWIDTH])
+      );
+   end
+endgenerate
+
+wire[`DWIDTH*`NUM_LDPES-1:0] sigmoid_ina_fake;
+wire[`DWIDTH*`NUM_LDPES-1:0] sigmoid_inb_fake;
+wire[`DWIDTH*`NUM_LDPES-1:0] sigmoid_outa_fake;
+wire[10*`NUM_LDPES-1:0] sigmoid_addr_fake_a;
+
+generate 
+
+   for(j=1;j<=`NUM_LDPES;j=j+1) begin
+      sigmoid_dp_ram sigmoid_activation_mem (
+            .clk(clk),
+            .addra(sigmoid_addr_fake_a[(j*10)-1: (j-1)*10]),
+            .ina(sigmoid_ina_fake[j*`DWIDTH-1:(j-1)*`DWIDTH]),
+            .wea(1'b0),
+            .outa(sigmoid_outa_fake[j*`DWIDTH-1:(j-1)*`DWIDTH]),
+            .addrb(inp_data[(j*`DWIDTH)-1: (j*`DWIDTH)-10]),
+            .inb(sigmoid_inb_fake[j*`DWIDTH-1:(j-1)*`DWIDTH]),
+            .web(1'b0),
+            .outb(sigmoid_activation_file_output[j*`DWIDTH-1:(j-1)*`DWIDTH])
+      );
+   end
+endgenerate
+
 
 endmodule
 
@@ -395,140 +318,429 @@ endmodule
 module elt_wise_add(
     input enable_add,
     input in_data_available,
-    input [`DESIGN_SIZE*`DWIDTH-1:0] primary_inp,
-    input [`DESIGN_SIZE*`DWIDTH-1:0] secondary_inp,
-    output [`DESIGN_SIZE*`DWIDTH-1:0] out_data,
+    input add_or_sub,
+    input [`NUM_LDPES*`DWIDTH-1:0] primary_inp,
+    input [`NUM_LDPES*`DWIDTH-1:0] secondary_inp,
+    output [`NUM_LDPES*`DWIDTH-1:0] out_data,
     output reg output_available_add,
     input clk
 );
     wire [(`DWIDTH)-1:0] x_0; 
     wire [(`DWIDTH)-1:0] y_0;
-    
-    add a0(.p(out_data[(1*`DWIDTH)-1:(0*`DWIDTH)]),.x(x_0),.y(y_0), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_0;
+
+    FPAddSub a0(
+       .result(out_data[(1*`DWIDTH)-1:(0*`DWIDTH)]),
+       .a(x_0),
+       .b(y_0), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_0)
+    );
     wire [(`DWIDTH)-1:0] x_1; 
     wire [(`DWIDTH)-1:0] y_1;
-    
-    add a1(.p(out_data[(2*`DWIDTH)-1:(1*`DWIDTH)]),.x(x_1),.y(y_1), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_1;
+
+    FPAddSub a1(
+       .result(out_data[(2*`DWIDTH)-1:(1*`DWIDTH)]),
+       .a(x_1),
+       .b(y_1), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_1)
+    );
     wire [(`DWIDTH)-1:0] x_2; 
     wire [(`DWIDTH)-1:0] y_2;
-    
-    add a2(.p(out_data[(3*`DWIDTH)-1:(2*`DWIDTH)]),.x(x_2),.y(y_2), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_2;
+
+    FPAddSub a2(
+       .result(out_data[(3*`DWIDTH)-1:(2*`DWIDTH)]),
+       .a(x_2),
+       .b(y_2), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_2)
+    );
     wire [(`DWIDTH)-1:0] x_3; 
     wire [(`DWIDTH)-1:0] y_3;
-    
-    add a3(.p(out_data[(4*`DWIDTH)-1:(3*`DWIDTH)]),.x(x_3),.y(y_3), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_3;
+
+    FPAddSub a3(
+       .result(out_data[(4*`DWIDTH)-1:(3*`DWIDTH)]),
+       .a(x_3),
+       .b(y_3), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_3)
+    );
     wire [(`DWIDTH)-1:0] x_4; 
     wire [(`DWIDTH)-1:0] y_4;
-    
-    add a4(.p(out_data[(5*`DWIDTH)-1:(4*`DWIDTH)]),.x(x_4),.y(y_4), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_4;
+
+    FPAddSub a4(
+       .result(out_data[(5*`DWIDTH)-1:(4*`DWIDTH)]),
+       .a(x_4),
+       .b(y_4), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_4)
+    );
     wire [(`DWIDTH)-1:0] x_5; 
     wire [(`DWIDTH)-1:0] y_5;
-    
-    add a5(.p(out_data[(6*`DWIDTH)-1:(5*`DWIDTH)]),.x(x_5),.y(y_5), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_5;
+
+    FPAddSub a5(
+       .result(out_data[(6*`DWIDTH)-1:(5*`DWIDTH)]),
+       .a(x_5),
+       .b(y_5), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_5)
+    );
     wire [(`DWIDTH)-1:0] x_6; 
     wire [(`DWIDTH)-1:0] y_6;
-    
-    add a6(.p(out_data[(7*`DWIDTH)-1:(6*`DWIDTH)]),.x(x_6),.y(y_6), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_6;
+
+    FPAddSub a6(
+       .result(out_data[(7*`DWIDTH)-1:(6*`DWIDTH)]),
+       .a(x_6),
+       .b(y_6), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_6)
+    );
     wire [(`DWIDTH)-1:0] x_7; 
     wire [(`DWIDTH)-1:0] y_7;
-    
-    add a7(.p(out_data[(8*`DWIDTH)-1:(7*`DWIDTH)]),.x(x_7),.y(y_7), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_7;
+
+    FPAddSub a7(
+       .result(out_data[(8*`DWIDTH)-1:(7*`DWIDTH)]),
+       .a(x_7),
+       .b(y_7), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_7)
+    );
     wire [(`DWIDTH)-1:0] x_8; 
     wire [(`DWIDTH)-1:0] y_8;
-    
-    add a8(.p(out_data[(9*`DWIDTH)-1:(8*`DWIDTH)]),.x(x_8),.y(y_8), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_8;
+
+    FPAddSub a8(
+       .result(out_data[(9*`DWIDTH)-1:(8*`DWIDTH)]),
+       .a(x_8),
+       .b(y_8), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_8)
+    );
     wire [(`DWIDTH)-1:0] x_9; 
     wire [(`DWIDTH)-1:0] y_9;
-    
-    add a9(.p(out_data[(10*`DWIDTH)-1:(9*`DWIDTH)]),.x(x_9),.y(y_9), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_9;
+
+    FPAddSub a9(
+       .result(out_data[(10*`DWIDTH)-1:(9*`DWIDTH)]),
+       .a(x_9),
+       .b(y_9), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_9)
+    );
     wire [(`DWIDTH)-1:0] x_10; 
     wire [(`DWIDTH)-1:0] y_10;
-    
-    add a10(.p(out_data[(11*`DWIDTH)-1:(10*`DWIDTH)]),.x(x_10),.y(y_10), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_10;
+
+    FPAddSub a10(
+       .result(out_data[(11*`DWIDTH)-1:(10*`DWIDTH)]),
+       .a(x_10),
+       .b(y_10), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_10)
+    );
     wire [(`DWIDTH)-1:0] x_11; 
     wire [(`DWIDTH)-1:0] y_11;
-    
-    add a11(.p(out_data[(12*`DWIDTH)-1:(11*`DWIDTH)]),.x(x_11),.y(y_11), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_11;
+
+    FPAddSub a11(
+       .result(out_data[(12*`DWIDTH)-1:(11*`DWIDTH)]),
+       .a(x_11),
+       .b(y_11), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_11)
+    );
     wire [(`DWIDTH)-1:0] x_12; 
     wire [(`DWIDTH)-1:0] y_12;
-    
-    add a12(.p(out_data[(13*`DWIDTH)-1:(12*`DWIDTH)]),.x(x_12),.y(y_12), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_12;
+
+    FPAddSub a12(
+       .result(out_data[(13*`DWIDTH)-1:(12*`DWIDTH)]),
+       .a(x_12),
+       .b(y_12), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_12)
+    );
     wire [(`DWIDTH)-1:0] x_13; 
     wire [(`DWIDTH)-1:0] y_13;
-    
-    add a13(.p(out_data[(14*`DWIDTH)-1:(13*`DWIDTH)]),.x(x_13),.y(y_13), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_13;
+
+    FPAddSub a13(
+       .result(out_data[(14*`DWIDTH)-1:(13*`DWIDTH)]),
+       .a(x_13),
+       .b(y_13), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_13)
+    );
     wire [(`DWIDTH)-1:0] x_14; 
     wire [(`DWIDTH)-1:0] y_14;
-    
-    add a14(.p(out_data[(15*`DWIDTH)-1:(14*`DWIDTH)]),.x(x_14),.y(y_14), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_14;
+
+    FPAddSub a14(
+       .result(out_data[(15*`DWIDTH)-1:(14*`DWIDTH)]),
+       .a(x_14),
+       .b(y_14), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_14)
+    );
     wire [(`DWIDTH)-1:0] x_15; 
     wire [(`DWIDTH)-1:0] y_15;
-    
-    add a15(.p(out_data[(16*`DWIDTH)-1:(15*`DWIDTH)]),.x(x_15),.y(y_15), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_15;
+
+    FPAddSub a15(
+       .result(out_data[(16*`DWIDTH)-1:(15*`DWIDTH)]),
+       .a(x_15),
+       .b(y_15), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_15)
+    );
     wire [(`DWIDTH)-1:0] x_16; 
     wire [(`DWIDTH)-1:0] y_16;
-    
-    add a16(.p(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]),.x(x_16),.y(y_16), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_16;
+
+    FPAddSub a16(
+       .result(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]),
+       .a(x_16),
+       .b(y_16), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_16)
+    );
     wire [(`DWIDTH)-1:0] x_17; 
     wire [(`DWIDTH)-1:0] y_17;
-    
-    add a17(.p(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]),.x(x_17),.y(y_17), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_17;
+
+    FPAddSub a17(
+       .result(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]),
+       .a(x_17),
+       .b(y_17), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_17)
+    );
     wire [(`DWIDTH)-1:0] x_18; 
     wire [(`DWIDTH)-1:0] y_18;
-    
-    add a18(.p(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]),.x(x_18),.y(y_18), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_18;
+
+    FPAddSub a18(
+       .result(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]),
+       .a(x_18),
+       .b(y_18), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_18)
+    );
     wire [(`DWIDTH)-1:0] x_19; 
     wire [(`DWIDTH)-1:0] y_19;
-    
-    add a19(.p(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]),.x(x_19),.y(y_19), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_19;
+
+    FPAddSub a19(
+       .result(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]),
+       .a(x_19),
+       .b(y_19), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_19)
+    );
     wire [(`DWIDTH)-1:0] x_20; 
     wire [(`DWIDTH)-1:0] y_20;
-    
-    add a20(.p(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]),.x(x_20),.y(y_20), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_20;
+
+    FPAddSub a20(
+       .result(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]),
+       .a(x_20),
+       .b(y_20), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_20)
+    );
     wire [(`DWIDTH)-1:0] x_21; 
     wire [(`DWIDTH)-1:0] y_21;
-    
-    add a21(.p(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]),.x(x_21),.y(y_21), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_21;
+
+    FPAddSub a21(
+       .result(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]),
+       .a(x_21),
+       .b(y_21), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_21)
+    );
     wire [(`DWIDTH)-1:0] x_22; 
     wire [(`DWIDTH)-1:0] y_22;
-    
-    add a22(.p(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]),.x(x_22),.y(y_22), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_22;
+
+    FPAddSub a22(
+       .result(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]),
+       .a(x_22),
+       .b(y_22), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_22)
+    );
     wire [(`DWIDTH)-1:0] x_23; 
     wire [(`DWIDTH)-1:0] y_23;
-    
-    add a23(.p(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]),.x(x_23),.y(y_23), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_23;
+
+    FPAddSub a23(
+       .result(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]),
+       .a(x_23),
+       .b(y_23), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_23)
+    );
     wire [(`DWIDTH)-1:0] x_24; 
     wire [(`DWIDTH)-1:0] y_24;
-    
-    add a24(.p(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]),.x(x_24),.y(y_24), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_24;
+
+    FPAddSub a24(
+       .result(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]),
+       .a(x_24),
+       .b(y_24), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_24)
+    );
     wire [(`DWIDTH)-1:0] x_25; 
     wire [(`DWIDTH)-1:0] y_25;
-    
-    add a25(.p(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]),.x(x_25),.y(y_25), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_25;
+
+    FPAddSub a25(
+       .result(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]),
+       .a(x_25),
+       .b(y_25), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_25)
+    );
     wire [(`DWIDTH)-1:0] x_26; 
     wire [(`DWIDTH)-1:0] y_26;
-    
-    add a26(.p(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]),.x(x_26),.y(y_26), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_26;
+
+    FPAddSub a26(
+       .result(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]),
+       .a(x_26),
+       .b(y_26), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_26)
+    );
     wire [(`DWIDTH)-1:0] x_27; 
     wire [(`DWIDTH)-1:0] y_27;
-    
-    add a27(.p(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]),.x(x_27),.y(y_27), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_27;
+
+    FPAddSub a27(
+       .result(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]),
+       .a(x_27),
+       .b(y_27), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_27)
+    );
     wire [(`DWIDTH)-1:0] x_28; 
     wire [(`DWIDTH)-1:0] y_28;
-    
-    add a28(.p(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]),.x(x_28),.y(y_28), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_28;
+
+    FPAddSub a28(
+       .result(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]),
+       .a(x_28),
+       .b(y_28), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_28)
+    );
     wire [(`DWIDTH)-1:0] x_29; 
     wire [(`DWIDTH)-1:0] y_29;
-    
-    add a29(.p(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]),.x(x_29),.y(y_29), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_29;
+
+    FPAddSub a29(
+       .result(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]),
+       .a(x_29),
+       .b(y_29), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_29)
+    );
     wire [(`DWIDTH)-1:0] x_30; 
     wire [(`DWIDTH)-1:0] y_30;
-    
-    add a30(.p(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]),.x(x_30),.y(y_30), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_30;
+
+    FPAddSub a30(
+       .result(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]),
+       .a(x_30),
+       .b(y_30), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_30)
+    );
     wire [(`DWIDTH)-1:0] x_31; 
     wire [(`DWIDTH)-1:0] y_31;
-    
-    add a31(.p(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]),.x(x_31),.y(y_31), .clk(clk), .reset(~enable_add));
+    wire [4:0] flag_fake_31;
+
+    FPAddSub a31(
+       .result(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]),
+       .a(x_31),
+       .b(y_31), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_31)
+    );
 
     assign x_0 = primary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign x_1 = primary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -604,7 +816,6 @@ module elt_wise_add(
             end
             else begin
                 output_available_add<=1;
-                state<=0;
             end
         end
         else begin
@@ -617,140 +828,396 @@ endmodule
 module elt_wise_mul(
     input enable_mul,
     input in_data_available,
-    input [`DESIGN_SIZE*`DWIDTH-1:0] primary_inp,
-    input [`DESIGN_SIZE*`DWIDTH-1:0] secondary_inp,
-    output [`DESIGN_SIZE*`DWIDTH-1:0] out_data,
+    input [`NUM_LDPES*`DWIDTH-1:0] primary_inp,
+    input [`NUM_LDPES*`DWIDTH-1:0] secondary_inp,
+    output [`NUM_LDPES*`DWIDTH-1:0] out_data,
     output reg output_available_mul,
     input clk
 );
     wire [(`DWIDTH)-1:0] x_0; 
     wire [(`DWIDTH)-1:0] y_0;
-    
-    mult m0(.p(out_data[(1*`DWIDTH)-1:(0*`DWIDTH)]),.x(x_0),.y(y_0), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_0;
+
+    FPMult_16 m0(
+       .result(out_data[(1*`DWIDTH)-1:(0*`DWIDTH)]),
+       .a(x_0),
+       .b(y_0), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_0)
+    );
     wire [(`DWIDTH)-1:0] x_1; 
     wire [(`DWIDTH)-1:0] y_1;
-    
-    mult m1(.p(out_data[(2*`DWIDTH)-1:(1*`DWIDTH)]),.x(x_1),.y(y_1), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_1;
+
+    FPMult_16 m1(
+       .result(out_data[(2*`DWIDTH)-1:(1*`DWIDTH)]),
+       .a(x_1),
+       .b(y_1), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_1)
+    );
     wire [(`DWIDTH)-1:0] x_2; 
     wire [(`DWIDTH)-1:0] y_2;
-    
-    mult m2(.p(out_data[(3*`DWIDTH)-1:(2*`DWIDTH)]),.x(x_2),.y(y_2), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_2;
+
+    FPMult_16 m2(
+       .result(out_data[(3*`DWIDTH)-1:(2*`DWIDTH)]),
+       .a(x_2),
+       .b(y_2), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_2)
+    );
     wire [(`DWIDTH)-1:0] x_3; 
     wire [(`DWIDTH)-1:0] y_3;
-    
-    mult m3(.p(out_data[(4*`DWIDTH)-1:(3*`DWIDTH)]),.x(x_3),.y(y_3), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_3;
+
+    FPMult_16 m3(
+       .result(out_data[(4*`DWIDTH)-1:(3*`DWIDTH)]),
+       .a(x_3),
+       .b(y_3), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_3)
+    );
     wire [(`DWIDTH)-1:0] x_4; 
     wire [(`DWIDTH)-1:0] y_4;
-    
-    mult m4(.p(out_data[(5*`DWIDTH)-1:(4*`DWIDTH)]),.x(x_4),.y(y_4), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_4;
+
+    FPMult_16 m4(
+       .result(out_data[(5*`DWIDTH)-1:(4*`DWIDTH)]),
+       .a(x_4),
+       .b(y_4), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_4)
+    );
     wire [(`DWIDTH)-1:0] x_5; 
     wire [(`DWIDTH)-1:0] y_5;
-    
-    mult m5(.p(out_data[(6*`DWIDTH)-1:(5*`DWIDTH)]),.x(x_5),.y(y_5), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_5;
+
+    FPMult_16 m5(
+       .result(out_data[(6*`DWIDTH)-1:(5*`DWIDTH)]),
+       .a(x_5),
+       .b(y_5), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_5)
+    );
     wire [(`DWIDTH)-1:0] x_6; 
     wire [(`DWIDTH)-1:0] y_6;
-    
-    mult m6(.p(out_data[(7*`DWIDTH)-1:(6*`DWIDTH)]),.x(x_6),.y(y_6), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_6;
+
+    FPMult_16 m6(
+       .result(out_data[(7*`DWIDTH)-1:(6*`DWIDTH)]),
+       .a(x_6),
+       .b(y_6), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_6)
+    );
     wire [(`DWIDTH)-1:0] x_7; 
     wire [(`DWIDTH)-1:0] y_7;
-    
-    mult m7(.p(out_data[(8*`DWIDTH)-1:(7*`DWIDTH)]),.x(x_7),.y(y_7), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_7;
+
+    FPMult_16 m7(
+       .result(out_data[(8*`DWIDTH)-1:(7*`DWIDTH)]),
+       .a(x_7),
+       .b(y_7), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_7)
+    );
     wire [(`DWIDTH)-1:0] x_8; 
     wire [(`DWIDTH)-1:0] y_8;
-    
-    mult m8(.p(out_data[(9*`DWIDTH)-1:(8*`DWIDTH)]),.x(x_8),.y(y_8), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_8;
+
+    FPMult_16 m8(
+       .result(out_data[(9*`DWIDTH)-1:(8*`DWIDTH)]),
+       .a(x_8),
+       .b(y_8), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_8)
+    );
     wire [(`DWIDTH)-1:0] x_9; 
     wire [(`DWIDTH)-1:0] y_9;
-    
-    mult m9(.p(out_data[(10*`DWIDTH)-1:(9*`DWIDTH)]),.x(x_9),.y(y_9), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_9;
+
+    FPMult_16 m9(
+       .result(out_data[(10*`DWIDTH)-1:(9*`DWIDTH)]),
+       .a(x_9),
+       .b(y_9), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_9)
+    );
     wire [(`DWIDTH)-1:0] x_10; 
     wire [(`DWIDTH)-1:0] y_10;
-    
-    mult m10(.p(out_data[(11*`DWIDTH)-1:(10*`DWIDTH)]),.x(x_10),.y(y_10), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_10;
+
+    FPMult_16 m10(
+       .result(out_data[(11*`DWIDTH)-1:(10*`DWIDTH)]),
+       .a(x_10),
+       .b(y_10), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_10)
+    );
     wire [(`DWIDTH)-1:0] x_11; 
     wire [(`DWIDTH)-1:0] y_11;
-    
-    mult m11(.p(out_data[(12*`DWIDTH)-1:(11*`DWIDTH)]),.x(x_11),.y(y_11), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_11;
+
+    FPMult_16 m11(
+       .result(out_data[(12*`DWIDTH)-1:(11*`DWIDTH)]),
+       .a(x_11),
+       .b(y_11), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_11)
+    );
     wire [(`DWIDTH)-1:0] x_12; 
     wire [(`DWIDTH)-1:0] y_12;
-    
-    mult m12(.p(out_data[(13*`DWIDTH)-1:(12*`DWIDTH)]),.x(x_12),.y(y_12), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_12;
+
+    FPMult_16 m12(
+       .result(out_data[(13*`DWIDTH)-1:(12*`DWIDTH)]),
+       .a(x_12),
+       .b(y_12), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_12)
+    );
     wire [(`DWIDTH)-1:0] x_13; 
     wire [(`DWIDTH)-1:0] y_13;
-    
-    mult m13(.p(out_data[(14*`DWIDTH)-1:(13*`DWIDTH)]),.x(x_13),.y(y_13), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_13;
+
+    FPMult_16 m13(
+       .result(out_data[(14*`DWIDTH)-1:(13*`DWIDTH)]),
+       .a(x_13),
+       .b(y_13), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_13)
+    );
     wire [(`DWIDTH)-1:0] x_14; 
     wire [(`DWIDTH)-1:0] y_14;
-    
-    mult m14(.p(out_data[(15*`DWIDTH)-1:(14*`DWIDTH)]),.x(x_14),.y(y_14), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_14;
+
+    FPMult_16 m14(
+       .result(out_data[(15*`DWIDTH)-1:(14*`DWIDTH)]),
+       .a(x_14),
+       .b(y_14), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_14)
+    );
     wire [(`DWIDTH)-1:0] x_15; 
     wire [(`DWIDTH)-1:0] y_15;
-    
-    mult m15(.p(out_data[(16*`DWIDTH)-1:(15*`DWIDTH)]),.x(x_15),.y(y_15), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_15;
+
+    FPMult_16 m15(
+       .result(out_data[(16*`DWIDTH)-1:(15*`DWIDTH)]),
+       .a(x_15),
+       .b(y_15), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_15)
+    );
     wire [(`DWIDTH)-1:0] x_16; 
     wire [(`DWIDTH)-1:0] y_16;
-    
-    mult m16(.p(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]),.x(x_16),.y(y_16), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_16;
+
+    FPMult_16 m16(
+       .result(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]),
+       .a(x_16),
+       .b(y_16), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_16)
+    );
     wire [(`DWIDTH)-1:0] x_17; 
     wire [(`DWIDTH)-1:0] y_17;
-    
-    mult m17(.p(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]),.x(x_17),.y(y_17), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_17;
+
+    FPMult_16 m17(
+       .result(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]),
+       .a(x_17),
+       .b(y_17), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_17)
+    );
     wire [(`DWIDTH)-1:0] x_18; 
     wire [(`DWIDTH)-1:0] y_18;
-    
-    mult m18(.p(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]),.x(x_18),.y(y_18), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_18;
+
+    FPMult_16 m18(
+       .result(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]),
+       .a(x_18),
+       .b(y_18), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_18)
+    );
     wire [(`DWIDTH)-1:0] x_19; 
     wire [(`DWIDTH)-1:0] y_19;
-    
-    mult m19(.p(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]),.x(x_19),.y(y_19), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_19;
+
+    FPMult_16 m19(
+       .result(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]),
+       .a(x_19),
+       .b(y_19), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_19)
+    );
     wire [(`DWIDTH)-1:0] x_20; 
     wire [(`DWIDTH)-1:0] y_20;
-    
-    mult m20(.p(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]),.x(x_20),.y(y_20), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_20;
+
+    FPMult_16 m20(
+       .result(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]),
+       .a(x_20),
+       .b(y_20), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_20)
+    );
     wire [(`DWIDTH)-1:0] x_21; 
     wire [(`DWIDTH)-1:0] y_21;
-    
-    mult m21(.p(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]),.x(x_21),.y(y_21), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_21;
+
+    FPMult_16 m21(
+       .result(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]),
+       .a(x_21),
+       .b(y_21), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_21)
+    );
     wire [(`DWIDTH)-1:0] x_22; 
     wire [(`DWIDTH)-1:0] y_22;
-    
-    mult m22(.p(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]),.x(x_22),.y(y_22), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_22;
+
+    FPMult_16 m22(
+       .result(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]),
+       .a(x_22),
+       .b(y_22), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_22)
+    );
     wire [(`DWIDTH)-1:0] x_23; 
     wire [(`DWIDTH)-1:0] y_23;
-    
-    mult m23(.p(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]),.x(x_23),.y(y_23), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_23;
+
+    FPMult_16 m23(
+       .result(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]),
+       .a(x_23),
+       .b(y_23), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_23)
+    );
     wire [(`DWIDTH)-1:0] x_24; 
     wire [(`DWIDTH)-1:0] y_24;
-    
-    mult m24(.p(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]),.x(x_24),.y(y_24), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_24;
+
+    FPMult_16 m24(
+       .result(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]),
+       .a(x_24),
+       .b(y_24), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_24)
+    );
     wire [(`DWIDTH)-1:0] x_25; 
     wire [(`DWIDTH)-1:0] y_25;
-    
-    mult m25(.p(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]),.x(x_25),.y(y_25), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_25;
+
+    FPMult_16 m25(
+       .result(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]),
+       .a(x_25),
+       .b(y_25), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_25)
+    );
     wire [(`DWIDTH)-1:0] x_26; 
     wire [(`DWIDTH)-1:0] y_26;
-    
-    mult m26(.p(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]),.x(x_26),.y(y_26), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_26;
+
+    FPMult_16 m26(
+       .result(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]),
+       .a(x_26),
+       .b(y_26), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_26)
+    );
     wire [(`DWIDTH)-1:0] x_27; 
     wire [(`DWIDTH)-1:0] y_27;
-    
-    mult m27(.p(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]),.x(x_27),.y(y_27), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_27;
+
+    FPMult_16 m27(
+       .result(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]),
+       .a(x_27),
+       .b(y_27), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_27)
+    );
     wire [(`DWIDTH)-1:0] x_28; 
     wire [(`DWIDTH)-1:0] y_28;
-    
-    mult m28(.p(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]),.x(x_28),.y(y_28), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_28;
+
+    FPMult_16 m28(
+       .result(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]),
+       .a(x_28),
+       .b(y_28), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_28)
+    );
     wire [(`DWIDTH)-1:0] x_29; 
     wire [(`DWIDTH)-1:0] y_29;
-    
-    mult m29(.p(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]),.x(x_29),.y(y_29), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_29;
+
+    FPMult_16 m29(
+       .result(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]),
+       .a(x_29),
+       .b(y_29), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_29)
+    );
     wire [(`DWIDTH)-1:0] x_30; 
     wire [(`DWIDTH)-1:0] y_30;
-    
-    mult m30(.p(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]),.x(x_30),.y(y_30), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_30;
+
+    FPMult_16 m30(
+       .result(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]),
+       .a(x_30),
+       .b(y_30), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_30)
+    );
     wire [(`DWIDTH)-1:0] x_31; 
     wire [(`DWIDTH)-1:0] y_31;
-    
-    mult m31(.p(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]),.x(x_31),.y(y_31), .clk(clk), .reset(~enable_mul));
+    wire [4:0] flag_fake_31;
+
+    FPMult_16 m31(
+       .result(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]),
+       .a(x_31),
+       .b(y_31), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_31)
+    );
 
     assign x_0 = primary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign x_1 = primary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -837,3 +1304,117 @@ module elt_wise_mul(
     end
 
 endmodule
+
+
+module tanh_dp_ram(
+    input clk,
+    input [10-1:0] addra, addrb,
+    input [16-1:0] ina, inb,
+    input wea, web,
+    output reg [16-1:0] outa, outb
+);
+
+`ifdef SIMULATION
+
+reg [16-1:0] ram [((1<<10)-1):0];
+
+initial begin
+   $readmemb("/home/tanmay/Koios++ - Copy/Multi_tile_design/tanh_activation_mem.txt" ,ram ,0); 
+end
+
+// Port A
+always @(posedge clk)  begin
+
+    if (wea) begin
+        ram[addra] <= ina;
+    end
+
+    outa <= ram[addra];
+end
+
+// Port B
+always @(posedge clk)  begin
+
+    if (web) begin
+        ram[addrb] <= inb;
+    end
+
+    outb <= ram[addrb];
+end
+
+`else
+
+defparam u_dual_port_ram.ADDR_WIDTH = 10; 
+defparam u_dual_port_ram.DATA_WIDTH = 16; 
+
+dual_port_ram u_dual_port_ram(
+.addr1(addra),
+.we1(wea),
+.data1(ina),
+.out1(outa),
+.addr2(addrb),
+.we2(web),
+.data2(inb),
+.out2(outb),
+.clk(clk)
+);
+
+`endif
+endmodule
+
+
+module sigmoid_dp_ram(
+    input clk,
+    input [10-1:0] addra, addrb,
+    input [16-1:0] ina, inb,
+    input wea, web,
+    output reg [16-1:0] outa, outb
+);
+
+`ifdef SIMULATION
+
+reg [16-1:0] ram [((1<<10)-1):0];
+
+initial begin
+   $readmemb("/home/tanmay/Koios++ - Copy/Multi_tile_design/sigmoid_activation_mem.txt" ,ram ,0); 
+end
+
+// Port A
+always @(posedge clk)  begin
+
+    if (wea) begin
+        ram[addra] <= ina;
+    end
+
+    outa <= ram[addra];
+end
+
+// Port B
+always @(posedge clk)  begin
+
+    if (web) begin
+        ram[addrb] <= inb;
+    end
+
+    outb <= ram[addrb];
+end
+
+`else
+defparam u_dual_port_ram.ADDR_WIDTH = 10; 
+defparam u_dual_port_ram.DATA_WIDTH = 16; 
+
+dual_port_ram u_dual_port_ram(
+.addr1(addra),
+.we1(wea),
+.data1(ina),
+.out1(outa),
+.addr2(addrb),
+.we2(web),
+.data2(inb),
+.out2(outb),
+.clk(clk)
+);
+
+`endif
+endmodule
+

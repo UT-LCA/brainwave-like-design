@@ -7,7 +7,6 @@
 `include "controller_gen.v"
 `include "mvu_gen.v"
 `include "mfu_gen.v"
-`define NUM_MVM_CYCLES 11
 
 
 module NPU(
@@ -66,13 +65,13 @@ module NPU(
     wire vrf_mvu_wr_enable_3;
     wire vrf_mvu_readn_enable_3;
     
-    reg done_mvm; //CHANGES THE REST STATE OF INSTR DECODER
-  
+    wire done_mvm; //CHANGES THE REST STATE OF INSTR DECODER
+    wire out_data_available_mvm;
+
     MVU mvm_unit (
     .clk(clk),
     .start(start_tile_with_single_cyc_latency),
     .reset(reset_tile_with_single_cyc_latency),
-    .done(done_mvm), //WITH TAG
     
     .vrf_wr_addr(vrf_addr_wr),
     .vrf_read_addr(vrf_addr_read),
@@ -93,16 +92,16 @@ module NPU(
     .mrf_in(mrf_in_data),
     .mrf_we(mrf_we),  //WITH TAG 
     .mrf_addr(mrf_addr_wr),
-    
+    .out_data_available(out_data_available_mvm),
     .mvm_result(result_mvm) //WITH TAG
-
     );
    
+    assign done_mvm = out_data_available_mvm;
     
     reg[3:0] num_cycles_mvm;
     
     //*******SCHEDULING NEXT MFU INSTRUCTIION BY CHECKING IF MVU IS COMPELETE *******
-    
+    /*
     always@(posedge clk) begin
        // $display("%b", mrf_addr_wr);
         if((reset_npu==1'b1) || (start_mv_mul_signal==1'b0)) begin
@@ -118,7 +117,7 @@ module NPU(
             end
         end
     end
-
+    */
     //*******************************************************************************
     
     wire in_data_available_mfu_0;
