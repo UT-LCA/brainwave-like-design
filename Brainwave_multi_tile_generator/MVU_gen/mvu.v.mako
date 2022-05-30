@@ -7,12 +7,7 @@
     num_reduction_stages = int(math.log2(num_tiles))
 %>
 
-`include "includes_gen.v"
-`define NUM_TILES ${num_tiles}
-`define NUM_REDUCTION_CYCLES ${num_reduction_stages}
-`define NUM_MVM_CYCLES ${num_dsp_per_ldpe+12}
-`define NUM_NORMALISE_CYCLES 6
-
+//`include "includes_gen.v"
 
 module MVU (
     input clk,

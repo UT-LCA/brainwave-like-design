@@ -4,12 +4,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-`include "includes_gen.v"
-`define NUM_TILES 4
-`define NUM_REDUCTION_CYCLES 2
-`define NUM_MVM_CYCLES 20
-`define NUM_NORMALISE_CYCLES 6
-
+//`include "includes_gen.v"
 
 module MVU (
     input clk,

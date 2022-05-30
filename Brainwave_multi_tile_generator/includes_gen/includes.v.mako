@@ -11,6 +11,11 @@
     vec_bram_dwidth = 16
     mat_bram_dwidth = 32
     mac_per_dsp = 2
+
+    target_op_width = int(math.log2(num_ldpes*num_tiles+8)+1)
+
+    mac_per_ldpe = num_dsp_per_ldpe*2
+    num_comparison_stages = int(math.log2(mac_per_ldpe))
 %>
 
 `define SIMULATION
@@ -78,3 +83,85 @@
 `define OUT_DWIDTH ${out_precision}
 `define ORF_DWIDTH ${max(out_precision*num_ldpes,vec_bram_dwidth*int(num_dsp_per_ldpe*mac_per_dsp*in_precision/vec_bram_dwidth))}
 
+`define DRAM_DWIDTH `ORF_DWIDTH
+`define DRAM_AWIDTH `ORF_AWIDTH
+
+`define OPCODE_WIDTH 4 
+`define TARGET_OP_WIDTH ${target_op_width}
+
+`define INSTR_WIDTH `OPCODE_WIDTH+`TARGET_OP_WIDTH+`DRAM_AWIDTH+`TARGET_OP_WIDTH+`VRF_AWIDTH + `VRF_AWIDTH
+
+`define ACTIVATION 2'b00
+`define ELT_WISE_MULTIPLY 2'b10
+`define ELT_WISE_ADD 2'b01
+`define BYPASS 2'b11
+
+`define RELU 2'b00
+`define TANH 2'b01
+`define SIGM 2'b10
+//OPCODES
+
+`define V_RD 0
+`define V_WR 1
+`define M_RD 2
+`define MV_MUL 3
+`define VV_ADD 4
+`define VV_SUB 5 //QUESTIONED
+`define VV_PASS 6
+`define VV_MUL 7
+`define V_RELU 8
+`define V_SIGM 9
+`define V_TANH 10
+`define END_CHAIN 11
+//MEM_IDS
+
+% for i in range(num_tiles):
+`define VRF_${i} ${i}
+% endfor
+
+`define VRF_${num_tiles} ${num_tiles}
+`define VRF_${num_tiles+1} ${num_tiles+1}
+`define VRF_${num_tiles+2} ${num_tiles+2}
+`define VRF_${num_tiles+3} ${num_tiles+3}
+`define VRF_MUXED ${num_tiles+4}
+`define DRAM_MEM_ID ${num_tiles+5}
+`define MFU_0_DSTN_ID ${num_tiles+6}
+`define MFU_1_DSTN_ID ${num_tiles+7}
+
+% for i in range(num_tiles*num_ldpes):
+`define MRF_${i} ${i}
+% endfor
+
+`define MFU_0 0
+`define MFU_1 1
+`define INSTR_MEM_AWIDTH 10
+
+`define EXPONENT 5
+`define MANTISSA 10
+
+`define SIGN 1
+`define NUM_COMPARATOR_TREE_CYCLES ${num_comparison_stages+2}
+`define NUM_COMPARATOR_TREE_CYCLES_FOR_TILE ${num_reduction_stages+2}
+`define NUM_LZD_CYCLES 5
+
+`define DESIGN_SIZE `NUM_LDPES
+`define DWIDTH `OUT_PRECISION
+`define MASK_WIDTH `OUT_PRECISION
+
+`define ACTIVATION 2'b00
+`define ELT_WISE_MULTIPY 2'b10
+`define ELT_WISE_ADD 2'b01
+`define BYPASS 2'b11
+
+`define ADD_LATENCY 5
+`define LOG_ADD_LATENCY 3
+`define MUL_LATENCY 5
+`define LOG_MUL_LATENCY 3 
+`define ACTIVATION_LATENCY 3
+`define TANH_LATENCY (`ACTIVATION_LATENCY+1)
+`define SIGMOID_LATENCY (`ACTIVATION_LATENCY+1)
+
+`define NUM_TILES ${num_tiles}
+`define NUM_REDUCTION_CYCLES ${num_reduction_stages}
+`define NUM_MVM_CYCLES ${num_dsp_per_ldpe+12}
+`define NUM_NORMALISE_CYCLES 6

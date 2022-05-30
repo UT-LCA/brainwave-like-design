@@ -1,4 +1,4 @@
-`include "npu_gen.v"
+`include "brainwave.v"
 
 
 module testbench;

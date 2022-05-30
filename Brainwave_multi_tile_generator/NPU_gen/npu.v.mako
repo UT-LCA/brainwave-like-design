@@ -7,9 +7,9 @@
     num_reduction_stages = int(math.log2(num_tiles))
 %>
 
-`include "controller_gen.v"
-`include "mvu_gen.v"
-`include "mfu_gen.v"
+//`include "controller_gen.v"
+//`include "mvu_gen.v"
+//`include "mfu_gen.v"
 
 
 module NPU(

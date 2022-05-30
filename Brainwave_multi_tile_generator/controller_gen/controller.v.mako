@@ -6,64 +6,7 @@
     target_op_width = int(math.log2(num_ldpes*num_tiles+8)+1)
 %>
 
-`include "includes_gen.v"
-`define DRAM_DWIDTH `ORF_DWIDTH
-`define DRAM_AWIDTH `ORF_AWIDTH
-
-//`define MEM_ID_WIDTH 4
-`define OPCODE_WIDTH 4 
-`define TARGET_OP_WIDTH ${target_op_width}
-
-`define INSTR_WIDTH `OPCODE_WIDTH+`TARGET_OP_WIDTH+`DRAM_AWIDTH+`TARGET_OP_WIDTH+`VRF_AWIDTH + `VRF_AWIDTH
-
-`define ACTIVATION 2'b00
-`define ELT_WISE_MULTIPLY 2'b10
-`define ELT_WISE_ADD 2'b01
-`define BYPASS 2'b11
-
-`define RELU 2'b00
-`define TANH 2'b01
-`define SIGM 2'b10
-//OPCODES
-
-`define V_RD 0
-`define V_WR 1
-`define M_RD 2
-`define MV_MUL 3
-`define VV_ADD 4
-`define VV_SUB 5 //QUESTIONED
-`define VV_PASS 6
-`define VV_MUL 7
-`define V_RELU 8
-`define V_SIGM 9
-`define V_TANH 10
-`define END_CHAIN 11
-
-//MEM_IDS
-
-% for i in range(num_tiles):
-`define VRF_${i} ${i}
-% endfor
-
-`define VRF_${num_tiles} ${num_tiles}
-`define VRF_${num_tiles+1} ${num_tiles+1}
-`define VRF_${num_tiles+2} ${num_tiles+2}
-`define VRF_${num_tiles+3} ${num_tiles+3}
-`define VRF_MUXED ${num_tiles+4}
-`define DRAM_MEM_ID ${num_tiles+5}
-`define MFU_0_DSTN_ID ${num_tiles+6}
-`define MFU_1_DSTN_ID ${num_tiles+7}
-
-
-% for i in range(num_tiles*num_ldpes):
-`define MRF_${i} ${i}
-% endfor
-
-`define MFU_0 0
-`define MFU_1 1
-
-`define NUM_TILES ${num_tiles}
-`define INSTR_MEM_AWIDTH 10
+//`include "includes_gen.v"
 
 module controller( 
 

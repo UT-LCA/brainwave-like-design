@@ -4,25 +4,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-`include "includes_gen.v"
-`include "floating_pt_gen.v"
+//`include "includes_gen.v"
+//`include "floating_pt_gen.v"
 
-`define DESIGN_SIZE `NUM_LDPES
-`define DWIDTH `OUT_PRECISION
-`define MASK_WIDTH `OUT_PRECISION
-
-`define ACTIVATION 2'b00
-`define ELT_WISE_MULTIPY 2'b10
-`define ELT_WISE_ADD 2'b01
-`define BYPASS 2'b11
-
-`define ADD_LATENCY 5
-`define LOG_ADD_LATENCY 3
-`define MUL_LATENCY 5
-`define LOG_MUL_LATENCY 3 
-`define ACTIVATION_LATENCY 3
-`define TANH_LATENCY (`ACTIVATION_LATENCY+1)
-`define SIGMOID_LATENCY (`ACTIVATION_LATENCY+1)
 
 module MFU( 
     input[1:0] activation_type,
