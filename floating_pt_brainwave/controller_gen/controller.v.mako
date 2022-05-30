@@ -479,7 +479,7 @@ module controller(
               state <= 2;
 
             end
-            `END_CHAIN, `VV_PASS:begin
+            `END_CHAIN :begin
 
               start_mv_mul<=1'b0;
               get_instr<=1'b0;
@@ -720,9 +720,7 @@ module controller(
                   vrf_wr_enable_mfu_mul_1 <= 1'b0;
                   vrf_muxed_wr_enable_dram <= 1'b0;
                   dram_write_enable<=1'b0;
-                  
                   vrf_in_data <= output_final_stage;
-                  
                   vrf_addr_wr<=dstn_address;
                   //vrf_addr_wr_mvu_0 <= dstn_address;
                   end

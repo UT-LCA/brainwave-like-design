@@ -80,7 +80,7 @@ module MFU(
             end
             `ELT_WISE_ADD: begin out_data = out_data_add;
             end
-            `ELT_WISE_MULTIPY: begin out_data = out_data_mul;
+            `ELT_WISE_MULTIPLY: begin out_data = out_data_mul;
             end
             `BYPASS: begin out_data = primary_inp; //Bypass the MFU
             end

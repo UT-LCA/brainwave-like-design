@@ -4,8 +4,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-`define SIMULATION
-
 `define IN_PRECISION 16
 `define OUT_PRECISION 16
 
@@ -259,11 +257,6 @@
 `define DESIGN_SIZE `NUM_LDPES
 `define DWIDTH `OUT_PRECISION
 `define MASK_WIDTH `OUT_PRECISION
-
-`define ACTIVATION 2'b00
-`define ELT_WISE_MULTIPY 2'b10
-`define ELT_WISE_ADD 2'b01
-`define BYPASS 2'b11
 
 `define ADD_LATENCY 5
 `define LOG_ADD_LATENCY 3
@@ -1369,7 +1362,7 @@ module controller(
               state <= 2;
 
             end
-            `END_CHAIN, `VV_PASS:begin
+            `END_CHAIN :begin
 
               start_mv_mul<=1'b0;
               get_instr<=1'b0;
@@ -18557,9 +18550,7 @@ module controller(
                   vrf_wr_enable_mfu_mul_1 <= 1'b0;
                   vrf_muxed_wr_enable_dram <= 1'b0;
                   dram_write_enable<=1'b0;
-                  
                   vrf_in_data <= output_final_stage;
-                  
                   vrf_addr_wr<=dstn_address;
                   //vrf_addr_wr_mvu_0 <= dstn_address;
                   end
@@ -18574,9 +18565,7 @@ module controller(
                   vrf_wr_enable_mfu_mul_1 <= 1'b0;
                   vrf_muxed_wr_enable_dram <= 1'b0;
                   dram_write_enable<=1'b0;
-                  
                   vrf_in_data <= output_final_stage;
-                  
                   vrf_addr_wr<=dstn_address;
                   //vrf_addr_wr_mvu_0 <= dstn_address;
                   end
@@ -18591,9 +18580,7 @@ module controller(
                   vrf_wr_enable_mfu_mul_1 <= 1'b0;
                   vrf_muxed_wr_enable_dram <= 1'b0;
                   dram_write_enable<=1'b0;
-                  
                   vrf_in_data <= output_final_stage;
-                  
                   vrf_addr_wr<=dstn_address;
                   //vrf_addr_wr_mvu_0 <= dstn_address;
                   end
@@ -18608,9 +18595,7 @@ module controller(
                   vrf_wr_enable_mfu_mul_1 <= 1'b0;
                   vrf_muxed_wr_enable_dram <= 1'b0;
                   dram_write_enable<=1'b0;
-                  
                   vrf_in_data <= output_final_stage;
-                  
                   vrf_addr_wr<=dstn_address;
                   //vrf_addr_wr_mvu_0 <= dstn_address;
                   end
@@ -20647,7 +20632,7 @@ module MFU(
             end
             `ELT_WISE_ADD: begin out_data = out_data_add;
             end
-            `ELT_WISE_MULTIPY: begin out_data = out_data_mul;
+            `ELT_WISE_MULTIPLY: begin out_data = out_data_mul;
             end
             `BYPASS: begin out_data = primary_inp; //Bypass the MFU
             end
@@ -21971,15 +21956,6 @@ endmodule
 // THIS FILE WAS AUTOMATICALLY GENERATED FROM floating_pt.v.mako
 // DO NOT EDIT
 ////////////////////////////////////////////////////////////////////////////////
-
-
-`define EXPONENT 5
-`define MANTISSA 10
-
-`define SIGN 1
-`define NUM_COMPARATOR_TREE_CYCLES 6
-`define NUM_COMPARATOR_TREE_CYCLES_FOR_TILE 4
-`define NUM_LZD_CYCLES 5
 
 
 module exponent_comparator_tree_ldpe (
