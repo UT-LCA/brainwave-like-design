@@ -1,0 +1,1 @@
+python3 render_template.py -i controller_gen.v.mako -o ../controller_gen.v 
