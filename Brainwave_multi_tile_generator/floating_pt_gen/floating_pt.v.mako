@@ -9,15 +9,6 @@
     num_comparison_stages = int(math.log2(mac_per_ldpe))
 %>
 
-`define EXPONENT 5
-`define MANTISSA 10
-
-`define SIGN 1
-`define NUM_COMPARATOR_TREE_CYCLES ${num_comparison_stages+2}
-`define NUM_COMPARATOR_TREE_CYCLES_FOR_TILE ${num_reduction_stages+2}
-`define NUM_LZD_CYCLES 5
-
-
 module exponent_comparator_tree_ldpe (
 % for i in range(mac_per_ldpe*2):
     input[`BFLOAT_EXP-1:0] inp${i},

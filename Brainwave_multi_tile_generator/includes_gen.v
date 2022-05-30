@@ -4,8 +4,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-`define SIMULATION
-
 `define IN_PRECISION 16
 `define OUT_PRECISION 16
 
@@ -259,11 +257,6 @@
 `define DESIGN_SIZE `NUM_LDPES
 `define DWIDTH `OUT_PRECISION
 `define MASK_WIDTH `OUT_PRECISION
-
-`define ACTIVATION 2'b00
-`define ELT_WISE_MULTIPY 2'b10
-`define ELT_WISE_ADD 2'b01
-`define BYPASS 2'b11
 
 `define ADD_LATENCY 5
 `define LOG_ADD_LATENCY 3
