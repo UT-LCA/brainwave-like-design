@@ -702,8 +702,8 @@ assign result = result_reg;
 
 `else
 
-wire [11:0] mode;
-assign mode = 12'b0101_0101_0011;
+wire [10:0] mode;
+assign mode = 11'b0101_0101_0011;
 
 int_sop_2 mac_component (
     .mode_sigs(mode),
@@ -714,7 +714,7 @@ int_sop_2 mac_component (
     .bx(bx),
     .by(by),
     .chainin(chainin),
-    .result(result),
+    .resulta(result),
     .chainout(chainout)
 );
 
