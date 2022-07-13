@@ -1,0 +1,1487 @@
+/usr/bin/env time -v /export/aman/vtr_aman/vtr-verilog-to-routing/vpr/vpr k6FracN10LB_mem20K_complexDSP_customSB_22nm.xml brainwave --circuit_file brainwave.pre-vpr.blif --const_gen_inference comb --timing_report_detail aggregated --route_chan_width 300 --max_router_iterations 150
+VPR FPGA Placement and Routing.
+Version: 8.1.0-dev+cedd632d9
+Revision: v8.0.0-6306-gcedd632d9
+Compiled: 2022-07-13T11:01:36
+Compiler: GNU 8.4.0 on Linux-4.15.0-124-generic x86_64
+Build Info: release IPO VTR_ASSERT_LEVEL=2
+
+University of Toronto
+verilogtorouting.org
+vtr-users@googlegroups.com
+This is free open source code under MIT license.
+
+VPR was run with the following command-line:
+/export/aman/vtr_aman/vtr-verilog-to-routing/vpr/vpr k6FracN10LB_mem20K_complexDSP_customSB_22nm.xml brainwave --circuit_file brainwave.pre-vpr.blif --const_gen_inference comb --timing_report_detail aggregated --route_chan_width 300 --max_router_iterations 150
+
+Using up to 1 parallel worker(s)
+
+Architecture file: k6FracN10LB_mem20K_complexDSP_customSB_22nm.xml
+Circuit name: brainwave
+
+# Loading Architecture Description
+# Loading Architecture Description took 0.05 seconds (max_rss 15.7 MiB, delta_rss +2.2 MiB)
+
+Timing analysis: ON
+Circuit netlist file: brainwave.net
+Circuit placement file: brainwave.place
+Circuit routing file: brainwave.route
+Circuit SDC file: brainwave.sdc
+Vpr floorplanning constraints file: not specified
+
+Packer: ENABLED
+Placer: ENABLED
+Router: ENABLED
+Analysis: ENABLED
+
+VPR was run with the following options:
+
+NetlistOpts.abosrb_buffer_luts            : true
+NetlistOpts.sweep_dangling_primary_ios    : true
+NetlistOpts.sweep_dangling_nets           : true
+NetlistOpts.sweep_dangling_blocks         : true
+NetlistOpts.sweep_constant_primary_outputs: false
+NetlistOpts.netlist_verbosity             : 1
+NetlistOpts.const_gen_inference           : COMB
+
+PackerOpts.allow_unrelated_clustering: auto
+PackerOpts.alpha_clustering: 0.750000
+PackerOpts.beta_clustering: 0.900000
+PackerOpts.cluster_seed_type: BLEND2
+PackerOpts.connection_driven: true
+PackerOpts.global_clocks: true
+PackerOpts.hill_climbing_flag: false
+PackerOpts.inter_cluster_net_delay: 1.000000
+PackerOpts.timing_driven: true
+PackerOpts.target_external_pin_util: auto
+
+PlacerOpts.place_freq: PLACE_ONCE
+PlacerOpts.place_algorithm: CRITICALITY_TIMING_PLACE
+PlacerOpts.pad_loc_type: FREE
+PlacerOpts.constraints_file: No constraints file given
+PlacerOpts.place_cost_exp: 1.000000
+PlacerOpts.place_chan_width: 300
+PlacerOpts.inner_loop_recompute_divider: 0
+PlacerOpts.recompute_crit_iter: 1
+PlacerOpts.timing_tradeoff: 0.500000
+PlacerOpts.td_place_exp_first: 1.000000
+PlacerOpts.td_place_exp_last: 8.000000
+PlacerOpts.delay_offset: 0.000000
+PlacerOpts.delay_ramp_delta_threshold: -1
+PlacerOpts.delay_ramp_slope: 0.000000
+PlacerOpts.tsu_rel_margin: 1.000000
+PlacerOpts.tsu_abs_margin: 0.000000
+PlacerOpts.post_place_timing_report_file: 
+PlacerOpts.allowed_tiles_for_delay_model: 
+PlacerOpts.delay_model_reducer: MIN
+PlacerOpts.delay_model_type: DELTA
+PlacerOpts.rlim_escape_fraction: 0.000000
+PlacerOpts.move_stats_file: 
+PlacerOpts.placement_saves_per_temperature: 0
+PlacerOpts.effort_scaling: CIRCUIT
+PlacerOpts.place_delta_delay_matrix_calculation_method: ASTAR_ROUTE
+PlaceOpts.seed: 0
+AnnealSched.type: AUTO_SCHED
+AnnealSched.inner_num: 0.500000
+
+RouterOpts.route_type: DETAILED
+RouterOpts.router_algorithm: TIMING_DRIVEN
+RouterOpts.base_cost_type: DELAY_NORMALIZED_LENGTH
+RouterOpts.fixed_channel_width: 300
+RouterOpts.check_route: FULL
+RouterOpts.acc_fac: 1.000000
+RouterOpts.bb_factor: 3
+RouterOpts.bend_cost: 0.000000
+RouterOpts.first_iter_pres_fac: 0.000000
+RouterOpts.initial_pres_fac: 0.500000
+RouterOpts.pres_fac_mult: 1.300000
+RouterOpts.max_router_iterations: 150
+RouterOpts.min_incremental_reroute_fanout: 16
+RouterOpts.do_check_rr_graph: true
+RouterOpts.verify_binary_search: false
+RouterOpts.min_channel_width_hint: 0
+RouterOpts.read_rr_edge_metadata: false
+RouterOpts.exit_after_first_routing_iteration: false
+RouterOpts.astar_fac: 1.200000
+RouterOpts.router_profiler_astar_fac: 1.200000
+RouterOpts.criticality_exp: 1.000000
+RouterOpts.max_criticality: 0.990000
+RouterOpts.init_wirelength_abort_threshold: 0.850000
+RouterOpts.save_routing_per_iteration: false
+RouterOpts.congested_routing_iteration_threshold_frac: 1.000000
+RouterOpts.high_fanout_threshold: 64
+RouterOpts.router_debug_net: -2
+RouterOpts.router_debug_sink_rr: -2
+RouterOpts.router_debug_iteration: -2
+RouterOpts.max_convergence_count: 1
+RouterOpts.reconvergence_cpd_threshold: 0.990000
+RouterOpts.update_lower_bound_delays: true
+RouterOpts.first_iteration_timing_report_file: 
+RouterOpts.incr_reroute_delay_ripup: AUTO
+RouterOpts.route_bb_update: DYNAMIC
+RouterOpts.lookahead_type: MAP
+RouterOpts.initial_timing: LOOKAHEAD
+RouterOpts.router_heap: BINARY_HEAP
+RouterOpts.routing_failure_predictor = SAFE
+RouterOpts.routing_budgets_algorithm = DISABLE
+
+AnalysisOpts.gen_post_synthesis_netlist: false
+AnalysisOpts.timing_report_npaths: 100
+AnalysisOpts.timing_report_skew: false
+AnalysisOpts.echo_dot_timing_graph_node: -1
+AnalysisOpts.timing_report_detail: AGGREGATED
+AnalysisOpts.post_synth_netlist_unconn_input_handling: UNCONNECTED
+AnalysisOpts.post_synth_netlist_unconn_output_handling: UNCONNECTED
+
+# Building complex block graph
+Warning 1: io[0].clock[0] unconnected pin in architecture.
+Warning 2: dsp_top[0].dsp_I2[43] unconnected pin in architecture.
+Warning 3: dsp_top[0].dsp_I2[44] unconnected pin in architecture.
+Warning 4: dsp_top[0].dsp_I2[45] unconnected pin in architecture.
+Warning 5: dsp_top[0].dsp_I2[46] unconnected pin in architecture.
+Warning 6: dsp_top[0].dsp_I2[47] unconnected pin in architecture.
+Warning 7: dsp_top[0].dsp_I2[48] unconnected pin in architecture.
+Warning 8: dsp_top[0].dsp_I2[49] unconnected pin in architecture.
+Warning 9: dsp_top[0].dsp_I2[50] unconnected pin in architecture.
+Warning 10: dsp_top[0].dsp_I2[51] unconnected pin in architecture.
+Warning 11: dsp_top[0].dsp_I2[52] unconnected pin in architecture.
+Warning 12: dsp_top[0].dsp_I2[53] unconnected pin in architecture.
+Warning 13: dsp_top[0].dsp_I2[54] unconnected pin in architecture.
+Warning 14: dsp_top[0].dsp_I2[55] unconnected pin in architecture.
+Warning 15: dsp_top[0].dsp_I2[56] unconnected pin in architecture.
+Warning 16: dsp_top[0].dsp_I2[57] unconnected pin in architecture.
+Warning 17: dsp_top[0].dsp_I2[58] unconnected pin in architecture.
+Warning 18: dsp_top[0].dsp_I2[59] unconnected pin in architecture.
+Warning 19: dsp_top[0].dsp_I2[60] unconnected pin in architecture.
+Warning 20: dsp_top[0].dsp_I2[61] unconnected pin in architecture.
+Warning 21: dsp_top[0].dsp_I2[62] unconnected pin in architecture.
+Warning 22: dsp[0].dsp_I2[43] unconnected pin in architecture.
+Warning 23: dsp[0].dsp_I2[44] unconnected pin in architecture.
+Warning 24: dsp[0].dsp_I2[45] unconnected pin in architecture.
+Warning 25: dsp[0].dsp_I2[46] unconnected pin in architecture.
+Warning 26: dsp[0].dsp_I2[47] unconnected pin in architecture.
+Warning 27: dsp[0].dsp_I2[48] unconnected pin in architecture.
+Warning 28: dsp[0].dsp_I2[49] unconnected pin in architecture.
+Warning 29: dsp[0].dsp_I2[50] unconnected pin in architecture.
+Warning 30: dsp[0].dsp_I2[51] unconnected pin in architecture.
+Warning 31: dsp[0].dsp_I2[52] unconnected pin in architecture.
+Warning 32: dsp[0].dsp_I2[53] unconnected pin in architecture.
+Warning 33: dsp[0].dsp_I2[54] unconnected pin in architecture.
+Warning 34: dsp[0].dsp_I2[55] unconnected pin in architecture.
+Warning 35: dsp[0].dsp_I2[56] unconnected pin in architecture.
+Warning 36: dsp[0].dsp_I2[57] unconnected pin in architecture.
+Warning 37: dsp[0].dsp_I2[58] unconnected pin in architecture.
+Warning 38: dsp[0].dsp_I2[59] unconnected pin in architecture.
+Warning 39: dsp[0].dsp_I2[60] unconnected pin in architecture.
+Warning 40: dsp[0].dsp_I2[61] unconnected pin in architecture.
+Warning 41: dsp[0].dsp_I2[62] unconnected pin in architecture.
+Warning 42: dsp_pb[0].datain[96] unconnected pin in architecture.
+Warning 43: dsp_pb[0].datain[97] unconnected pin in architecture.
+Warning 44: dsp_pb[0].datain[98] unconnected pin in architecture.
+Warning 45: dsp_pb[0].datain[99] unconnected pin in architecture.
+Warning 46: dsp_pb[0].datain[100] unconnected pin in architecture.
+Warning 47: dsp_pb[0].datain[101] unconnected pin in architecture.
+Warning 48: dsp_pb[0].datain[102] unconnected pin in architecture.
+Warning 49: dsp_pb[0].datain[103] unconnected pin in architecture.
+Warning 50: dsp_pb[0].datain[104] unconnected pin in architecture.
+Warning 51: dsp_pb[0].datain[105] unconnected pin in architecture.
+Warning 52: dsp_pb[0].datain[106] unconnected pin in architecture.
+Warning 53: dsp_pb[0].datain[107] unconnected pin in architecture.
+Warning 54: dsp_pb[0].datain[108] unconnected pin in architecture.
+Warning 55: dsp_pb[0].datain[109] unconnected pin in architecture.
+Warning 56: dsp_pb[0].datain[110] unconnected pin in architecture.
+Warning 57: dsp_pb[0].datain[111] unconnected pin in architecture.
+Warning 58: dsp_pb[0].datain[112] unconnected pin in architecture.
+Warning 59: dsp_pb[0].datain[113] unconnected pin in architecture.
+Warning 60: dsp_pb[0].datain[114] unconnected pin in architecture.
+Warning 61: dsp_pb[0].datain[115] unconnected pin in architecture.
+# Building complex block graph took 0.10 seconds (max_rss 28.3 MiB, delta_rss +12.6 MiB)
+Circuit file: brainwave.pre-vpr.blif
+# Load circuit
+Found constant-zero generator 'NPU^output_data_DRAM~64'
+Found constant-zero generator 'NPU^output_data_DRAM~65'
+Found constant-zero generator 'NPU^output_data_DRAM~66'
+Found constant-zero generator 'NPU^output_data_DRAM~67'
+Found constant-zero generator 'NPU^output_data_DRAM~68'
+Found constant-zero generator 'NPU^output_data_DRAM~69'
+Found constant-zero generator 'NPU^output_data_DRAM~70'
+Found constant-zero generator 'NPU^output_data_DRAM~71'
+Found constant-zero generator 'NPU^output_data_DRAM~72'
+Found constant-zero generator 'NPU^output_data_DRAM~73'
+Found constant-zero generator 'NPU^output_data_DRAM~74'
+Found constant-zero generator 'NPU^output_data_DRAM~75'
+Found constant-zero generator 'NPU^output_data_DRAM~76'
+Found constant-zero generator 'NPU^output_data_DRAM~77'
+Found constant-zero generator 'NPU^output_data_DRAM~78'
+Found constant-zero generator 'NPU^output_data_DRAM~79'
+Found constant-zero generator 'NPU^output_data_DRAM~80'
+Found constant-zero generator 'NPU^output_data_DRAM~81'
+Found constant-zero generator 'NPU^output_data_DRAM~82'
+Found constant-zero generator 'NPU^output_data_DRAM~83'
+Found constant-zero generator 'NPU^output_data_DRAM~84'
+Found constant-zero generator 'NPU^output_data_DRAM~85'
+Found constant-zero generator 'NPU^output_data_DRAM~86'
+Found constant-zero generator 'NPU^output_data_DRAM~87'
+Found constant-zero generator 'NPU^output_data_DRAM~88'
+Found constant-zero generator 'NPU^output_data_DRAM~89'
+Found constant-zero generator 'NPU^output_data_DRAM~90'
+Found constant-zero generator 'NPU^output_data_DRAM~91'
+Found constant-zero generator 'NPU^output_data_DRAM~92'
+Found constant-zero generator 'NPU^output_data_DRAM~93'
+Found constant-zero generator 'NPU^output_data_DRAM~94'
+Found constant-zero generator 'NPU^output_data_DRAM~95'
+Found constant-zero generator 'NPU^output_data_DRAM~96'
+Found constant-zero generator 'NPU^output_data_DRAM~97'
+Found constant-zero generator 'NPU^output_data_DRAM~98'
+Found constant-zero generator 'NPU^output_data_DRAM~99'
+Found constant-zero generator 'NPU^output_data_DRAM~100'
+Found constant-zero generator 'NPU^output_data_DRAM~101'
+Found constant-zero generator 'NPU^output_data_DRAM~102'
+Found constant-zero generator 'NPU^output_data_DRAM~103'
+Found constant-zero generator 'NPU^output_data_DRAM~104'
+Found constant-zero generator 'NPU^output_data_DRAM~105'
+Found constant-zero generator 'NPU^output_data_DRAM~106'
+Found constant-zero generator 'NPU^output_data_DRAM~107'
+Found constant-zero generator 'NPU^output_data_DRAM~108'
+Found constant-zero generator 'NPU^output_data_DRAM~109'
+Found constant-zero generator 'NPU^output_data_DRAM~110'
+Found constant-zero generator 'NPU^output_data_DRAM~111'
+Found constant-zero generator 'NPU^output_data_DRAM~112'
+Found constant-zero generator 'NPU^output_data_DRAM~113'
+Found constant-zero generator 'NPU^output_data_DRAM~114'
+Found constant-zero generator 'NPU^output_data_DRAM~115'
+Found constant-zero generator 'NPU^output_data_DRAM~116'
+Found constant-zero generator 'NPU^output_data_DRAM~117'
+Found constant-zero generator 'NPU^output_data_DRAM~118'
+Found constant-zero generator 'NPU^output_data_DRAM~119'
+Found constant-zero generator 'NPU^output_data_DRAM~120'
+Found constant-zero generator 'NPU^output_data_DRAM~121'
+Found constant-zero generator 'NPU^output_data_DRAM~122'
+Found constant-zero generator 'NPU^output_data_DRAM~123'
+Found constant-zero generator 'NPU^output_data_DRAM~124'
+Found constant-zero generator 'NPU^output_data_DRAM~125'
+Found constant-zero generator 'NPU^output_data_DRAM~126'
+Found constant-zero generator 'NPU^output_data_DRAM~127'
+Found constant-zero generator 'NPU^output_data_DRAM~128'
+Found constant-zero generator 'NPU^output_data_DRAM~129'
+Found constant-zero generator 'NPU^output_data_DRAM~130'
+Found constant-zero generator 'NPU^output_data_DRAM~131'
+Found constant-zero generator 'NPU^output_data_DRAM~132'
+Found constant-zero generator 'NPU^output_data_DRAM~133'
+Found constant-zero generator 'NPU^output_data_DRAM~134'
+Found constant-zero generator 'NPU^output_data_DRAM~135'
+Found constant-zero generator 'NPU^output_data_DRAM~136'
+Found constant-zero generator 'NPU^output_data_DRAM~137'
+Found constant-zero generator 'NPU^output_data_DRAM~138'
+Found constant-zero generator 'NPU^output_data_DRAM~139'
+Found constant-zero generator 'NPU^output_data_DRAM~140'
+Found constant-zero generator 'NPU^output_data_DRAM~141'
+Found constant-zero generator 'NPU^output_data_DRAM~142'
+Found constant-zero generator 'NPU^output_data_DRAM~143'
+Found constant-zero generator 'NPU^output_data_DRAM~144'
+Found constant-zero generator 'NPU^output_data_DRAM~145'
+Found constant-zero generator 'NPU^output_data_DRAM~146'
+Found constant-zero generator 'NPU^output_data_DRAM~147'
+Found constant-zero generator 'NPU^output_data_DRAM~148'
+Found constant-zero generator 'NPU^output_data_DRAM~149'
+Found constant-zero generator 'NPU^output_data_DRAM~150'
+Found constant-zero generator 'NPU^output_data_DRAM~151'
+Found constant-zero generator 'NPU^output_data_DRAM~152'
+Found constant-zero generator 'NPU^output_data_DRAM~153'
+Found constant-zero generator 'NPU^output_data_DRAM~154'
+Found constant-zero generator 'NPU^output_data_DRAM~155'
+Found constant-zero generator 'NPU^output_data_DRAM~156'
+Found constant-zero generator 'NPU^output_data_DRAM~157'
+Found constant-zero generator 'NPU^output_data_DRAM~158'
+Found constant-zero generator 'NPU^output_data_DRAM~159'
+Found constant-zero generator 'unconn'
+Found constant-zero generator 'gnd'
+Found constant-zero generator '$sdffe~504^FF~615'
+Found constant-zero generator '$sdffe~776^FF~3136'
+Found constant-zero generator '$sdffe~504^FF~639'
+Found constant-zero generator '$sdffe~776^FF~3160'
+Found constant-zero generator '$sdffe~504^FF~663'
+Found constant-zero generator '$sdffe~776^FF~3184'
+Found constant-zero generator '$sdffe~504^FF~687'
+Found constant-zero generator '$sdffe~776^FF~3208'
+Found constant-one generator 'vcc'
+# Load circuit took 0.38 seconds (max_rss 60.5 MiB, delta_rss +32.2 MiB)
+# Clean circuit
+Absorbed 2451 LUT buffers
+Inferred    0 additional primitive pins as constant generators since they have no combinationally connected inputs
+Inferred  296 additional primitive pins as constant generators due to constant inputs
+Inferred    0 additional primitive pins as constant generators since they have no combinationally connected inputs
+Inferred    0 additional primitive pins as constant generators due to constant inputs
+Inferred    0 additional primitive pins as constant generators since they have no combinationally connected inputs
+Inferred    0 additional primitive pins as constant generators due to constant inputs
+Swept input(s)      : 96
+Swept output(s)     : 0 (0 dangling, 0 constant)
+Swept net(s)        : 7016
+Swept block(s)      : 0
+Constant Pins Marked: 296
+# Clean circuit took 0.02 seconds (max_rss 60.5 MiB, delta_rss +0.0 MiB)
+# Compress circuit
+# Compress circuit took 0.04 seconds (max_rss 62.8 MiB, delta_rss +2.4 MiB)
+# Verify circuit
+# Verify circuit took 0.01 seconds (max_rss 62.8 MiB, delta_rss +0.0 MiB)
+Circuit Statistics:
+  Blocks: 9943
+    .input         :     110
+    .latch         :    2885
+    .output        :     182
+    0-LUT          :     106
+    6-LUT          :    3726
+    adder          :    1350
+    dual_port_ram  :     416
+    multiply       :     144
+    single_port_ram:    1024
+  Nets  : 12239
+    Avg Fanout:     3.8
+    Max Fanout:  4325.0
+    Min Fanout:     1.0
+  Netlist Clocks: 1
+# Build Timing Graph
+  Timing Graph Nodes: 81717
+  Timing Graph Edges: 156381
+  Timing Graph Levels: 76
+# Build Timing Graph took 0.13 seconds (max_rss 84.6 MiB, delta_rss +16.1 MiB)
+Netlist contains 1 clocks
+  Netlist Clock 'NPU^clk' Fanout: 4325 pins (7.4%), 4325 blocks (43.5%)
+# Load Timing Constraints
+
+SDC file 'brainwave.sdc' not found
+Setting default timing constraints:
+   * constrain all primay inputs and primary outputs on netlist clock 'NPU^clk'
+   * optimize netlist clock to run as fast as possible
+Timing constraints created 1 clocks
+  Constrained Clock 'NPU^clk' Source: 'NPU^clk.inpad[0]'
+
+# Load Timing Constraints took 0.00 seconds (max_rss 84.6 MiB, delta_rss +0.0 MiB)
+# Packing
+Begin packing 'brainwave.pre-vpr.blif'.
+
+After removing unused inputs...
+	total blocks: 9943, total nets: 12239, total inputs: 110, total outputs: 182
+Begin prepacking.
+
+There is one chain in this architecture called "chain" with the following starting points:
+	clb[0]/lab[0]/fle[0]/ble5[0]/arithmetic[0]/adder[0].cin[0]
+
+0 attraction groups were created during prepacking.
+Finish prepacking.
+Using inter-cluster delay: 2.1832e-09
+Packing with pin utilization targets: io:1,1 clb:0.8,1 dsp_top:1,1 memory:1,1
+Packing with high fanout thresholds: io:128 clb:32 dsp_top:128 memory:128
+Starting Clustering - Clustering Progress: 
+-------------------   --------------------------   ---------
+Molecules processed   Number of clusters created   FPGA size
+-------------------   --------------------------   ---------
+   234/5859      3%                           50    54 x 54    
+   468/5859      7%                           72    54 x 54    
+   702/5859     11%                           92    54 x 54    
+   936/5859     15%                          111    54 x 54    
+  1170/5859     19%                          132    54 x 54    
+  1404/5859     23%                          152    54 x 54    
+  1638/5859     27%                          166    54 x 54    
+  1872/5859     31%                          184    54 x 54    
+  2106/5859     35%                          198    54 x 54    
+  2340/5859     39%                          213    54 x 54    
+  2574/5859     43%                          225    54 x 54    
+  2808/5859     47%                          236    54 x 54    
+  3042/5859     51%                          248    54 x 54    
+  3276/5859     55%                          261    54 x 54    
+  3510/5859     59%                          287    54 x 54    
+  3744/5859     63%                          303    54 x 54    
+  3978/5859     67%                          316    54 x 54    
+Failed route at end, repack cluster trying detailed routing at each stage.
+  4212/5859     71%                          328    54 x 54    
+  4446/5859     75%                          341    54 x 54    
+  4680/5859     79%                          354    54 x 54    
+  4914/5859     83%                          372    54 x 54    
+  5148/5859     87%                          384    54 x 54    
+  5382/5859     91%                          396    54 x 54    
+  5616/5859     95%                          531    54 x 54    
+  5850/5859     99%                          765    54 x 54    
+
+Logic Element (fle) detailed count:
+  Total number of Logic Elements used : 2733
+  LEs used for logic and registers    : 1678
+  LEs used for logic only             : 1055
+  LEs used for registers only         : 0
+
+Incr Slack updates 1 in 0.00214401 sec
+Full Max Req/Worst Slack updates 1 in 0.000915367 sec
+Incr Max Req/Worst Slack updates 0 in 0 sec
+Incr Criticality updates 0 in 0 sec
+Full Criticality updates 1 in 0.00365026 sec
+FPGA sized to 54 x 54 (auto)
+Device Utilization: 0.26 (target 1.00)
+	Block Utilization: 0.18 Type: io
+	Block Utilization: 0.16 Type: clb
+	Block Utilization: 1.00 Type: dsp_top
+	Block Utilization: 0.87 Type: memory
+
+Final Clustering Statistics: 
+----------   --------   ------------------------------------   --------------------------
+Block Type   # Blocks   Avg. # of input clocks and pins used   Avg. # of output pins used
+----------   --------   ------------------------------------   --------------------------
+     EMPTY          0                                      0                            0   
+        io        292                               0.623288                     0.376712   
+       clb        372                                 19.957                      9.63441   
+   dsp_top         39                                58.4359                      29.5385   
+    memory         90                                30.9556                      20.6222   
+Absorbed logical nets 5537 out of 12239 nets, 6702 nets not absorbed.
+
+Netlist conversion complete.
+
+# Packing took 9.87 seconds (max_rss 129.0 MiB, delta_rss +44.4 MiB)
+# Load packing
+Begin loading packed FPGA netlist file.
+Netlist generated from file 'brainwave.net'.
+Detected 106 constant generators (to see names run with higher pack verbosity)
+Finished loading packed FPGA netlist file (took 1.10879 seconds).
+Warning 62: Treated 98 constant nets as global which will not be routed (to see net names increase packer verbosity).
+# Load packing took 1.16 seconds (max_rss 138.3 MiB, delta_rss +9.3 MiB)
+Warning 63: Netlist contains 582 global net to non-global architecture pin connections
+Warning 64: Logic block #404 (NPU^output_data_DRAM~64) has only 1 output pin 'NPU^output_data_DRAM~64.O[12]'. It may be a constant generator.
+Warning 65: Logic block #405 (NPU^output_data_DRAM~65) has only 1 output pin 'NPU^output_data_DRAM~65.O[12]'. It may be a constant generator.
+Warning 66: Logic block #406 (NPU^output_data_DRAM~66) has only 1 output pin 'NPU^output_data_DRAM~66.O[12]'. It may be a constant generator.
+Warning 67: Logic block #407 (NPU^output_data_DRAM~67) has only 1 output pin 'NPU^output_data_DRAM~67.O[12]'. It may be a constant generator.
+Warning 68: Logic block #408 (NPU^output_data_DRAM~68) has only 1 output pin 'NPU^output_data_DRAM~68.O[12]'. It may be a constant generator.
+Warning 69: Logic block #409 (NPU^output_data_DRAM~69) has only 1 output pin 'NPU^output_data_DRAM~69.O[12]'. It may be a constant generator.
+Warning 70: Logic block #410 (NPU^output_data_DRAM~70) has only 1 output pin 'NPU^output_data_DRAM~70.O[12]'. It may be a constant generator.
+Warning 71: Logic block #411 (NPU^output_data_DRAM~71) has only 1 output pin 'NPU^output_data_DRAM~71.O[12]'. It may be a constant generator.
+Warning 72: Logic block #412 (NPU^output_data_DRAM~72) has only 1 output pin 'NPU^output_data_DRAM~72.O[12]'. It may be a constant generator.
+Warning 73: Logic block #413 (NPU^output_data_DRAM~73) has only 1 output pin 'NPU^output_data_DRAM~73.O[12]'. It may be a constant generator.
+Warning 74: Logic block #414 (NPU^output_data_DRAM~74) has only 1 output pin 'NPU^output_data_DRAM~74.O[12]'. It may be a constant generator.
+Warning 75: Logic block #415 (NPU^output_data_DRAM~75) has only 1 output pin 'NPU^output_data_DRAM~75.O[12]'. It may be a constant generator.
+Warning 76: Logic block #416 (NPU^output_data_DRAM~76) has only 1 output pin 'NPU^output_data_DRAM~76.O[12]'. It may be a constant generator.
+Warning 77: Logic block #417 (NPU^output_data_DRAM~77) has only 1 output pin 'NPU^output_data_DRAM~77.O[12]'. It may be a constant generator.
+Warning 78: Logic block #418 (NPU^output_data_DRAM~78) has only 1 output pin 'NPU^output_data_DRAM~78.O[12]'. It may be a constant generator.
+Warning 79: Logic block #419 (NPU^output_data_DRAM~79) has only 1 output pin 'NPU^output_data_DRAM~79.O[12]'. It may be a constant generator.
+Warning 80: Logic block #420 (NPU^output_data_DRAM~80) has only 1 output pin 'NPU^output_data_DRAM~80.O[12]'. It may be a constant generator.
+Warning 81: Logic block #421 (NPU^output_data_DRAM~81) has only 1 output pin 'NPU^output_data_DRAM~81.O[12]'. It may be a constant generator.
+Warning 82: Logic block #422 (NPU^output_data_DRAM~82) has only 1 output pin 'NPU^output_data_DRAM~82.O[12]'. It may be a constant generator.
+Warning 83: Logic block #423 (NPU^output_data_DRAM~83) has only 1 output pin 'NPU^output_data_DRAM~83.O[12]'. It may be a constant generator.
+Warning 84: Logic block #424 (NPU^output_data_DRAM~84) has only 1 output pin 'NPU^output_data_DRAM~84.O[12]'. It may be a constant generator.
+Warning 85: Logic block #425 (NPU^output_data_DRAM~85) has only 1 output pin 'NPU^output_data_DRAM~85.O[12]'. It may be a constant generator.
+Warning 86: Logic block #426 (NPU^output_data_DRAM~86) has only 1 output pin 'NPU^output_data_DRAM~86.O[12]'. It may be a constant generator.
+Warning 87: Logic block #427 (NPU^output_data_DRAM~87) has only 1 output pin 'NPU^output_data_DRAM~87.O[12]'. It may be a constant generator.
+Warning 88: Logic block #428 (NPU^output_data_DRAM~88) has only 1 output pin 'NPU^output_data_DRAM~88.O[12]'. It may be a constant generator.
+Warning 89: Logic block #429 (NPU^output_data_DRAM~89) has only 1 output pin 'NPU^output_data_DRAM~89.O[12]'. It may be a constant generator.
+Warning 90: Logic block #430 (NPU^output_data_DRAM~90) has only 1 output pin 'NPU^output_data_DRAM~90.O[12]'. It may be a constant generator.
+Warning 91: Logic block #431 (NPU^output_data_DRAM~91) has only 1 output pin 'NPU^output_data_DRAM~91.O[12]'. It may be a constant generator.
+Warning 92: Logic block #432 (NPU^output_data_DRAM~92) has only 1 output pin 'NPU^output_data_DRAM~92.O[12]'. It may be a constant generator.
+Warning 93: Logic block #433 (NPU^output_data_DRAM~93) has only 1 output pin 'NPU^output_data_DRAM~93.O[12]'. It may be a constant generator.
+Warning 94: Logic block #434 (NPU^output_data_DRAM~94) has only 1 output pin 'NPU^output_data_DRAM~94.O[12]'. It may be a constant generator.
+Warning 95: Logic block #435 (NPU^output_data_DRAM~95) has only 1 output pin 'NPU^output_data_DRAM~95.O[12]'. It may be a constant generator.
+Warning 96: Logic block #436 (NPU^output_data_DRAM~96) has only 1 output pin 'NPU^output_data_DRAM~96.O[12]'. It may be a constant generator.
+Warning 97: Logic block #437 (NPU^output_data_DRAM~97) has only 1 output pin 'NPU^output_data_DRAM~97.O[12]'. It may be a constant generator.
+Warning 98: Logic block #438 (NPU^output_data_DRAM~98) has only 1 output pin 'NPU^output_data_DRAM~98.O[12]'. It may be a constant generator.
+Warning 99: Logic block #439 (NPU^output_data_DRAM~99) has only 1 output pin 'NPU^output_data_DRAM~99.O[12]'. It may be a constant generator.
+Warning 100: Logic block #440 (NPU^output_data_DRAM~100) has only 1 output pin 'NPU^output_data_DRAM~100.O[12]'. It may be a constant generator.
+Warning 101: Logic block #441 (NPU^output_data_DRAM~101) has only 1 output pin 'NPU^output_data_DRAM~101.O[12]'. It may be a constant generator.
+Warning 102: Logic block #442 (NPU^output_data_DRAM~102) has only 1 output pin 'NPU^output_data_DRAM~102.O[12]'. It may be a constant generator.
+Warning 103: Logic block #443 (NPU^output_data_DRAM~103) has only 1 output pin 'NPU^output_data_DRAM~103.O[12]'. It may be a constant generator.
+Warning 104: Logic block #444 (NPU^output_data_DRAM~104) has only 1 output pin 'NPU^output_data_DRAM~104.O[12]'. It may be a constant generator.
+Warning 105: Logic block #445 (NPU^output_data_DRAM~105) has only 1 output pin 'NPU^output_data_DRAM~105.O[12]'. It may be a constant generator.
+Warning 106: Logic block #446 (NPU^output_data_DRAM~106) has only 1 output pin 'NPU^output_data_DRAM~106.O[12]'. It may be a constant generator.
+Warning 107: Logic block #447 (NPU^output_data_DRAM~107) has only 1 output pin 'NPU^output_data_DRAM~107.O[12]'. It may be a constant generator.
+Warning 108: Logic block #448 (NPU^output_data_DRAM~108) has only 1 output pin 'NPU^output_data_DRAM~108.O[12]'. It may be a constant generator.
+Warning 109: Logic block #449 (NPU^output_data_DRAM~109) has only 1 output pin 'NPU^output_data_DRAM~109.O[12]'. It may be a constant generator.
+Warning 110: Logic block #450 (NPU^output_data_DRAM~110) has only 1 output pin 'NPU^output_data_DRAM~110.O[12]'. It may be a constant generator.
+Warning 111: Logic block #451 (NPU^output_data_DRAM~111) has only 1 output pin 'NPU^output_data_DRAM~111.O[12]'. It may be a constant generator.
+Warning 112: Logic block #452 (NPU^output_data_DRAM~112) has only 1 output pin 'NPU^output_data_DRAM~112.O[12]'. It may be a constant generator.
+Warning 113: Logic block #453 (NPU^output_data_DRAM~113) has only 1 output pin 'NPU^output_data_DRAM~113.O[12]'. It may be a constant generator.
+Warning 114: Logic block #454 (NPU^output_data_DRAM~114) has only 1 output pin 'NPU^output_data_DRAM~114.O[12]'. It may be a constant generator.
+Warning 115: Logic block #455 (NPU^output_data_DRAM~115) has only 1 output pin 'NPU^output_data_DRAM~115.O[12]'. It may be a constant generator.
+Warning 116: Logic block #456 (NPU^output_data_DRAM~116) has only 1 output pin 'NPU^output_data_DRAM~116.O[12]'. It may be a constant generator.
+Warning 117: Logic block #457 (NPU^output_data_DRAM~117) has only 1 output pin 'NPU^output_data_DRAM~117.O[12]'. It may be a constant generator.
+Warning 118: Logic block #458 (NPU^output_data_DRAM~118) has only 1 output pin 'NPU^output_data_DRAM~118.O[12]'. It may be a constant generator.
+Warning 119: Logic block #459 (NPU^output_data_DRAM~119) has only 1 output pin 'NPU^output_data_DRAM~119.O[12]'. It may be a constant generator.
+Warning 120: Logic block #460 (NPU^output_data_DRAM~120) has only 1 output pin 'NPU^output_data_DRAM~120.O[12]'. It may be a constant generator.
+Warning 121: Logic block #461 (NPU^output_data_DRAM~121) has only 1 output pin 'NPU^output_data_DRAM~121.O[12]'. It may be a constant generator.
+Warning 122: Logic block #462 (NPU^output_data_DRAM~122) has only 1 output pin 'NPU^output_data_DRAM~122.O[12]'. It may be a constant generator.
+Warning 123: Logic block #463 (NPU^output_data_DRAM~123) has only 1 output pin 'NPU^output_data_DRAM~123.O[12]'. It may be a constant generator.
+Warning 124: Logic block #464 (NPU^output_data_DRAM~124) has only 1 output pin 'NPU^output_data_DRAM~124.O[12]'. It may be a constant generator.
+Warning 125: Logic block #465 (NPU^output_data_DRAM~125) has only 1 output pin 'NPU^output_data_DRAM~125.O[12]'. It may be a constant generator.
+Warning 126: Logic block #466 (NPU^output_data_DRAM~126) has only 1 output pin 'NPU^output_data_DRAM~126.O[12]'. It may be a constant generator.
+Warning 127: Logic block #467 (NPU^output_data_DRAM~127) has only 1 output pin 'NPU^output_data_DRAM~127.O[12]'. It may be a constant generator.
+Warning 128: Logic block #468 (NPU^output_data_DRAM~128) has only 1 output pin 'NPU^output_data_DRAM~128.O[12]'. It may be a constant generator.
+Warning 129: Logic block #469 (NPU^output_data_DRAM~129) has only 1 output pin 'NPU^output_data_DRAM~129.O[12]'. It may be a constant generator.
+Warning 130: Logic block #470 (NPU^output_data_DRAM~130) has only 1 output pin 'NPU^output_data_DRAM~130.O[12]'. It may be a constant generator.
+Warning 131: Logic block #471 (NPU^output_data_DRAM~131) has only 1 output pin 'NPU^output_data_DRAM~131.O[12]'. It may be a constant generator.
+Warning 132: Logic block #472 (NPU^output_data_DRAM~132) has only 1 output pin 'NPU^output_data_DRAM~132.O[12]'. It may be a constant generator.
+Warning 133: Logic block #473 (NPU^output_data_DRAM~133) has only 1 output pin 'NPU^output_data_DRAM~133.O[12]'. It may be a constant generator.
+Warning 134: Logic block #474 (NPU^output_data_DRAM~134) has only 1 output pin 'NPU^output_data_DRAM~134.O[12]'. It may be a constant generator.
+Warning 135: Logic block #475 (NPU^output_data_DRAM~135) has only 1 output pin 'NPU^output_data_DRAM~135.O[12]'. It may be a constant generator.
+Warning 136: Logic block #476 (NPU^output_data_DRAM~136) has only 1 output pin 'NPU^output_data_DRAM~136.O[12]'. It may be a constant generator.
+Warning 137: Logic block #477 (NPU^output_data_DRAM~137) has only 1 output pin 'NPU^output_data_DRAM~137.O[12]'. It may be a constant generator.
+Warning 138: Logic block #478 (NPU^output_data_DRAM~138) has only 1 output pin 'NPU^output_data_DRAM~138.O[12]'. It may be a constant generator.
+Warning 139: Logic block #479 (NPU^output_data_DRAM~139) has only 1 output pin 'NPU^output_data_DRAM~139.O[12]'. It may be a constant generator.
+Warning 140: Logic block #480 (NPU^output_data_DRAM~140) has only 1 output pin 'NPU^output_data_DRAM~140.O[12]'. It may be a constant generator.
+Warning 141: Logic block #481 (NPU^output_data_DRAM~141) has only 1 output pin 'NPU^output_data_DRAM~141.O[12]'. It may be a constant generator.
+Warning 142: Logic block #482 (NPU^output_data_DRAM~142) has only 1 output pin 'NPU^output_data_DRAM~142.O[12]'. It may be a constant generator.
+Warning 143: Logic block #483 (NPU^output_data_DRAM~143) has only 1 output pin 'NPU^output_data_DRAM~143.O[12]'. It may be a constant generator.
+Warning 144: Logic block #484 (NPU^output_data_DRAM~144) has only 1 output pin 'NPU^output_data_DRAM~144.O[12]'. It may be a constant generator.
+Warning 145: Logic block #485 (NPU^output_data_DRAM~145) has only 1 output pin 'NPU^output_data_DRAM~145.O[12]'. It may be a constant generator.
+Warning 146: Logic block #486 (NPU^output_data_DRAM~146) has only 1 output pin 'NPU^output_data_DRAM~146.O[12]'. It may be a constant generator.
+Warning 147: Logic block #487 (NPU^output_data_DRAM~147) has only 1 output pin 'NPU^output_data_DRAM~147.O[12]'. It may be a constant generator.
+Warning 148: Logic block #488 (NPU^output_data_DRAM~148) has only 1 output pin 'NPU^output_data_DRAM~148.O[12]'. It may be a constant generator.
+Warning 149: Logic block #489 (NPU^output_data_DRAM~149) has only 1 output pin 'NPU^output_data_DRAM~149.O[12]'. It may be a constant generator.
+Warning 150: Logic block #490 (NPU^output_data_DRAM~150) has only 1 output pin 'NPU^output_data_DRAM~150.O[12]'. It may be a constant generator.
+Warning 151: Logic block #491 (NPU^output_data_DRAM~151) has only 1 output pin 'NPU^output_data_DRAM~151.O[12]'. It may be a constant generator.
+Warning 152: Logic block #492 (NPU^output_data_DRAM~152) has only 1 output pin 'NPU^output_data_DRAM~152.O[12]'. It may be a constant generator.
+Warning 153: Logic block #493 (NPU^output_data_DRAM~153) has only 1 output pin 'NPU^output_data_DRAM~153.O[12]'. It may be a constant generator.
+Warning 154: Logic block #494 (NPU^output_data_DRAM~154) has only 1 output pin 'NPU^output_data_DRAM~154.O[12]'. It may be a constant generator.
+Warning 155: Logic block #495 (NPU^output_data_DRAM~155) has only 1 output pin 'NPU^output_data_DRAM~155.O[12]'. It may be a constant generator.
+Warning 156: Logic block #496 (NPU^output_data_DRAM~156) has only 1 output pin 'NPU^output_data_DRAM~156.O[12]'. It may be a constant generator.
+Warning 157: Logic block #497 (NPU^output_data_DRAM~157) has only 1 output pin 'NPU^output_data_DRAM~157.O[12]'. It may be a constant generator.
+Warning 158: Logic block #498 (NPU^output_data_DRAM~158) has only 1 output pin 'NPU^output_data_DRAM~158.O[12]'. It may be a constant generator.
+Warning 159: Logic block #499 (NPU^output_data_DRAM~159) has only 1 output pin 'NPU^output_data_DRAM~159.O[12]'. It may be a constant generator.
+Warning 160: Logic block #500 (gnd) has only 1 output pin 'gnd.O[12]'. It may be a constant generator.
+Cluster level netlist and block usage statistics
+Netlist num_nets: 6702
+Netlist num_blocks: 793
+Netlist EMPTY blocks: 0.
+Netlist io blocks: 292.
+Netlist clb blocks: 372.
+Netlist dsp_top blocks: 39.
+Netlist memory blocks: 90.
+Netlist inputs pins: 110
+Netlist output pins: 182
+
+Pb types usage...
+  io                      : 292
+   inpad                  : 110
+   outpad                 : 182
+  clb                     : 372
+   lab                    : 372
+    fle                   : 2733
+     ble5                 : 4802
+      flut5               : 3452
+       lut5               : 3452
+        lut               : 3452
+       ff                 : 2807
+      arithmetic          : 1350
+       lut4               : 104
+        lut               : 104
+       adder              : 1350
+     ble6                 : 276
+      lut6                : 276
+       lut                : 276
+      ff                  : 78
+  dsp_top                 : 39
+   dsp                    : 39
+    dsp_pb                : 39
+     mult_9x9_fixed_pt    : 144
+  memory                  : 90
+   mem_1024x20_sp         : 64
+    memory_slice          : 1024
+   mem_1024x20_dp         : 26
+    memory_slice          : 416
+
+# Create Device
+## Build Device Grid
+FPGA sized to 54 x 54: 2916 grid tiles (auto)
+
+Resource usage...
+	Netlist
+		292	blocks of type: io
+	Architecture
+		1664	blocks of type: io
+	Netlist
+		372	blocks of type: clb
+	Architecture
+		2340	blocks of type: clb
+	Netlist
+		39	blocks of type: dsp_top
+	Architecture
+		39	blocks of type: dsp_top
+	Netlist
+		90	blocks of type: memory
+	Architecture
+		104	blocks of type: memory
+
+Device Utilization: 0.26 (target 1.00)
+	Physical Tile io:
+	Block Utilization: 0.18 Logical Block: io
+	Physical Tile clb:
+	Block Utilization: 0.16 Logical Block: clb
+	Physical Tile dsp_top:
+	Block Utilization: 1.00 Logical Block: dsp_top
+	Physical Tile memory:
+	Block Utilization: 0.87 Logical Block: memory
+
+FPGA size limited by block type(s): dsp_top
+
+## Build Device Grid took 0.02 seconds (max_rss 138.3 MiB, delta_rss +0.0 MiB)
+## Build routing resource graph
+SOURCE->OPIN and IPIN->SINK edge count:270894
+OPIN->CHANX/CHANY edge count before creating direct connections: 2687438
+OPIN->CHANX/CHANY edge count after creating direct connections: 2692037
+CHAN->CHAN type edge count:9141584
+Warning 161: in check_rr_node: RR node: 2692 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:2692 side: (RIGHT,) (1,1) has no out-going edges.
+Warning 162: in check_rr_node: RR node: 16144 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:16144 side: (RIGHT,) (3,1) has no out-going edges.
+Warning 163: in check_rr_node: RR node: 24040 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:24040 side: (RIGHT,) (4,1) has no out-going edges.
+Warning 164: in check_rr_node: RR node: 31936 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:31936 side: (RIGHT,) (5,1) has no out-going edges.
+Warning 165: in check_rr_node: RR node: 40335 pin: 293 pin_name: dsp_top.chainout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40335 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 166: in check_rr_node: RR node: 40336 pin: 294 pin_name: dsp_top.chainout[1] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40336 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 167: in check_rr_node: RR node: 40337 pin: 295 pin_name: dsp_top.chainout[2] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40337 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 168: in check_rr_node: RR node: 40338 pin: 296 pin_name: dsp_top.chainout[3] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40338 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 169: in check_rr_node: RR node: 40339 pin: 297 pin_name: dsp_top.chainout[4] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40339 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 170: in check_rr_node: RR node: 40340 pin: 298 pin_name: dsp_top.chainout[5] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40340 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 171: in check_rr_node: RR node: 40341 pin: 299 pin_name: dsp_top.chainout[6] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40341 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 172: in check_rr_node: RR node: 40342 pin: 300 pin_name: dsp_top.chainout[7] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40342 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 173: in check_rr_node: RR node: 40343 pin: 301 pin_name: dsp_top.chainout[8] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40343 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 174: in check_rr_node: RR node: 40344 pin: 302 pin_name: dsp_top.chainout[9] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40344 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 175: in check_rr_node: RR node: 40345 pin: 303 pin_name: dsp_top.chainout[10] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40345 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 176: in check_rr_node: RR node: 40346 pin: 304 pin_name: dsp_top.chainout[11] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40346 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 177: in check_rr_node: RR node: 40347 pin: 305 pin_name: dsp_top.chainout[12] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40347 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 178: in check_rr_node: RR node: 40348 pin: 306 pin_name: dsp_top.chainout[13] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40348 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 179: in check_rr_node: RR node: 40349 pin: 307 pin_name: dsp_top.chainout[14] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40349 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 180: in check_rr_node: RR node: 40350 pin: 308 pin_name: dsp_top.chainout[15] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40350 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 181: in check_rr_node: RR node: 40351 pin: 309 pin_name: dsp_top.chainout[16] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40351 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 182: in check_rr_node: RR node: 40352 pin: 310 pin_name: dsp_top.chainout[17] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40352 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 183: in check_rr_node: RR node: 40353 pin: 311 pin_name: dsp_top.chainout[18] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40353 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 184: in check_rr_node: RR node: 40354 pin: 312 pin_name: dsp_top.chainout[19] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40354 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 185: in check_rr_node: RR node: 40355 pin: 313 pin_name: dsp_top.chainout[20] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40355 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 186: in check_rr_node: RR node: 40356 pin: 314 pin_name: dsp_top.chainout[21] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40356 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 187: in check_rr_node: RR node: 40357 pin: 315 pin_name: dsp_top.chainout[22] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40357 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 188: in check_rr_node: RR node: 40358 pin: 316 pin_name: dsp_top.chainout[23] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40358 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 189: in check_rr_node: RR node: 40359 pin: 317 pin_name: dsp_top.chainout[24] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40359 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 190: in check_rr_node: RR node: 40360 pin: 318 pin_name: dsp_top.chainout[25] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40360 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 191: in check_rr_node: RR node: 40361 pin: 319 pin_name: dsp_top.chainout[26] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40361 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 192: in check_rr_node: RR node: 40362 pin: 320 pin_name: dsp_top.chainout[27] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40362 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 193: in check_rr_node: RR node: 40363 pin: 321 pin_name: dsp_top.chainout[28] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40363 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 194: in check_rr_node: RR node: 40364 pin: 322 pin_name: dsp_top.chainout[29] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40364 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 195: in check_rr_node: RR node: 40365 pin: 323 pin_name: dsp_top.chainout[30] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40365 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 196: in check_rr_node: RR node: 40366 pin: 324 pin_name: dsp_top.chainout[31] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40366 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 197: in check_rr_node: RR node: 40367 pin: 325 pin_name: dsp_top.chainout[32] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40367 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 198: in check_rr_node: RR node: 40368 pin: 326 pin_name: dsp_top.chainout[33] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40368 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 199: in check_rr_node: RR node: 40369 pin: 327 pin_name: dsp_top.chainout[34] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40369 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 200: in check_rr_node: RR node: 40370 pin: 328 pin_name: dsp_top.chainout[35] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40370 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 201: in check_rr_node: RR node: 40371 pin: 329 pin_name: dsp_top.chainout[36] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40371 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 202: in check_rr_node: RR node: 40372 pin: 330 pin_name: dsp_top.chainout[37] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40372 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 203: in check_rr_node: RR node: 40373 pin: 331 pin_name: dsp_top.chainout[38] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40373 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 204: in check_rr_node: RR node: 40374 pin: 332 pin_name: dsp_top.chainout[39] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40374 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 205: in check_rr_node: RR node: 40375 pin: 333 pin_name: dsp_top.chainout[40] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40375 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 206: in check_rr_node: RR node: 40376 pin: 334 pin_name: dsp_top.chainout[41] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40376 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 207: in check_rr_node: RR node: 40377 pin: 335 pin_name: dsp_top.chainout[42] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40377 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 208: in check_rr_node: RR node: 40378 pin: 336 pin_name: dsp_top.chainout[43] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40378 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 209: in check_rr_node: RR node: 40379 pin: 337 pin_name: dsp_top.chainout[44] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40379 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 210: in check_rr_node: RR node: 40380 pin: 338 pin_name: dsp_top.chainout[45] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40380 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 211: in check_rr_node: RR node: 40381 pin: 339 pin_name: dsp_top.chainout[46] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40381 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 212: in check_rr_node: RR node: 40382 pin: 340 pin_name: dsp_top.chainout[47] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40382 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 213: in check_rr_node: RR node: 40383 pin: 341 pin_name: dsp_top.chainout[48] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40383 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 214: in check_rr_node: RR node: 40384 pin: 342 pin_name: dsp_top.chainout[49] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40384 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 215: in check_rr_node: RR node: 40385 pin: 343 pin_name: dsp_top.chainout[50] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40385 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 216: in check_rr_node: RR node: 40386 pin: 344 pin_name: dsp_top.chainout[51] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40386 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 217: in check_rr_node: RR node: 40387 pin: 345 pin_name: dsp_top.chainout[52] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40387 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 218: in check_rr_node: RR node: 40388 pin: 346 pin_name: dsp_top.chainout[53] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40388 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 219: in check_rr_node: RR node: 40389 pin: 347 pin_name: dsp_top.chainout[54] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40389 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 220: in check_rr_node: RR node: 40390 pin: 348 pin_name: dsp_top.chainout[55] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40390 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 221: in check_rr_node: RR node: 40391 pin: 349 pin_name: dsp_top.chainout[56] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40391 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 222: in check_rr_node: RR node: 40392 pin: 350 pin_name: dsp_top.chainout[57] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40392 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 223: in check_rr_node: RR node: 40393 pin: 351 pin_name: dsp_top.chainout[58] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40393 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 224: in check_rr_node: RR node: 40394 pin: 352 pin_name: dsp_top.chainout[59] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40394 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 225: in check_rr_node: RR node: 40395 pin: 353 pin_name: dsp_top.chainout[60] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40395 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 226: in check_rr_node: RR node: 40396 pin: 354 pin_name: dsp_top.chainout[61] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40396 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 227: in check_rr_node: RR node: 40397 pin: 355 pin_name: dsp_top.chainout[62] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40397 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 228: in check_rr_node: RR node: 40398 pin: 356 pin_name: dsp_top.chainout[63] capacity: 1 fan-in: 1 fan-out: 0 OPIN:40398 side: (BOTTOM,) (6,1) has no out-going edges.
+Warning 229: in check_rr_node: RR node: 49236 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:49236 side: (RIGHT,) (7,1) has no out-going edges.
+Warning 230: in check_rr_node: RR node: 57132 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:57132 side: (RIGHT,) (8,1) has no out-going edges.
+Warning 231: in check_rr_node: RR node: 65028 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:65028 side: (RIGHT,) (9,1) has no out-going edges.
+Warning 232: in check_rr_node: RR node: 72924 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:72924 side: (RIGHT,) (10,1) has no out-going edges.
+Warning 233: in check_rr_node: RR node: 80820 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:80820 side: (RIGHT,) (11,1) has no out-going edges.
+Warning 234: in check_rr_node: RR node: 88716 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:88716 side: (RIGHT,) (12,1) has no out-going edges.
+Warning 235: in check_rr_node: RR node: 96612 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:96612 side: (RIGHT,) (13,1) has no out-going edges.
+Warning 236: in check_rr_node: RR node: 104508 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:104508 side: (RIGHT,) (14,1) has no out-going edges.
+Warning 237: in check_rr_node: RR node: 112404 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:112404 side: (RIGHT,) (15,1) has no out-going edges.
+Warning 238: in check_rr_node: RR node: 120300 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:120300 side: (RIGHT,) (16,1) has no out-going edges.
+Warning 239: in check_rr_node: RR node: 128196 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:128196 side: (RIGHT,) (17,1) has no out-going edges.
+Warning 240: in check_rr_node: RR node: 141648 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:141648 side: (RIGHT,) (19,1) has no out-going edges.
+Warning 241: in check_rr_node: RR node: 149544 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:149544 side: (RIGHT,) (20,1) has no out-going edges.
+Warning 242: in check_rr_node: RR node: 157440 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:157440 side: (RIGHT,) (21,1) has no out-going edges.
+Warning 243: in check_rr_node: RR node: 165839 pin: 293 pin_name: dsp_top.chainout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165839 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 244: in check_rr_node: RR node: 165840 pin: 294 pin_name: dsp_top.chainout[1] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165840 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 245: in check_rr_node: RR node: 165841 pin: 295 pin_name: dsp_top.chainout[2] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165841 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 246: in check_rr_node: RR node: 165842 pin: 296 pin_name: dsp_top.chainout[3] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165842 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 247: in check_rr_node: RR node: 165843 pin: 297 pin_name: dsp_top.chainout[4] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165843 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 248: in check_rr_node: RR node: 165844 pin: 298 pin_name: dsp_top.chainout[5] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165844 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 249: in check_rr_node: RR node: 165845 pin: 299 pin_name: dsp_top.chainout[6] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165845 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 250: in check_rr_node: RR node: 165846 pin: 300 pin_name: dsp_top.chainout[7] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165846 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 251: in check_rr_node: RR node: 165847 pin: 301 pin_name: dsp_top.chainout[8] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165847 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 252: in check_rr_node: RR node: 165848 pin: 302 pin_name: dsp_top.chainout[9] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165848 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 253: in check_rr_node: RR node: 165849 pin: 303 pin_name: dsp_top.chainout[10] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165849 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 254: in check_rr_node: RR node: 165850 pin: 304 pin_name: dsp_top.chainout[11] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165850 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 255: in check_rr_node: RR node: 165851 pin: 305 pin_name: dsp_top.chainout[12] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165851 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 256: in check_rr_node: RR node: 165852 pin: 306 pin_name: dsp_top.chainout[13] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165852 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 257: in check_rr_node: RR node: 165853 pin: 307 pin_name: dsp_top.chainout[14] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165853 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 258: in check_rr_node: RR node: 165854 pin: 308 pin_name: dsp_top.chainout[15] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165854 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 259: in check_rr_node: RR node: 165855 pin: 309 pin_name: dsp_top.chainout[16] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165855 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 260: in check_rr_node: RR node: 165856 pin: 310 pin_name: dsp_top.chainout[17] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165856 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 261: in check_rr_node: RR node: 165857 pin: 311 pin_name: dsp_top.chainout[18] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165857 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 262: in check_rr_node: RR node: 165858 pin: 312 pin_name: dsp_top.chainout[19] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165858 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 263: in check_rr_node: RR node: 165859 pin: 313 pin_name: dsp_top.chainout[20] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165859 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 264: in check_rr_node: RR node: 165860 pin: 314 pin_name: dsp_top.chainout[21] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165860 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 265: in check_rr_node: RR node: 165861 pin: 315 pin_name: dsp_top.chainout[22] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165861 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 266: in check_rr_node: RR node: 165862 pin: 316 pin_name: dsp_top.chainout[23] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165862 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 267: in check_rr_node: RR node: 165863 pin: 317 pin_name: dsp_top.chainout[24] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165863 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 268: in check_rr_node: RR node: 165864 pin: 318 pin_name: dsp_top.chainout[25] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165864 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 269: in check_rr_node: RR node: 165865 pin: 319 pin_name: dsp_top.chainout[26] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165865 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 270: in check_rr_node: RR node: 165866 pin: 320 pin_name: dsp_top.chainout[27] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165866 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 271: in check_rr_node: RR node: 165867 pin: 321 pin_name: dsp_top.chainout[28] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165867 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 272: in check_rr_node: RR node: 165868 pin: 322 pin_name: dsp_top.chainout[29] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165868 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 273: in check_rr_node: RR node: 165869 pin: 323 pin_name: dsp_top.chainout[30] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165869 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 274: in check_rr_node: RR node: 165870 pin: 324 pin_name: dsp_top.chainout[31] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165870 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 275: in check_rr_node: RR node: 165871 pin: 325 pin_name: dsp_top.chainout[32] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165871 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 276: in check_rr_node: RR node: 165872 pin: 326 pin_name: dsp_top.chainout[33] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165872 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 277: in check_rr_node: RR node: 165873 pin: 327 pin_name: dsp_top.chainout[34] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165873 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 278: in check_rr_node: RR node: 165874 pin: 328 pin_name: dsp_top.chainout[35] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165874 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 279: in check_rr_node: RR node: 165875 pin: 329 pin_name: dsp_top.chainout[36] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165875 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 280: in check_rr_node: RR node: 165876 pin: 330 pin_name: dsp_top.chainout[37] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165876 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 281: in check_rr_node: RR node: 165877 pin: 331 pin_name: dsp_top.chainout[38] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165877 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 282: in check_rr_node: RR node: 165878 pin: 332 pin_name: dsp_top.chainout[39] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165878 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 283: in check_rr_node: RR node: 165879 pin: 333 pin_name: dsp_top.chainout[40] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165879 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 284: in check_rr_node: RR node: 165880 pin: 334 pin_name: dsp_top.chainout[41] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165880 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 285: in check_rr_node: RR node: 165881 pin: 335 pin_name: dsp_top.chainout[42] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165881 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 286: in check_rr_node: RR node: 165882 pin: 336 pin_name: dsp_top.chainout[43] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165882 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 287: in check_rr_node: RR node: 165883 pin: 337 pin_name: dsp_top.chainout[44] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165883 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 288: in check_rr_node: RR node: 165884 pin: 338 pin_name: dsp_top.chainout[45] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165884 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 289: in check_rr_node: RR node: 165885 pin: 339 pin_name: dsp_top.chainout[46] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165885 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 290: in check_rr_node: RR node: 165886 pin: 340 pin_name: dsp_top.chainout[47] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165886 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 291: in check_rr_node: RR node: 165887 pin: 341 pin_name: dsp_top.chainout[48] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165887 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 292: in check_rr_node: RR node: 165888 pin: 342 pin_name: dsp_top.chainout[49] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165888 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 293: in check_rr_node: RR node: 165889 pin: 343 pin_name: dsp_top.chainout[50] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165889 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 294: in check_rr_node: RR node: 165890 pin: 344 pin_name: dsp_top.chainout[51] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165890 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 295: in check_rr_node: RR node: 165891 pin: 345 pin_name: dsp_top.chainout[52] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165891 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 296: in check_rr_node: RR node: 165892 pin: 346 pin_name: dsp_top.chainout[53] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165892 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 297: in check_rr_node: RR node: 165893 pin: 347 pin_name: dsp_top.chainout[54] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165893 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 298: in check_rr_node: RR node: 165894 pin: 348 pin_name: dsp_top.chainout[55] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165894 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 299: in check_rr_node: RR node: 165895 pin: 349 pin_name: dsp_top.chainout[56] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165895 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 300: in check_rr_node: RR node: 165896 pin: 350 pin_name: dsp_top.chainout[57] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165896 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 301: in check_rr_node: RR node: 165897 pin: 351 pin_name: dsp_top.chainout[58] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165897 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 302: in check_rr_node: RR node: 165898 pin: 352 pin_name: dsp_top.chainout[59] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165898 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 303: in check_rr_node: RR node: 165899 pin: 353 pin_name: dsp_top.chainout[60] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165899 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 304: in check_rr_node: RR node: 165900 pin: 354 pin_name: dsp_top.chainout[61] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165900 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 305: in check_rr_node: RR node: 165901 pin: 355 pin_name: dsp_top.chainout[62] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165901 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 306: in check_rr_node: RR node: 165902 pin: 356 pin_name: dsp_top.chainout[63] capacity: 1 fan-in: 1 fan-out: 0 OPIN:165902 side: (BOTTOM,) (22,1) has no out-going edges.
+Warning 307: in check_rr_node: RR node: 174740 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:174740 side: (RIGHT,) (23,1) has no out-going edges.
+Warning 308: in check_rr_node: RR node: 182636 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:182636 side: (RIGHT,) (24,1) has no out-going edges.
+Warning 309: in check_rr_node: RR node: 190532 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:190532 side: (RIGHT,) (25,1) has no out-going edges.
+Warning 310: in check_rr_node: RR node: 198428 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:198428 side: (RIGHT,) (26,1) has no out-going edges.
+Warning 311: in check_rr_node: RR node: 206324 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:206324 side: (RIGHT,) (27,1) has no out-going edges.
+Warning 312: in check_rr_node: RR node: 214220 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:214220 side: (RIGHT,) (28,1) has no out-going edges.
+Warning 313: in check_rr_node: RR node: 222116 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:222116 side: (RIGHT,) (29,1) has no out-going edges.
+Warning 314: in check_rr_node: RR node: 230012 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:230012 side: (RIGHT,) (30,1) has no out-going edges.
+Warning 315: in check_rr_node: RR node: 237908 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:237908 side: (RIGHT,) (31,1) has no out-going edges.
+Warning 316: in check_rr_node: RR node: 245804 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:245804 side: (RIGHT,) (32,1) has no out-going edges.
+Warning 317: in check_rr_node: RR node: 253700 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:253700 side: (RIGHT,) (33,1) has no out-going edges.
+Warning 318: in check_rr_node: RR node: 267152 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:267152 side: (RIGHT,) (35,1) has no out-going edges.
+Warning 319: in check_rr_node: RR node: 275048 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:275048 side: (RIGHT,) (36,1) has no out-going edges.
+Warning 320: in check_rr_node: RR node: 282944 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:282944 side: (RIGHT,) (37,1) has no out-going edges.
+Warning 321: in check_rr_node: RR node: 291343 pin: 293 pin_name: dsp_top.chainout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291343 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 322: in check_rr_node: RR node: 291344 pin: 294 pin_name: dsp_top.chainout[1] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291344 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 323: in check_rr_node: RR node: 291345 pin: 295 pin_name: dsp_top.chainout[2] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291345 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 324: in check_rr_node: RR node: 291346 pin: 296 pin_name: dsp_top.chainout[3] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291346 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 325: in check_rr_node: RR node: 291347 pin: 297 pin_name: dsp_top.chainout[4] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291347 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 326: in check_rr_node: RR node: 291348 pin: 298 pin_name: dsp_top.chainout[5] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291348 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 327: in check_rr_node: RR node: 291349 pin: 299 pin_name: dsp_top.chainout[6] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291349 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 328: in check_rr_node: RR node: 291350 pin: 300 pin_name: dsp_top.chainout[7] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291350 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 329: in check_rr_node: RR node: 291351 pin: 301 pin_name: dsp_top.chainout[8] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291351 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 330: in check_rr_node: RR node: 291352 pin: 302 pin_name: dsp_top.chainout[9] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291352 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 331: in check_rr_node: RR node: 291353 pin: 303 pin_name: dsp_top.chainout[10] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291353 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 332: in check_rr_node: RR node: 291354 pin: 304 pin_name: dsp_top.chainout[11] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291354 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 333: in check_rr_node: RR node: 291355 pin: 305 pin_name: dsp_top.chainout[12] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291355 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 334: in check_rr_node: RR node: 291356 pin: 306 pin_name: dsp_top.chainout[13] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291356 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 335: in check_rr_node: RR node: 291357 pin: 307 pin_name: dsp_top.chainout[14] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291357 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 336: in check_rr_node: RR node: 291358 pin: 308 pin_name: dsp_top.chainout[15] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291358 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 337: in check_rr_node: RR node: 291359 pin: 309 pin_name: dsp_top.chainout[16] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291359 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 338: in check_rr_node: RR node: 291360 pin: 310 pin_name: dsp_top.chainout[17] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291360 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 339: in check_rr_node: RR node: 291361 pin: 311 pin_name: dsp_top.chainout[18] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291361 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 340: in check_rr_node: RR node: 291362 pin: 312 pin_name: dsp_top.chainout[19] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291362 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 341: in check_rr_node: RR node: 291363 pin: 313 pin_name: dsp_top.chainout[20] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291363 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 342: in check_rr_node: RR node: 291364 pin: 314 pin_name: dsp_top.chainout[21] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291364 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 343: in check_rr_node: RR node: 291365 pin: 315 pin_name: dsp_top.chainout[22] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291365 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 344: in check_rr_node: RR node: 291366 pin: 316 pin_name: dsp_top.chainout[23] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291366 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 345: in check_rr_node: RR node: 291367 pin: 317 pin_name: dsp_top.chainout[24] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291367 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 346: in check_rr_node: RR node: 291368 pin: 318 pin_name: dsp_top.chainout[25] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291368 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 347: in check_rr_node: RR node: 291369 pin: 319 pin_name: dsp_top.chainout[26] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291369 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 348: in check_rr_node: RR node: 291370 pin: 320 pin_name: dsp_top.chainout[27] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291370 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 349: in check_rr_node: RR node: 291371 pin: 321 pin_name: dsp_top.chainout[28] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291371 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 350: in check_rr_node: RR node: 291372 pin: 322 pin_name: dsp_top.chainout[29] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291372 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 351: in check_rr_node: RR node: 291373 pin: 323 pin_name: dsp_top.chainout[30] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291373 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 352: in check_rr_node: RR node: 291374 pin: 324 pin_name: dsp_top.chainout[31] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291374 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 353: in check_rr_node: RR node: 291375 pin: 325 pin_name: dsp_top.chainout[32] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291375 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 354: in check_rr_node: RR node: 291376 pin: 326 pin_name: dsp_top.chainout[33] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291376 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 355: in check_rr_node: RR node: 291377 pin: 327 pin_name: dsp_top.chainout[34] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291377 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 356: in check_rr_node: RR node: 291378 pin: 328 pin_name: dsp_top.chainout[35] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291378 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 357: in check_rr_node: RR node: 291379 pin: 329 pin_name: dsp_top.chainout[36] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291379 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 358: in check_rr_node: RR node: 291380 pin: 330 pin_name: dsp_top.chainout[37] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291380 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 359: in check_rr_node: RR node: 291381 pin: 331 pin_name: dsp_top.chainout[38] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291381 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 360: in check_rr_node: RR node: 291382 pin: 332 pin_name: dsp_top.chainout[39] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291382 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 361: in check_rr_node: RR node: 291383 pin: 333 pin_name: dsp_top.chainout[40] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291383 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 362: in check_rr_node: RR node: 291384 pin: 334 pin_name: dsp_top.chainout[41] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291384 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 363: in check_rr_node: RR node: 291385 pin: 335 pin_name: dsp_top.chainout[42] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291385 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 364: in check_rr_node: RR node: 291386 pin: 336 pin_name: dsp_top.chainout[43] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291386 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 365: in check_rr_node: RR node: 291387 pin: 337 pin_name: dsp_top.chainout[44] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291387 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 366: in check_rr_node: RR node: 291388 pin: 338 pin_name: dsp_top.chainout[45] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291388 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 367: in check_rr_node: RR node: 291389 pin: 339 pin_name: dsp_top.chainout[46] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291389 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 368: in check_rr_node: RR node: 291390 pin: 340 pin_name: dsp_top.chainout[47] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291390 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 369: in check_rr_node: RR node: 291391 pin: 341 pin_name: dsp_top.chainout[48] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291391 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 370: in check_rr_node: RR node: 291392 pin: 342 pin_name: dsp_top.chainout[49] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291392 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 371: in check_rr_node: RR node: 291393 pin: 343 pin_name: dsp_top.chainout[50] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291393 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 372: in check_rr_node: RR node: 291394 pin: 344 pin_name: dsp_top.chainout[51] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291394 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 373: in check_rr_node: RR node: 291395 pin: 345 pin_name: dsp_top.chainout[52] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291395 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 374: in check_rr_node: RR node: 291396 pin: 346 pin_name: dsp_top.chainout[53] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291396 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 375: in check_rr_node: RR node: 291397 pin: 347 pin_name: dsp_top.chainout[54] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291397 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 376: in check_rr_node: RR node: 291398 pin: 348 pin_name: dsp_top.chainout[55] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291398 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 377: in check_rr_node: RR node: 291399 pin: 349 pin_name: dsp_top.chainout[56] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291399 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 378: in check_rr_node: RR node: 291400 pin: 350 pin_name: dsp_top.chainout[57] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291400 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 379: in check_rr_node: RR node: 291401 pin: 351 pin_name: dsp_top.chainout[58] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291401 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 380: in check_rr_node: RR node: 291402 pin: 352 pin_name: dsp_top.chainout[59] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291402 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 381: in check_rr_node: RR node: 291403 pin: 353 pin_name: dsp_top.chainout[60] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291403 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 382: in check_rr_node: RR node: 291404 pin: 354 pin_name: dsp_top.chainout[61] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291404 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 383: in check_rr_node: RR node: 291405 pin: 355 pin_name: dsp_top.chainout[62] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291405 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 384: in check_rr_node: RR node: 291406 pin: 356 pin_name: dsp_top.chainout[63] capacity: 1 fan-in: 1 fan-out: 0 OPIN:291406 side: (BOTTOM,) (38,1) has no out-going edges.
+Warning 385: in check_rr_node: RR node: 300244 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:300244 side: (RIGHT,) (39,1) has no out-going edges.
+Warning 386: in check_rr_node: RR node: 308140 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:308140 side: (RIGHT,) (40,1) has no out-going edges.
+Warning 387: in check_rr_node: RR node: 316036 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:316036 side: (RIGHT,) (41,1) has no out-going edges.
+Warning 388: in check_rr_node: RR node: 323932 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:323932 side: (RIGHT,) (42,1) has no out-going edges.
+Warning 389: in check_rr_node: RR node: 331828 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:331828 side: (RIGHT,) (43,1) has no out-going edges.
+Warning 390: in check_rr_node: RR node: 339724 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:339724 side: (RIGHT,) (44,1) has no out-going edges.
+Warning 391: in check_rr_node: RR node: 347620 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:347620 side: (RIGHT,) (45,1) has no out-going edges.
+Warning 392: in check_rr_node: RR node: 355516 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:355516 side: (RIGHT,) (46,1) has no out-going edges.
+Warning 393: in check_rr_node: RR node: 363412 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:363412 side: (RIGHT,) (47,1) has no out-going edges.
+Warning 394: in check_rr_node: RR node: 371308 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:371308 side: (RIGHT,) (48,1) has no out-going edges.
+Warning 395: in check_rr_node: RR node: 379204 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:379204 side: (RIGHT,) (49,1) has no out-going edges.
+Warning 396: in check_rr_node: RR node: 392656 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:392656 side: (RIGHT,) (51,1) has no out-going edges.
+Warning 397: in check_rr_node: RR node: 400552 pin: 101 pin_name: clb.cout[0] capacity: 1 fan-in: 1 fan-out: 0 OPIN:400552 side: (RIGHT,) (52,1) has no out-going edges.
+## Build routing resource graph took 16.57 seconds (max_rss 444.7 MiB, delta_rss +306.4 MiB)
+  RR Graph Nodes: 807480
+  RR Graph Edges: 12104515
+# Create Device took 16.81 seconds (max_rss 444.7 MiB, delta_rss +306.4 MiB)
+
+# Computing router lookahead map
+## Computing wire lookahead
+## Computing wire lookahead took 37.75 seconds (max_rss 444.7 MiB, delta_rss +0.0 MiB)
+## Computing src/opin lookahead
+## Computing src/opin lookahead took 0.00 seconds (max_rss 444.7 MiB, delta_rss +0.0 MiB)
+# Computing router lookahead map took 37.75 seconds (max_rss 444.7 MiB, delta_rss +0.0 MiB)
+# Computing placement delta delay look-up
+RR graph channel widths unchanged, skipping RR graph rebuild
+## Computing delta delays
+## Computing delta delays took 0.98 seconds (max_rss 444.7 MiB, delta_rss +0.0 MiB)
+# Computing placement delta delay look-up took 0.99 seconds (max_rss 444.7 MiB, delta_rss +0.0 MiB)
+Using simple RL 'Softmax agent' for choosing move types
+# Placement
+## Initial Placement
+## Initial Placement took 0.00 seconds (max_rss 444.7 MiB, delta_rss +0.0 MiB)
+
+There are 11736 point to point connections in this circuit.
+
+
+Completed placement consistency check successfully.
+Initial placement cost: 1 bb_cost: 948.778 td_cost: 5.32656e-06
+Initial placement estimated Critical Path Delay (CPD): 12.0955 ns
+Initial placement estimated setup Total Negative Slack (sTNS): -43968 ns
+Initial placement estimated setup Worst Negative Slack (sWNS): -12.0955 ns
+
+Initial placement estimated setup slack histogram:
+[ -1.2e-08: -1.1e-08)    25 (  0.1%) |
+[ -1.1e-08: -9.8e-09)    26 (  0.1%) |
+[ -9.8e-09: -8.6e-09)    76 (  0.3%) |
+[ -8.6e-09: -7.5e-09)   362 (  1.4%) |*
+[ -7.5e-09: -6.3e-09)   323 (  1.2%) |*
+[ -6.3e-09: -5.1e-09)   292 (  1.1%) |*
+[ -5.1e-09:   -4e-09)   270 (  1.0%) |*
+[   -4e-09: -2.8e-09)   162 (  0.6%) |
+[ -2.8e-09: -1.6e-09)  4800 ( 18.5%) |***********
+[ -1.6e-09: -4.9e-10) 19611 ( 75.6%) |*********************************************
+Placement contains 2 placement macros involving 4 blocks (average macro size 2.000000)
+
+Moves per temperature: 3669
+Warning 398: Starting t: 719 of 793 configurations accepted.
+
+---- ------ ------- ------- ---------- ---------- ------- ---------- -------- ------- ------- ------ -------- --------- ------
+Tnum   Time       T Av Cost Av BB Cost Av TD Cost     CPD       sTNS     sWNS Ac Rate Std Dev  R lim Crit Exp Tot Moves  Alpha
+      (sec)                                          (ns)       (ns)     (ns)                                                 
+---- ------ ------- ------- ---------- ---------- ------- ---------- -------- ------- ------- ------ -------- --------- ------
+   1    0.1 6.1e-01   0.934     789.03 4.3938e-06  11.991  -4.17e+04  -11.991   0.941  0.0262   53.0     1.00      3669  0.200
+   2    0.1 5.5e-01   0.997     773.89 4.7359e-06  10.426  -4.09e+04  -10.426   0.939  0.0146   53.0     1.00      7338  0.900
+   3    0.1 5.0e-01   0.981     791.43 4.6523e-06  10.842  -4.01e+04  -10.842   0.938  0.0127   53.0     1.00     11007  0.900
+   4    0.1 4.5e-01   1.002     801.96 4.7064e-06  10.761  -4.17e+04  -10.761   0.937  0.0092   53.0     1.00     14676  0.900
+   5    0.1 4.0e-01   0.986     780.30 4.45e-06    11.183  -4.15e+04  -11.183   0.937  0.0099   53.0     1.00     18345  0.900
+   6    0.1 3.6e-01   0.976     782.62 4.3899e-06  11.470  -4.04e+04  -11.470   0.938  0.0196   53.0     1.00     22014  0.900
+   7    0.1 3.3e-01   0.975     784.71 3.7989e-06  13.268  -4.12e+04  -13.268   0.941  0.0149   53.0     1.00     25683  0.900
+   8    0.1 2.9e-01   0.949     768.89 4.0887e-06  12.017  -4.18e+04  -12.017   0.936  0.0152   53.0     1.00     29352  0.900
+   9    0.1 2.6e-01   0.998     775.51 4.6796e-06  10.321  -4.01e+04  -10.321   0.933  0.0124   53.0     1.00     33021  0.900
+  10    0.1 2.4e-01   1.008     780.14 4.1922e-06  11.678  -3.99e+04  -11.678   0.934  0.0118   53.0     1.00     36690  0.900
+  11    0.1 2.1e-01   0.986     785.91 4.7587e-06  10.660  -4.12e+04  -10.660   0.932  0.0139   53.0     1.00     40359  0.900
+  12    0.1 1.9e-01   1.000     779.53 4.7183e-06  10.343  -4.05e+04  -10.343   0.936  0.0149   53.0     1.00     44028  0.900
+  13    0.1 1.7e-01   1.010     777.73 4.5393e-06  10.767  -4.04e+04  -10.767   0.931  0.0108   53.0     1.00     47697  0.900
+  14    0.1 1.6e-01   0.991     783.56 4.0697e-06  12.221  -3.96e+04  -12.221   0.933  0.0161   53.0     1.00     51366  0.900
+  15    0.1 1.4e-01   0.974     785.50 4.5601e-06  11.053  -4.13e+04  -11.053   0.936  0.0187   53.0     1.00     55035  0.900
+  16    0.1 1.3e-01   0.972     768.50 4.5176e-06  10.973  -4.13e+04  -10.973   0.933  0.0153   53.0     1.00     58704  0.900
+  17    0.1 1.1e-01   0.979     764.76 4.4488e-06  11.078     -4e+04  -11.078   0.936  0.0130   53.0     1.00     62373  0.900
+  18    0.1 1.0e-01   0.983     784.20 4.55e-06    10.870  -3.98e+04  -10.870   0.937  0.0146   53.0     1.00     66042  0.900
+  19    0.1 9.2e-02   0.990     783.29 4.4178e-06  11.361  -4.07e+04  -11.361   0.932  0.0130   53.0     1.00     69711  0.900
+  20    0.1 8.3e-02   1.007     783.41 4.1925e-06  11.835  -4.15e+04  -11.835   0.936  0.0160   53.0     1.00     73380  0.900
+  21    0.1 7.5e-02   0.987     775.49 4.8795e-06  10.057  -4.09e+04  -10.057   0.935  0.0255   53.0     1.00     77049  0.900
+  22    0.1 6.7e-02   1.015     771.34 4.2395e-06  11.496  -4.01e+04  -11.496   0.929  0.0145   53.0     1.00     80718  0.900
+  23    0.1 6.0e-02   0.986     785.37 4.4724e-06  11.207  -4.16e+04  -11.207   0.933  0.0157   53.0     1.00     84387  0.900
+  24    0.1 5.4e-02   0.982     780.83 4.1999e-06  11.912  -4.23e+04  -11.912   0.937  0.0213   53.0     1.00     88056  0.900
+  25    0.1 4.9e-02   0.980     774.65 4.328e-06   11.393  -4.01e+04  -11.393   0.929  0.0123   53.0     1.00     91725  0.900
+  26    0.1 4.4e-02   0.984     764.22 3.7437e-06  12.929  -4.01e+04  -12.929   0.928  0.0099   53.0     1.00     95394  0.900
+  27    0.1 4.0e-02   1.003     778.30 4.2618e-06  11.548  -3.97e+04  -11.548   0.926  0.0165   53.0     1.00     99063  0.900
+  28    0.1 3.6e-02   0.964     764.18 4.194e-06   11.700  -4.05e+04  -11.700   0.932  0.0149   53.0     1.00    102732  0.900
+  29    0.1 3.2e-02   1.025     780.04 4.692e-06   10.342  -3.94e+04  -10.342   0.928  0.0125   53.0     1.00    106401  0.900
+  30    0.1 2.9e-02   0.967     770.88 4.4656e-06  11.183  -4.11e+04  -11.183   0.939  0.0135   53.0     1.00    110070  0.900
+  31    0.1 2.6e-02   0.965     775.17 4.5295e-06  11.183  -4.22e+04  -11.183   0.925  0.0191   53.0     1.00    113739  0.900
+  32    0.1 2.3e-02   0.999     767.07 4.8349e-06   9.954  -4.07e+04   -9.954   0.930  0.0121   53.0     1.00    117408  0.900
+  33    0.1 2.1e-02   0.985     777.98 4.6249e-06  10.787   -4.2e+04  -10.787   0.922  0.0157   53.0     1.00    121077  0.900
+  34    0.1 1.9e-02   0.957     772.23 3.9774e-06  12.538  -4.18e+04  -12.538   0.921  0.0108   53.0     1.00    124746  0.900
+  35    0.1 1.7e-02   0.991     763.00 4.4064e-06  10.794  -4.01e+04  -10.794   0.914  0.0148   53.0     1.00    128415  0.900
+  36    0.1 1.5e-02   1.008     756.28 4.5964e-06  10.271  -4.05e+04  -10.271   0.914  0.0131   53.0     1.00    132084  0.900
+  37    0.1 1.4e-02   0.960     743.27 4.8589e-06   9.844  -4.17e+04   -9.844   0.928  0.0195   53.0     1.00    135753  0.900
+  38    0.1 1.2e-02   0.998     741.44 4.5621e-06  10.222  -3.92e+04  -10.222   0.919  0.0137   53.0     1.00    139422  0.900
+  39    0.1 1.1e-02   0.993     752.06 4.1881e-06  11.522  -4.01e+04  -11.522   0.917  0.0099   53.0     1.00    143091  0.900
+  40    0.1 1.0e-02   1.000     754.97 4.608e-06   10.349     -4e+04  -10.349   0.907  0.0088   53.0     1.00    146760  0.900
+  41    0.1 9.1e-03   0.966     736.34 4.3406e-06  10.794  -4.09e+04  -10.794   0.909  0.0185   53.0     1.00    150429  0.900
+  42    0.1 8.2e-03   0.994     756.65 4.1418e-06  11.496  -3.97e+04  -11.496   0.912  0.0096   53.0     1.00    154098  0.900
+  43    0.1 7.3e-03   0.967     746.18 4.1999e-06  11.314  -4.17e+04  -11.314   0.905  0.0137   53.0     1.00    157767  0.900
+  44    0.1 6.6e-03   0.978     728.43 3.9041e-06  11.914  -4.04e+04  -11.914   0.890  0.0105   53.0     1.00    161436  0.900
+  45    0.1 5.9e-03   0.990     729.57 3.6877e-06  12.566  -3.93e+04  -12.566   0.889  0.0136   53.0     1.00    165105  0.900
+  46    0.1 5.4e-03   0.970     729.16 3.7055e-06  12.638   -4.1e+04  -12.638   0.884  0.0201   53.0     1.00    168774  0.900
+  47    0.1 4.8e-03   0.952     725.34 4.3341e-06  10.761  -3.99e+04  -10.761   0.876  0.0192   53.0     1.00    172443  0.900
+  48    0.1 4.3e-03   0.947     704.80 4.7299e-06   9.540     -4e+04   -9.540   0.879  0.0245   53.0     1.00    176112  0.900
+  49    0.1 3.9e-03   0.948     703.88 4.3571e-06  10.265  -4.16e+04  -10.265   0.862  0.0235   53.0     1.00    179781  0.900
+  50    0.1 3.5e-03   0.970     694.60 3.962e-06   11.002  -3.94e+04  -11.002   0.857  0.0149   53.0     1.00    183450  0.900
+  51    0.1 3.2e-03   0.983     680.68 4.1857e-06  10.240  -4.03e+04  -10.240   0.844  0.0121   53.0     1.00    187119  0.900
+  52    0.1 2.8e-03   0.999     680.48 3.7426e-06  11.419  -3.92e+04  -11.419   0.850  0.0150   53.0     1.00    190788  0.900
+  53    0.1 2.6e-03   0.983     664.67 3.6296e-06  11.601  -3.95e+04  -11.601   0.841  0.0300   53.0     1.00    194457  0.900
+  54    0.1 2.3e-03   0.986     626.24 3.872e-06    9.925  -3.88e+04   -9.925   0.826  0.0136   53.0     1.00    198126  0.900
+  55    0.1 2.1e-03   0.976     610.46 3.9691e-06   9.516  -3.85e+04   -9.516   0.813  0.0086   53.0     1.00    201795  0.900
+  56    0.1 1.9e-03   0.975     602.44 3.972e-06    9.509  -3.89e+04   -9.509   0.791  0.0205   53.0     1.00    205464  0.900
+  57    0.1 1.8e-03   0.989     591.43 3.9216e-06   9.435  -3.81e+04   -9.435   0.779  0.0114   53.0     1.00    209133  0.950
+  58    0.1 1.7e-03   0.991     575.34 3.5015e-06  10.242  -3.69e+04  -10.242   0.768  0.0076   53.0     1.00    212802  0.950
+  59    0.1 1.6e-03   0.953     554.65 3.6466e-06   9.724  -3.83e+04   -9.724   0.754  0.0208   53.0     1.00    216471  0.950
+  60    0.1 1.5e-03   0.981     564.36 4.0509e-06   8.603  -3.81e+04   -8.603   0.754  0.0117   53.0     1.00    220140  0.950
+  61    0.1 1.4e-03   0.956     538.14 3.4375e-06   9.722  -3.76e+04   -9.722   0.740  0.0197   53.0     1.00    223809  0.950
+  62    0.1 1.4e-03   0.976     530.90 3.5527e-06   9.299   -3.7e+04   -9.299   0.746  0.0136   53.0     1.00    227478  0.950
+  63    0.1 1.3e-03   0.973     523.98 3.379e-06    9.849  -3.78e+04   -9.849   0.726  0.0120   53.0     1.00    231147  0.950
+  64    0.1 1.2e-03   0.993     524.52 3.5776e-06   9.382  -3.84e+04   -9.382   0.724  0.0217   53.0     1.00    234816  0.950
+  65    0.1 1.2e-03   1.001     498.14 3.4213e-06   9.332  -3.62e+04   -9.332   0.707  0.0074   53.0     1.00    238485  0.950
+  66    0.1 1.1e-03   0.984     484.51 3.4408e-06   9.201  -3.62e+04   -9.201   0.709  0.0080   53.0     1.00    242154  0.950
+  67    0.1 1.1e-03   0.989     477.99 3.2792e-06   9.569  -3.64e+04   -9.569   0.687  0.0142   53.0     1.00    245823  0.950
+  68    0.1 1.0e-03   0.989     464.56 3.3353e-06   9.073  -3.52e+04   -9.073   0.693  0.0068   53.0     1.00    249492  0.950
+  69    0.1 9.6e-04   1.000     464.89 3.0957e-06   9.645  -3.63e+04   -9.645   0.680  0.0048   53.0     1.00    253161  0.950
+  70    0.1 9.1e-04   0.974     456.04 3.0384e-06   9.724  -3.63e+04   -9.724   0.673  0.0156   53.0     1.00    256830  0.950
+  71    0.1 8.6e-04   1.004     446.45 3.0234e-06   9.592   -3.5e+04   -9.592   0.654  0.0086   53.0     1.00    260499  0.950
+  72    0.1 8.2e-04   0.965     427.88 3.1222e-06   9.096  -3.53e+04   -9.096   0.653  0.0147   53.0     1.00    264168  0.950
+  73    0.1 7.8e-04   0.992     428.05 3.1546e-06   8.835  -3.43e+04   -8.835   0.654  0.0058   53.0     1.00    267837  0.950
+  74    0.1 7.4e-04   0.983     417.46 3.0543e-06   9.098  -3.55e+04   -9.098   0.648  0.0074   53.0     1.00    271506  0.950
+  75    0.1 7.0e-04   0.992     416.33 3.1799e-06   8.680  -3.57e+04   -8.680   0.632  0.0055   53.0     1.00    275175  0.950
+  76    0.1 6.7e-04   0.987     408.14 3.0953e-06   8.779  -3.55e+04   -8.779   0.624  0.0069   53.0     1.00    278844  0.950
+  77    0.1 6.4e-04   0.983     398.51 2.899e-06    9.306  -3.46e+04   -9.306   0.626  0.0061   53.0     1.00    282513  0.950
+  78    0.1 6.0e-04   0.987     392.57 2.9786e-06   8.892  -3.46e+04   -8.892   0.603  0.0046   53.0     1.00    286182  0.950
+  79    0.1 5.7e-04   1.000     393.26 2.8981e-06   9.201  -3.53e+04   -9.201   0.601  0.0033   53.0     1.00    289851  0.950
+  80    0.1 5.4e-04   0.995     390.48 3.1104e-06   8.500  -3.41e+04   -8.500   0.608  0.0044   53.0     1.00    293520  0.950
+  81    0.1 5.2e-04   0.992     387.70 3.0128e-06   8.674   -3.4e+04   -8.674   0.612  0.0070   53.0     1.00    297189  0.950
+  82    0.1 4.9e-04   0.989     380.52 2.9179e-06   8.785  -3.39e+04   -8.785   0.571  0.0074   53.0     1.00    300858  0.950
+  83    0.1 4.7e-04   0.990     371.96 2.8498e-06   8.967  -3.36e+04   -8.967   0.577  0.0044   53.0     1.00    304527  0.950
+  84    0.1 4.4e-04   0.994     369.57 2.9338e-06   8.597  -3.32e+04   -8.597   0.568  0.0044   53.0     1.00    308196  0.950
+  85    0.1 4.2e-04   0.996     368.26 2.7564e-06   9.098  -3.34e+04   -9.098   0.565  0.0036   53.0     1.00    311865  0.950
+  86    0.1 4.0e-04   0.988     367.86 3.0807e-06   8.080  -3.46e+04   -8.080   0.569  0.0052   53.0     1.00    315534  0.950
+  87    0.1 3.8e-04   0.993     364.74 2.7911e-06   8.861  -3.35e+04   -8.861   0.557  0.0043   53.0     1.00    319203  0.950
+  88    0.1 3.6e-04   0.989     359.88 2.8699e-06   8.472   -3.3e+04   -8.472   0.537  0.0050   53.0     1.00    322872  0.950
+  89    0.1 3.4e-04   1.001     356.54 2.9213e-06   8.367  -3.35e+04   -8.367   0.539  0.0025   53.0     1.00    326541  0.950
+  90    0.1 3.3e-04   0.993     354.43 2.9289e-06   8.264  -3.36e+04   -8.264   0.528  0.0026   53.0     1.00    330210  0.950
+  91    0.1 3.1e-04   0.994     352.32 2.9335e-06   8.185  -3.35e+04   -8.185   0.527  0.0037   53.0     1.00    333879  0.950
+  92    0.1 2.9e-04   0.997     347.73 2.8825e-06   8.262  -3.38e+04   -8.262   0.502  0.0025   53.0     1.00    337548  0.950
+  93    0.1 2.8e-04   0.998     346.96 2.8622e-06   8.342  -3.37e+04   -8.342   0.516  0.0019   53.0     1.00    341217  0.950
+  94    0.1 2.7e-04   0.997     348.20 2.8619e-06   8.361  -3.38e+04   -8.361   0.516  0.0016   53.0     1.00    344886  0.950
+  95    0.1 2.5e-04   0.998     347.70 2.9615e-06   8.048   -3.4e+04   -8.048   0.506  0.0028   53.0     1.00    348555  0.950
+  96    0.1 2.4e-04   0.989     344.34 2.9275e-06   8.056   -3.4e+04   -8.056   0.491  0.0039   53.0     1.00    352224  0.950
+  97    0.1 2.3e-04   0.995     342.67 2.9921e-06   7.848  -3.38e+04   -7.848   0.477  0.0029   53.0     1.00    355893  0.950
+  98    0.1 2.2e-04   0.997     342.95 2.7975e-06   8.361  -3.39e+04   -8.361   0.486  0.0030   53.0     1.00    359562  0.950
+  99    0.1 2.1e-04   0.993     339.30 2.6969e-06   8.601   -3.4e+04   -8.601   0.475  0.0048   53.0     1.00    363231  0.950
+ 100    0.1 2.0e-04   0.997     337.97 3.0211e-06   7.606   -3.4e+04   -7.606   0.475  0.0016   53.0     1.00    366900  0.950
+ 101    0.1 1.9e-04   0.994     336.20 3.1256e-06   7.354  -3.41e+04   -7.354   0.469  0.0034   53.0     1.00    370569  0.950
+ 102    0.1 1.8e-04   0.996     334.68 2.5423e-06   9.019  -3.37e+04   -9.019   0.470  0.0021   53.0     1.00    374238  0.950
+ 103    0.1 1.7e-04   0.997     334.07 2.7537e-06   8.264  -3.35e+04   -8.264   0.452  0.0016   53.0     1.00    377907  0.950
+ 104    0.1 1.6e-04   0.998     332.95 2.8516e-06   7.978  -3.31e+04   -7.978   0.444  0.0020   53.0     1.00    381576  0.950
+ 105    0.1 1.5e-04   0.995     332.47 2.8388e-06   7.945  -3.27e+04   -7.945   0.454  0.0035   53.0     1.00    385245  0.950
+ 106    0.1 1.4e-04   0.999     330.75 2.8518e-06   7.823  -3.29e+04   -7.823   0.439  0.0019   53.0     1.00    388914  0.950
+ 107    0.1 1.4e-04   0.996     328.99 3.0162e-06   7.321  -3.35e+04   -7.321   0.418  0.0033   52.9     1.01    392583  0.950
+ 108    0.1 1.3e-04   0.998     328.29 2.5545e-06   7.529  -3.32e+04   -7.529   0.404  0.0015   51.7     1.17    396252  0.950
+ 109    0.1 1.2e-04   0.995     326.94 2.0811e-06   7.692  -3.35e+04   -7.692   0.405  0.0023   49.9     1.42    399921  0.950
+ 110    0.1 1.2e-04   0.996     325.08 1.7714e-06   7.692  -3.31e+04   -7.692   0.400  0.0025   48.2     1.65    403590  0.950
+ 111    0.1 1.1e-04   0.997     323.73 1.4006e-06   7.945  -3.32e+04   -7.945   0.396  0.0020   46.2     1.91    407259  0.950
+ 112    0.1 1.1e-04   0.998     323.87 1.3755e-06   7.424  -3.37e+04   -7.424   0.376  0.0013   44.2     2.19    410928  0.950
+ 113    0.1 1.0e-04   0.996     322.29 1.0407e-06   7.737  -3.41e+04   -7.737   0.373  0.0017   41.4     2.57    414597  0.950
+ 114    0.1 9.5e-05   0.996     321.33 9.4778e-07   7.529  -3.41e+04   -7.529   0.393  0.0016   38.6     2.94    418266  0.950
+ 115    0.1 9.0e-05   0.996     321.10 9.9784e-07   7.111  -3.44e+04   -7.111   0.361  0.0021   36.8     3.18    421935  0.950
+ 116    0.1 8.6e-05   0.996     321.16 9.6925e-07   6.858  -3.43e+04   -6.858   0.369  0.0021   33.9     3.57    425604  0.950
+ 117    0.1 8.2e-05   0.999     321.41 9.2356e-07   6.753  -3.47e+04   -6.753   0.364  0.0008   31.5     3.89    429273  0.950
+ 118    0.1 7.8e-05   0.998     319.83 7.218e-07    7.008  -3.49e+04   -7.008   0.367  0.0010   29.1     4.22    432942  0.950
+ 119    0.1 7.4e-05   0.998     319.67 6.2625e-07   7.111  -3.47e+04   -7.111   0.349  0.0014   27.0     4.50    436611  0.950
+ 120    0.1 7.0e-05   0.998     320.51 7.3293e-07   6.692  -3.46e+04   -6.692   0.358  0.0010   24.5     4.84    440280  0.950
+ 121    0.1 6.7e-05   0.998     320.18 6.9959e-07   6.692  -3.45e+04   -6.692   0.372  0.0010   22.5     5.11    443949  0.950
+ 122    0.1 6.3e-05   0.999     319.30 6.6858e-07   6.695  -3.45e+04   -6.695   0.367  0.0008   21.0     5.31    447618  0.950
+ 123    0.1 6.0e-05   0.999     319.55 6.226e-07    6.692  -3.47e+04   -6.692   0.352  0.0012   19.4     5.52    451287  0.950
+ 124    0.1 5.7e-05   0.998     320.21 7.5996e-07   6.383  -3.48e+04   -6.383   0.348  0.0012   17.7     5.75    454956  0.950
+ 125    0.1 5.4e-05   0.999     319.77 7.3123e-07   6.383  -3.47e+04   -6.383   0.364  0.0007   16.1     5.97    458625  0.950
+ 126    0.1 5.1e-05   0.997     318.98 6.9583e-07   6.383  -3.48e+04   -6.383   0.353  0.0014   14.9     6.13    462294  0.950
+ 127    0.1 4.9e-05   0.999     318.38 6.782e-07    6.383   -3.5e+04   -6.383   0.374  0.0008   13.6     6.31    465963  0.950
+ 128    0.1 4.6e-05   1.000     318.07 6.1054e-07   6.485  -3.43e+04   -6.485   0.364  0.0005   12.7     6.43    469632  0.950
+ 129    0.1 4.4e-05   0.996     317.78 6.4992e-07   6.379  -3.39e+04   -6.379   0.361  0.0011   11.7     6.56    473301  0.950
+ 130    0.1 4.2e-05   0.999     317.15 6.3031e-07   6.379  -3.42e+04   -6.379   0.352  0.0005   10.8     6.68    476970  0.950
+ 131    0.1 4.0e-05   0.998     316.57 6.1607e-07   6.379  -3.38e+04   -6.379   0.360  0.0009    9.8     6.81    480639  0.950
+ 132    0.1 3.8e-05   0.998     315.58 6.1721e-07   6.379   -3.4e+04   -6.379   0.346  0.0011    9.1     6.91    484308  0.950
+ 133    0.1 3.6e-05   0.995     315.22 5.3609e-07   6.482   -3.4e+04   -6.482   0.362  0.0027    8.2     7.03    487977  0.950
+ 134    0.1 3.4e-05   0.994     313.96 5.9426e-07   6.379  -3.38e+04   -6.379   0.390  0.0049    7.6     7.12    491646  0.950
+ 135    0.1 3.2e-05   0.998     312.95 5.8242e-07   6.379  -3.38e+04   -6.379   0.370  0.0009    7.2     7.17    495315  0.950
+ 136    0.1 3.1e-05   0.992     313.26 5.3707e-07   6.482  -3.41e+04   -6.482   0.359  0.0077    6.7     7.23    498984  0.950
+ 137    0.1 2.9e-05   0.975     312.34 3.7714e-07   6.820  -3.39e+04   -6.820   0.375  0.0158    6.2     7.31    502653  0.950
+ 138    0.1 2.8e-05   0.997     311.23 4.9722e-07   6.485  -3.37e+04   -6.485   0.418  0.0033    5.8     7.36    506322  0.950
+ 139    0.1 2.6e-05   1.000     310.80 5.4109e-07   6.379  -3.37e+04   -6.379   0.397  0.0001    5.6     7.38    509991  0.950
+ 140    0.1 2.5e-05   0.999     310.28 5.452e-07    6.379  -3.39e+04   -6.379   0.394  0.0003    5.4     7.41    513660  0.950
+ 141    0.1 2.4e-05   0.997     310.43 5.3467e-07   6.379  -3.38e+04   -6.379   0.399  0.0034    5.1     7.44    517329  0.950
+ 142    0.1 2.3e-05   0.999     310.16 5.3769e-07   6.379  -3.37e+04   -6.379   0.402  0.0006    4.9     7.47    520998  0.950
+ 143    0.1 2.2e-05   0.999     309.76 5.3592e-07   6.379  -3.39e+04   -6.379   0.403  0.0004    4.7     7.50    524667  0.950
+ 144    0.1 2.0e-05   0.999     309.22 5.2721e-07   6.379  -3.38e+04   -6.379   0.394  0.0004    4.6     7.52    528336  0.950
+ 145    0.1 1.9e-05   0.998     308.94 5.2366e-07   6.379  -3.37e+04   -6.379   0.399  0.0032    4.4     7.55    532005  0.950
+ 146    0.1 1.8e-05   0.997     308.88 5.1093e-07   6.379  -3.35e+04   -6.379   0.403  0.0010    4.2     7.57    535674  0.950
+ 147    0.1 1.8e-05   0.999     308.29 5.0377e-07   6.379  -3.33e+04   -6.379   0.397  0.0005    4.0     7.59    539343  0.950
+ 148    0.1 1.7e-05   1.000     307.98 5.0134e-07   6.379  -3.35e+04   -6.379   0.379  0.0002    3.8     7.62    543012  0.950
+ 149    0.1 1.6e-05   1.000     307.60 5.0446e-07   6.379  -3.35e+04   -6.379   0.373  0.0002    3.6     7.65    546681  0.950
+ 150    0.1 1.5e-05   1.000     307.67 5.0063e-07   6.379  -3.35e+04   -6.379   0.382  0.0003    3.4     7.68    550350  0.950
+ 151    0.1 1.4e-05   1.000     307.70 4.9584e-07   6.379  -3.35e+04   -6.379   0.367  0.0001    3.2     7.71    554019  0.950
+ 152    0.1 1.4e-05   0.999     307.77 4.9176e-07   6.379  -3.35e+04   -6.379   0.395  0.0003    2.9     7.74    557688  0.950
+ 153    0.1 1.3e-05   0.998     307.84 4.862e-07    6.379  -3.33e+04   -6.379   0.404  0.0018    2.8     7.76    561357  0.950
+ 154    0.1 1.2e-05   0.992     307.60 4.9052e-07   6.379  -3.34e+04   -6.379   0.402  0.0056    2.7     7.77    565026  0.950
+ 155    0.1 1.2e-05   0.997     307.40 4.8125e-07   6.379  -3.35e+04   -6.379   0.429  0.0036    2.6     7.78    568695  0.950
+ 156    0.1 1.1e-05   0.991     307.60 4.7815e-07   6.379  -3.35e+04   -6.379   0.421  0.0028    2.6     7.79    572364  0.950
+ 157    0.1 1.0e-05   0.997     307.47 4.7731e-07   6.379  -3.34e+04   -6.379   0.410  0.0034    2.5     7.79    576033  0.950
+ 158    0.1 1.0e-05   0.994     307.39 4.7864e-07   6.379  -3.36e+04   -6.379   0.421  0.0050    2.5     7.80    579702  0.950
+ 159    0.1 9.5e-06   1.000     307.27 4.7656e-07   6.379  -3.34e+04   -6.379   0.400  0.0001    2.4     7.81    583371  0.950
+ 160    0.1 9.0e-06   1.000     307.14 4.7591e-07   6.379  -3.34e+04   -6.379   0.392  0.0001    2.3     7.82    587040  0.950
+ 161    0.1 8.5e-06   0.996     307.21 4.6906e-07   6.379  -3.34e+04   -6.379   0.408  0.0028    2.2     7.84    590709  0.950
+ 162    0.1 8.1e-06   1.000     307.46 4.8133e-07   6.379  -3.35e+04   -6.379   0.406  0.0003    2.1     7.85    594378  0.950
+ 163    0.1 7.7e-06   0.998     307.40 4.734e-07    6.379  -3.34e+04   -6.379   0.386  0.0039    2.1     7.86    598047  0.950
+ 164    0.1 7.3e-06   0.994     307.24 4.6503e-07   6.379  -3.34e+04   -6.379   0.416  0.0018    1.9     7.87    601716  0.950
+ 165    0.1 7.0e-06   0.999     307.18 4.743e-07    6.379  -3.34e+04   -6.379   0.342  0.0030    1.9     7.88    605385  0.950
+ 166    0.1 6.6e-06   0.996     307.20 4.6436e-07   6.379  -3.34e+04   -6.379   0.398  0.0033    1.7     7.90    609054  0.950
+ 167    0.1 6.3e-06   1.000     307.06 4.7175e-07   6.379  -3.36e+04   -6.379   0.335  0.0001    1.6     7.91    612723  0.950
+ 168    0.1 6.0e-06   0.997     306.94 4.6838e-07   6.379  -3.34e+04   -6.379   0.322  0.0041    1.5     7.94    616392  0.950
+ 169    0.1 5.7e-06   0.995     306.91 4.5875e-07   6.379  -3.33e+04   -6.379   0.304  0.0027    1.3     7.96    620061  0.950
+ 170    0.1 5.4e-06   0.999     306.84 4.6502e-07   6.379  -3.35e+04   -6.379   0.303  0.0030    1.1     7.98    623730  0.950
+ 171    0.1 5.1e-06   0.994     306.88 4.553e-07    6.379  -3.33e+04   -6.379   0.394  0.0023    1.0     8.00    627399  0.950
+ 172    0.1 4.9e-06   0.994     306.87 4.6098e-07   6.379  -3.33e+04   -6.379   0.366  0.0044    1.0     8.00    631068  0.950
+ 173    0.1 4.6e-06   0.994     306.91 4.547e-07    6.379  -3.33e+04   -6.379   0.371  0.0022    1.0     8.00    634737  0.950
+ 174    0.1 4.4e-06   1.000     306.83 4.6593e-07   6.379  -3.34e+04   -6.379   0.318  0.0001    1.0     8.00    638406  0.950
+ 175    0.1 4.2e-06   0.998     306.78 4.6434e-07   6.379  -3.34e+04   -6.379   0.264  0.0036    1.0     8.00    642075  0.950
+ 176    0.1 4.0e-06   0.999     306.84 4.5908e-07   6.379  -3.34e+04   -6.379   0.257  0.0020    1.0     8.00    645744  0.950
+ 177    0.1 3.8e-06   1.000     306.81 4.6562e-07   6.379  -3.34e+04   -6.379   0.278  0.0000    1.0     8.00    649413  0.950
+ 178    0.1 3.6e-06   1.000     306.89 4.6512e-07   6.379  -3.34e+04   -6.379   0.274  0.0000    1.0     8.00    653082  0.950
+ 179    0.1 3.4e-06   0.996     306.85 4.619e-07    6.379  -3.35e+04   -6.379   0.313  0.0045    1.0     8.00    656751  0.950
+ 180    0.1 3.2e-06   0.999     306.87 4.5951e-07   6.379  -3.34e+04   -6.379   0.333  0.0026    1.0     8.00    660420  0.950
+ 181    0.1 3.1e-06   0.992     306.87 4.5782e-07   6.379  -3.34e+04   -6.379   0.299  0.0036    1.0     8.00    664089  0.950
+ 182    0.1 2.9e-06   1.000     306.89 4.5911e-07   6.379  -3.33e+04   -6.379   0.285  0.0001    1.0     8.00    667758  0.950
+ 183    0.1 2.8e-06   1.000     306.85 4.586e-07    6.379  -3.34e+04   -6.379   0.279  0.0000    1.0     8.00    671427  0.950
+ 184    0.1 2.6e-06   0.995     306.72 4.5537e-07   6.379  -3.33e+04   -6.379   0.226  0.0028    1.0     8.00    675096  0.950
+ 185    0.1 2.5e-06   1.000     306.68 4.6471e-07   6.379  -3.34e+04   -6.379   0.255  0.0014    1.0     8.00    678765  0.950
+ 186    0.1 2.4e-06   0.997     306.72 4.5748e-07   6.379  -3.34e+04   -6.379   0.276  0.0033    1.0     8.00    682434  0.950
+ 187    0.1 2.3e-06   0.997     306.82 4.6148e-07   6.379  -3.34e+04   -6.379   0.282  0.0043    1.0     8.00    686103  0.950
+ 188    0.1 2.1e-06   0.996     306.78 4.5526e-07   6.379  -3.34e+04   -6.379   0.368  0.0032    1.0     8.00    689772  0.950
+ 189    0.1 2.0e-06   1.000     306.70 4.6523e-07   6.379  -3.34e+04   -6.379   0.319  0.0000    1.0     8.00    693441  0.950
+ 190    0.1 1.9e-06   1.000     306.68 4.6442e-07   6.379  -3.34e+04   -6.379   0.257  0.0018    1.0     8.00    697110  0.950
+ 191    0.1 1.8e-06   0.994     306.62 4.5517e-07   6.379  -3.33e+04   -6.379   0.235  0.0023    1.0     8.00    700779  0.950
+ 192    0.1 1.7e-06   0.998     306.64 4.6415e-07   6.379  -3.34e+04   -6.379   0.249  0.0035    1.0     8.00    704448  0.950
+ 193    0.1 1.7e-06   1.000     306.73 4.6016e-07   6.379  -3.33e+04   -6.379   0.265  0.0000    1.0     8.00    708117  0.950
+ 194    0.1 1.6e-06   0.996     306.74 4.5572e-07   6.379  -3.33e+04   -6.379   0.306  0.0031    1.0     8.00    711786  0.950
+ 195    0.1 1.5e-06   0.993     306.77 4.5889e-07   6.379  -3.34e+04   -6.379   0.277  0.0036    1.0     8.00    715455  0.950
+ 196    0.1 1.4e-06   1.000     306.75 4.587e-07    6.379  -3.34e+04   -6.379   0.268  0.0000    1.0     8.00    719124  0.950
+ 197    0.1 1.3e-06   0.996     306.70 4.5575e-07   6.379  -3.34e+04   -6.379   0.230  0.0032    1.0     8.00    722793  0.950
+ 198    0.1 1.3e-06   0.998     306.68 4.6403e-07   6.379  -3.34e+04   -6.379   0.209  0.0038    1.0     8.00    726462  0.950
+ 199    0.1 1.2e-06   1.000     306.67 4.5948e-07   6.379  -3.34e+04   -6.379   0.208  0.0000    1.0     8.00    730131  0.950
+ 200    0.1 1.2e-06   1.000     306.63 4.598e-07    6.379  -3.34e+04   -6.379   0.228  0.0000    1.0     8.00    733800  0.950
+ 201    0.1 1.1e-06   1.000     306.68 4.6049e-07   6.379  -3.34e+04   -6.379   0.231  0.0000    1.0     8.00    737469  0.950
+ 202    0.1 1.0e-06   0.996     306.72 4.549e-07    6.379  -3.33e+04   -6.379   0.253  0.0031    1.0     8.00    741138  0.950
+ 203    0.1 9.9e-07   0.996     306.62 4.6274e-07   6.379  -3.34e+04   -6.379   0.281  0.0045    1.0     8.00    744807  0.950
+ 204    0.1 9.4e-07   0.995     306.64 4.5533e-07   6.379  -3.33e+04   -6.379   0.333  0.0028    1.0     8.00    748476  0.950
+ 205    0.1 8.9e-07   0.991     306.69 4.5812e-07   6.379  -3.34e+04   -6.379   0.316  0.0019    1.0     8.00    752145  0.950
+ 206    0.1 8.5e-07   0.994     306.67 4.5437e-07   6.379  -3.34e+04   -6.379   0.264  0.0020    1.0     8.00    755814  0.950
+ 207    0.1 8.1e-07   1.000     306.60 4.663e-07    6.379  -3.34e+04   -6.379   0.255  0.0000    1.0     8.00    759483  0.950
+ 208    0.1 7.7e-07   0.996     306.66 4.6213e-07   6.379  -3.34e+04   -6.379   0.277  0.0045    1.0     8.00    763152  0.950
+ 209    0.1 0.0e+00   1.000     306.69 4.5947e-07   6.379  -3.34e+04   -6.379   0.126  0.0000    1.0     8.00    766821  0.950
+## Placement Quench took 0.07 seconds (max_rss 444.7 MiB)
+post-quench CPD = 6.379 (ns) 
+
+Completed placement consistency check successfully.
+
+Swaps called: 767614
+
+Aborted Move Reasons:
+  macro_from swap to location illegal: 14
+
+Placement estimated critical path delay (least slack): 6.379 ns, Fmax: 156.764 MHz
+Placement estimated setup Worst Negative Slack (sWNS): -6.379 ns
+Placement estimated setup Total Negative Slack (sTNS): -33354.6 ns
+
+Placement estimated setup slack histogram:
+[ -6.4e-09: -5.8e-09)    81 (  0.3%) |
+[ -5.8e-09: -5.2e-09)   266 (  1.0%) |*
+[ -5.2e-09: -4.6e-09)   249 (  1.0%) |*
+[ -4.6e-09:   -4e-09)    52 (  0.2%) |
+[   -4e-09: -3.4e-09)   197 (  0.8%) |*
+[ -3.4e-09: -2.8e-09)   285 (  1.1%) |*
+[ -2.8e-09: -2.3e-09)   214 (  0.8%) |*
+[ -2.3e-09: -1.7e-09)   657 (  2.5%) |**
+[ -1.7e-09: -1.1e-09) 10621 ( 40.9%) |************************************
+[ -1.1e-09: -4.9e-10) 13325 ( 51.4%) |*********************************************
+
+Placement estimated geomean non-virtual intra-domain period: 6.379 ns (156.764 MHz)
+Placement estimated fanout-weighted geomean non-virtual intra-domain period: 6.379 ns (156.764 MHz)
+
+Placement cost: 0.999921, bb_cost: 306.606, td_cost: 4.6004e-07, 
+
+Placement resource usage:
+  io      implemented as io     : 292
+  clb     implemented as clb    : 372
+  dsp_top implemented as dsp_top: 39
+  memory  implemented as memory : 90
+
+Placement number of temperatures: 209
+Placement total # of swap attempts: 767614
+	Swaps accepted: 426138 (55.5 %)
+	Swaps rejected: 277582 (36.2 %)
+	Swaps aborted :  63894 ( 8.3 %)
+
+
+Percentage of different move types:
+	Uniform move: 30.78 % (acc=53.54 %, rej=46.46 %, aborted=0.00 %)
+	Median move: 23.07 % (acc=41.82 %, rej=29.94 %, aborted=28.24 %)
+	W. Centroid move: 20.36 % (acc=66.44 %, rej=29.92 %, aborted=3.64 %)
+	Centroid move: 25.58 % (acc=61.98 %, rej=33.99 %, aborted=4.03 %)
+	W. Median move: 0.07 % (acc=5.48 %, rej=56.86 %, aborted=37.66 %)
+	Crit. Uniform move: 0.07 % (acc=0.37 %, rej=99.63 %, aborted=0.00 %)
+	Feasible Region move: 0.06 % (acc=0.00 %, rej=88.69 %, aborted=11.31 %)
+
+Placement Quench timing analysis took 0.0275413 seconds (0.0224352 STA, 0.00510614 slack) (1 full updates: 1 setup, 0 hold, 0 combined).
+Placement Total  timing analysis took 6.32542 seconds (4.86577 STA, 1.45965 slack) (211 full updates: 211 setup, 0 hold, 0 combined).
+update_td_costs: connections 0 nets 0 sum_nets 0 total 0
+# Placement took 13.91 seconds (max_rss 444.7 MiB, delta_rss +0.0 MiB)
+
+# Routing
+RR graph channel widths unchanged, skipping RR graph rebuild
+Confirming router algorithm: TIMING_DRIVEN.
+## Initializing router criticalities
+Initial Net Connection Criticality Histogram:
+[        0:      0.1) 1750 ( 13.8%) |*********************************
+[      0.1:      0.2) 2467 ( 19.5%) |**********************************************
+[      0.2:      0.3) 2049 ( 16.2%) |**************************************
+[      0.3:      0.4) 1335 ( 10.5%) |*************************
+[      0.4:      0.5)  574 (  4.5%) |***********
+[      0.5:      0.6)  782 (  6.2%) |***************
+[      0.6:      0.7) 1436 ( 11.3%) |***************************
+[      0.7:      0.8) 1307 ( 10.3%) |************************
+[      0.8:      0.9)  787 (  6.2%) |***************
+[      0.9:        1)  184 (  1.5%) |***
+## Initializing router criticalities took 0.28 seconds (max_rss 444.7 MiB, delta_rss +0.0 MiB)
+---- ------ ------- ---- ------- ------- ------- ----------------- --------------- -------- ---------- ---------- ---------- ---------- --------
+Iter   Time    pres  BBs    Heap  Re-Rtd  Re-Rtd Overused RR Nodes      Wirelength      CPD       sTNS       sWNS       hTNS       hWNS Est Succ
+      (sec)     fac Updt    push    Nets   Conns                                       (ns)       (ns)       (ns)       (ns)       (ns)     Iter
+---- ------ ------- ---- ------- ------- ------- ----------------- --------------- -------- ---------- ---------- ---------- ---------- --------
+   1    0.9     0.0    0 4699746    6603   11736    5115 ( 0.633%)  148487 ( 9.0%)    7.325 -4.998e+04     -7.325      0.000      0.000      N/A
+Incr Slack updates 211 in 0.399101 sec
+Full Max Req/Worst Slack updates 86 in 0.0780552 sec
+Incr Max Req/Worst Slack updates 125 in 0.164 sec
+Incr Criticality updates 81 in 0.168272 sec
+Full Criticality updates 130 in 0.489267 sec
+   2    0.8     0.5  158 3862600    4079    8282    2154 ( 0.267%)  147932 ( 8.9%)    7.325 -4.939e+04     -7.325      0.000      0.000      N/A
+   3    0.5     0.6   64 2382034    2485    5129    1445 ( 0.179%)  148693 ( 9.0%)    7.325 -4.957e+04     -7.325      0.000      0.000      N/A
+   4    0.4     0.8   27 1664824    1790    3794     973 ( 0.120%)  149204 ( 9.0%)    7.325 -4.962e+04     -7.325      0.000      0.000      N/A
+   5    0.3     1.1   20 1209734    1340    2883     686 ( 0.085%)  149443 ( 9.0%)    7.325 -4.923e+04     -7.325      0.000      0.000      N/A
+   6    0.2     1.4   15  715489     965    2009     482 ( 0.060%)  149619 ( 9.0%)    7.325 -4.925e+04     -7.325      0.000      0.000      N/A
+   7    0.1     1.9    6  405819     704    1466     332 ( 0.041%)  149994 ( 9.1%)    7.325 -4.929e+04     -7.325      0.000      0.000      N/A
+   8    0.1     2.4    4  200215     512    1007     239 ( 0.030%)  150096 ( 9.1%)    7.325 -4.928e+04     -7.325      0.000      0.000      N/A
+   9    0.1     3.1    5   91487     357     658     149 ( 0.018%)  150358 ( 9.1%)    7.325 -4.934e+04     -7.325      0.000      0.000      N/A
+  10    0.1     4.1    1   47252     238     405      88 ( 0.011%)  150566 ( 9.1%)    7.325 -4.930e+04     -7.325      0.000      0.000       22
+  11    0.1     5.3    0   32301     136     230      45 ( 0.006%)  150753 ( 9.1%)    7.325 -4.931e+04     -7.325      0.000      0.000       21
+  12    0.1     6.9    1   12150      72      92      20 ( 0.002%)  150801 ( 9.1%)    7.325 -4.932e+04     -7.325      0.000      0.000       19
+  13    0.1     9.0    1    4767      29      39       6 ( 0.001%)  150857 ( 9.1%)    7.325 -4.932e+04     -7.325      0.000      0.000       18
+  14    0.1    11.6    0    1462       9       9       2 ( 0.000%)  150873 ( 9.1%)    7.325 -4.932e+04     -7.325      0.000      0.000       16
+  15    0.1    15.1    0     542       2       2       0 ( 0.000%)  150877 ( 9.1%)    7.325 -4.932e+04     -7.325      0.000      0.000       15
+Restoring best routing
+Critical path: 7.32543 ns
+    Max Non Global Net Fanout: 185.000000
+Successfully routed after 15 routing iterations.
+Final Net Connection Criticality Histogram:
+[        0:      0.1) 1138 (  9.0%) |********************
+[      0.1:      0.2) 1897 ( 15.0%) |*********************************
+[      0.2:      0.3) 2646 ( 20.9%) |**********************************************
+[      0.3:      0.4) 1319 ( 10.4%) |***********************
+[      0.4:      0.5)  781 (  6.2%) |**************
+[      0.5:      0.6)  491 (  3.9%) |*********
+[      0.6:      0.7)  566 (  4.5%) |**********
+[      0.7:      0.8) 1619 ( 12.8%) |****************************
+[      0.8:      0.9) 1792 ( 14.1%) |*******************************
+[      0.9:        1)  422 (  3.3%) |*******
+Router Stats: total_nets_routed: 19321 total_connections_routed: 37741 total_heap_pushes: 15330422 total_heap_pops: 3514972
+# Routing took 4.31 seconds (max_rss 444.7 MiB, delta_rss +0.0 MiB)
+
+Checking to ensure routing is legal...
+# Checking to ensure non-configurable edges are legal
+# Checking to ensure non-configurable edges are legal took 0.10 seconds (max_rss 444.7 MiB, delta_rss +0.0 MiB)
+Completed routing consistency check successfully.
+
+Serial number (magic cookie) for the routing is: 177477162
+Circuit successfully routed with a channel width factor of 300.
+# Synchronize the packed netlist to routing optimization
+## Annotating rr_node with routed nets
+## Annotating rr_node with routed nets took 0.00 seconds (max_rss 444.7 MiB, delta_rss +0.0 MiB)
+Found 9822 mismatches between routing and packing results.
+Fixed 6593 routing traces due to mismatch between routing and packing results.
+# Synchronize the packed netlist to routing optimization took 0.11 seconds (max_rss 444.7 MiB, delta_rss +0.0 MiB)
+Final Clustering Statistics: 
+----------   --------   ------------------------------------   --------------------------
+Block Type   # Blocks   Avg. # of input clocks and pins used   Avg. # of output pins used
+----------   --------   ------------------------------------   --------------------------
+     EMPTY          0                                      0                            0   
+        io        292                               0.623288                     0.376712   
+       clb        372                                 19.957                      9.63441   
+   dsp_top         39                                58.4359                      29.5385   
+    memory         90                                30.9556                      20.6222   
+Absorbed logical nets 5537 out of 12239 nets, 6702 nets not absorbed.
+
+
+Average number of bends per net: 2.44722  Maximum # of bends: 137
+
+Number of global nets: 99
+Number of routed nets (nonglobal): 6603
+Wire length results (in units of 1 clb segments)...
+	Total wirelength: 150877, average net length: 22.8498
+	Maximum net length: 863
+
+Wire length results in terms of physical segments...
+	Total wiring segments used: 31921, average wire segments per net: 4.83432
+	Maximum segments used by a net: 198
+	Total local nets with reserved CLB opins: 0
+
+Routing channel utilization histogram:
+[        1:      inf)    0 (  0.0%) |
+[      0.9:        1)    0 (  0.0%) |
+[      0.8:      0.9)    0 (  0.0%) |
+[      0.7:      0.8)    0 (  0.0%) |
+[      0.5:      0.6)    0 (  0.0%) |
+[      0.4:      0.5)    2 (  0.0%) |
+[      0.3:      0.4)  100 (  1.8%) |*
+[      0.2:      0.3)  340 (  6.1%) |****
+[      0.1:      0.2) 1430 ( 25.5%) |******************
+[        0:      0.1) 3746 ( 66.7%) |**********************************************
+Maximum routing channel utilization:      0.43 at (34,16)
+
+X - Directed channels:   j max occ ave occ capacity
+                      ---- ------- ------- --------
+                         0      57  23.204      300
+                         1      12   2.278      300
+                         2      27   6.315      300
+                         3      38   9.537      300
+                         4      40  12.019      300
+                         5      35   8.407      300
+                         6      58  16.907      300
+                         7      51  18.056      300
+                         8      55  18.537      300
+                         9      55  19.315      300
+                        10      67  26.500      300
+                        11      76  27.870      300
+                        12      96  34.148      300
+                        13      96  30.000      300
+                        14     107  40.296      300
+                        15     116  40.315      300
+                        16     128  41.204      300
+                        17     116  42.111      300
+                        18     114  44.704      300
+                        19     104  39.167      300
+                        20     109  46.056      300
+                        21      97  37.148      300
+                        22     103  36.222      300
+                        23      86  37.074      300
+                        24      92  36.037      300
+                        25      54  25.741      300
+                        26      81  37.130      300
+                        27      74  35.556      300
+                        28      74  36.185      300
+                        29      59  33.796      300
+                        30      60  33.296      300
+                        31      58  24.241      300
+                        32      53  24.759      300
+                        33      52  27.852      300
+                        34      60  25.852      300
+                        35      61  25.315      300
+                        36      63  30.130      300
+                        37      60  23.519      300
+                        38      75  26.667      300
+                        39      72  26.241      300
+                        40      58  20.833      300
+                        41      45  18.444      300
+                        42      57  20.389      300
+                        43      41  15.685      300
+                        44      79  21.889      300
+                        45      88  21.870      300
+                        46      68  18.204      300
+                        47      55  19.593      300
+                        48      54  18.648      300
+                        49      35   9.704      300
+                        50      16   4.352      300
+                        51      14   2.759      300
+                        52      22   8.574      300
+Y - Directed channels:   i max occ ave occ capacity
+                      ---- ------- ------- --------
+                         0      50  27.556      300
+                         1      69  39.037      300
+                         2      72  42.981      300
+                         3      33  15.167      300
+                         4      82  37.981      300
+                         5     120  77.611      300
+                         6     114  78.500      300
+                         7      53  25.611      300
+                         8      33  17.296      300
+                         9      31   8.370      300
+                        10      25   7.352      300
+                        11      11   3.407      300
+                        12       3   0.444      300
+                        13      11   4.370      300
+                        14      18   8.593      300
+                        15      20  12.185      300
+                        16      23  14.574      300
+                        17      89  57.148      300
+                        18     111  65.852      300
+                        19      68  41.185      300
+                        20      94  63.500      300
+                        21     111  82.426      300
+                        22     135  82.741      300
+                        23      61  27.500      300
+                        24      46  16.167      300
+                        25      41  12.315      300
+                        26      26   8.722      300
+                        27      15   5.759      300
+                        28      32  13.056      300
+                        29      64  19.019      300
+                        30      99  33.074      300
+                        31     113  34.556      300
+                        32     137  44.685      300
+                        33     146  62.056      300
+                        34     156  68.796      300
+                        35     110  46.333      300
+                        36     109  47.574      300
+                        37     103  66.815      300
+                        38     110  58.796      300
+                        39      35  11.685      300
+                        40      13   4.593      300
+                        41       8   2.426      300
+                        42      13   4.074      300
+                        43       7   1.630      300
+                        44       3   0.667      300
+                        45       4   1.037      300
+                        46      25   7.333      300
+                        47      12   3.259      300
+                        48      10   3.704      300
+                        49      43  17.630      300
+                        50      46  15.407      300
+                        51      13   4.296      300
+                        52      19   6.519      300
+
+Total tracks in x-direction: 15900, in y-direction: 15900
+
+Logic area (in minimum width transistor areas, excludes I/Os and empty grid tiles)...
+	Total logic block area (Warning, need to add pitch of routing to blocks with height > 3): 8.95105e+07
+	Total used logic block area: 3.26679e+07
+
+Routing area (in minimum width transistor areas)...
+	Total routing area: 6.33386e+07, per logic tile: 21721.1
+
+Segment usage by type (index): name type utilization
+                               ---- ---- -----------
+                                 L4    0      0.0787
+                                L16    1       0.117
+
+Segment usage by length: length utilization
+                         ------ -----------
+                              4      0.0787
+                             16       0.117
+
+
+Final hold Worst Negative Slack (hWNS): 0 ns
+Final hold Total Negative Slack (hTNS): 0 ns
+
+Final hold slack histogram:
+[  1.9e-10:  6.2e-10) 2028 (  7.8%) |************
+[  6.2e-10:    1e-09) 4372 ( 16.8%) |**************************
+[    1e-09:  1.5e-09) 5084 ( 19.6%) |******************************
+[  1.5e-09:  1.9e-09) 7732 ( 29.8%) |**********************************************
+[  1.9e-09:  2.3e-09) 4764 ( 18.4%) |****************************
+[  2.3e-09:  2.7e-09) 1572 (  6.1%) |*********
+[  2.7e-09:  3.1e-09)  352 (  1.4%) |**
+[  3.1e-09:  3.6e-09)   37 (  0.1%) |
+[  3.6e-09:    4e-09)    5 (  0.0%) |
+[    4e-09:  4.4e-09)    1 (  0.0%) |
+
+Final critical path delay (least slack): 7.32543 ns, Fmax: 136.511 MHz
+Final setup Worst Negative Slack (sWNS): -7.32543 ns
+Final setup Total Negative Slack (sTNS): -49319.4 ns
+
+Final setup slack histogram:
+[ -7.3e-09: -6.6e-09)   110 (  0.4%) |
+[ -6.6e-09:   -6e-09)   301 (  1.2%) |*
+[   -6e-09: -5.3e-09)   191 (  0.7%) |*
+[ -5.3e-09: -4.6e-09)   103 (  0.4%) |
+[ -4.6e-09: -3.9e-09)   243 (  0.9%) |*
+[ -3.9e-09: -3.2e-09)   334 (  1.3%) |*
+[ -3.2e-09: -2.5e-09)  1863 (  7.2%) |********
+[ -2.5e-09: -1.9e-09)  8014 ( 30.9%) |***********************************
+[ -1.9e-09: -1.2e-09) 10409 ( 40.1%) |*********************************************
+[ -1.2e-09: -4.9e-10)  4379 ( 16.9%) |*******************
+
+Final geomean non-virtual intra-domain period: 7.32543 ns (136.511 MHz)
+Final fanout-weighted geomean non-virtual intra-domain period: 7.32543 ns (136.511 MHz)
+
+Incr Slack updates 1 in 0.0022376 sec
+Full Max Req/Worst Slack updates 1 in 0.000905701 sec
+Incr Max Req/Worst Slack updates 0 in 0 sec
+Incr Criticality updates 0 in 0 sec
+Full Criticality updates 1 in 0.00414268 sec
+Flow timing analysis took 7.76694 seconds (6.15912 STA, 1.60782 slack) (229 full updates: 212 setup, 0 hold, 17 combined).
+VPR succeeded
+The entire flow of VPR took 87.47 seconds (max_rss 444.7 MiB)
+Incr Slack updates 16 in 0.0272428 sec
+Full Max Req/Worst Slack updates 1 in 0.000894957 sec
+Incr Max Req/Worst Slack updates 15 in 0.0196957 sec
+Incr Criticality updates 14 in 0.0295581 sec
+Full Criticality updates 2 in 0.00833183 sec
+	Command being timed: "/export/aman/vtr_aman/vtr-verilog-to-routing/vpr/vpr k6FracN10LB_mem20K_complexDSP_customSB_22nm.xml brainwave --circuit_file brainwave.pre-vpr.blif --const_gen_inference comb --timing_report_detail aggregated --route_chan_width 300 --max_router_iterations 150"
+	User time (seconds): 86.49
+	System time (seconds): 0.48
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:27.52
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 455328
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 218322
+	Voluntary context switches: 23015
+	Involuntary context switches: 7234
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
