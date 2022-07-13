@@ -1,0 +1,224 @@
+/usr/bin/env time -v /export/aman/vtr_aman/vtr-verilog-to-routing/ODIN_II/odin_II --adder_type default --elaborator yosys --fflegalize -U0 -c odin_config.xml
+=======================================================================
+ Odin II - Verilog synthesis tools targetting VPR FPGAs
+-----------------------------------------------------------------------
+	Version: 8.1.0-dev+cedd632d9
+	Revision: v8.0.0-6306-gcedd632d9
+	Compiled: 2022-07-13T11:01:36
+	Compiler: GNU 8.4.0 on Linux-4.15.0-124-generic x86_64
+	Build Info: release IPO VTR_ASSERT_LEVEL=2
+
+University of New Brunswick
+For documentation:
+  https://docs.verilogtorouting.org/en/latest/odin
+For question:
+  vtr-users@googlegroups.com
+
+This is free open source code under MIT license.
+=======================================================================
+
+Reading Configuration file
+Architecture: k6FracN10LB_mem20K_complexDSP_customSB_22nm.xml
+Reading FPGA Architecture file
+Using Lut input width of: 4
+--------------------------------------------------------------------
+High-level Synthesis Begin
+Reading top level module
+Reading blif netlist...
+  0%|>--------------------------------------------------| Remaining: 29.1ms    
+  2%|=>-------------------------------------------------| Remaining: 17111.5ms    
+  4%|==>------------------------------------------------| Remaining: 14630.8ms    
+  6%|===>-----------------------------------------------| Remaining: 12786.0ms    
+  8%|====>----------------------------------------------| Remaining: 10116.4ms    
+ 10%|=====>---------------------------------------------| Remaining: 8811.7ms    
+ 12%|======>--------------------------------------------| Remaining: 7267.2ms    
+ 14%|=======>-------------------------------------------| Remaining: 6246.3ms    
+ 16%|========>------------------------------------------| Remaining: 5727.7ms    
+ 18%|=========>-----------------------------------------| Remaining: 5055.6ms    
+ 20%|==========>----------------------------------------| Remaining: 4523.5ms    
+ 22%|===========>---------------------------------------| Remaining: 4086.6ms    
+ 24%|============>--------------------------------------| Remaining: 3761.8ms    
+ 26%|=============>-------------------------------------| Remaining: 3389.6ms    
+ 28%|==============>------------------------------------| Remaining: 3070.3ms    
+ 30%|===============>-----------------------------------| Remaining: 2793.6ms    
+ 32%|================>----------------------------------| Remaining: 2550.7ms    
+ 34%|=================>---------------------------------| Remaining: 2336.3ms    
+ 36%|==================>--------------------------------| Remaining: 2145.4ms    
+ 38%|===================>-------------------------------| Remaining: 1974.3ms    
+ 40%|====================>------------------------------| Remaining: 1819.9ms    
+ 42%|=====================>-----------------------------| Remaining: 1679.7ms    
+ 44%|======================>----------------------------| Remaining: 1552.2ms    
+ 46%|=======================>---------------------------| Remaining: 1435.4ms    
+ 48%|========================>--------------------------| Remaining: 1329.0ms    
+ 50%|=========================>-------------------------| Remaining: 1229.9ms    
+ 52%|==========================>------------------------| Remaining: 1138.1ms    
+ 54%|===========================>-----------------------| Remaining: 1053.0ms    
+ 56%|============================>----------------------| Remaining: 973.8ms    
+ 58%|=============================>---------------------| Remaining: 899.8ms    
+ 60%|==============================>--------------------| Remaining: 830.5ms    
+ 62%|===============================>-------------------| Remaining: 765.4ms    
+ 64%|================================>------------------| Remaining: 704.2ms    
+ 66%|=================================>-----------------| Remaining: 646.6ms    
+ 68%|==================================>----------------| Remaining: 592.2ms    
+ 70%|===================================>---------------| Remaining: 540.7ms    
+ 72%|====================================>--------------| Remaining: 491.8ms    
+ 74%|=====================================>-------------| Remaining: 445.4ms    
+ 76%|======================================>------------| Remaining: 401.3ms    
+ 78%|=======================================>-----------| Remaining: 359.4ms    
+ 80%|========================================>----------| Remaining: 319.3ms    
+ 82%|=========================================>---------| Remaining: 281.0ms    
+ 84%|==========================================>--------| Remaining: 244.5ms    
+ 86%|===========================================>-------| Remaining: 209.5ms    
+ 88%|============================================>------| Remaining: 175.9ms    
+ 90%|=============================================>-----| Remaining: 143.7ms    
+ 92%|==============================================>----| Remaining: 112.7ms    
+ 94%|===============================================>---| Remaining: 82.9ms    
+ 96%|================================================>--| Remaining: 54.3ms    
+ 98%|=================================================>-| Remaining: 26.6ms    
+100%|==================================================>| Total time: 1309.3ms    
+-------------------------------------
+Elaborating the netlist created from the input BLIF file
+
+Elaboration Time: 7311.2ms
+--------------------------------------------------------------------
+Successful Elaboration of the design by Odin-II
+Performing Optimization on the Netlist
+
+Hard Logical Memory Distribution
+============================
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+SPRAM: 64 width 1024 depth
+DPRAM: 32 width 1024 depth
+DPRAM: 32 width 1024 depth
+DPRAM: 32 width 1024 depth
+DPRAM: 32 width 1024 depth
+DPRAM: 64 width 1024 depth
+DPRAM: 64 width 1024 depth
+DPRAM: 64 width 1024 depth
+DPRAM: 64 width 1024 depth
+DPRAM: 32 width 1024 depth
+
+Total Logical Memory Blocks = 25 
+Total Logical Memory bits = 1474560 
+Max Memory Width = 64 
+Max Memory Depth = 1024 
+
+
+Optimization Time: 33.3ms
+--------------------------------------------------------------------
+Successful Optimization of netlist by Odin-II
+Performing Partial Technology Mapping to the target device
+
+Techmap Time: 49.1ms
+--------------------------------------------------------------------
+Successful Partial Technology Mapping by Odin-II
+Outputting the netlist to the specified output format
+
+Hard Multiplier Distribution
+============================
+3 X 8 => 5
+8 X 8 => 139
+
+
+Total # of multipliers = 144
+
+Hard adder Distribution
+============================
+
+
+Total # of chains = 0
+
+Hard adder chain Details
+============================
+
+
+The Number of Hard Block adders in the Longest Chain: 0
+
+
+The Total Number of Hard Block adders: 0
+
+
+Geometric mean adder/subtractor chain length: -nan
+
+Hard MINUS Distribution
+============================
+
+
+Total # of chains = 0
+
+Hard sub chain Details
+============================
+
+
+The Number of Hard Block subs in the Longest Chain: 0
+
+
+The Total Number of Hard Block subs: 0
+
+	==== Stats ====
+Number of <FF_NODE> node:                 2909
+Number of <INPUT_NODE> node:              109
+Number of <OUTPUT_NODE> node:             182
+Number of <CLOCK_NODE> node:              1
+Number of <ADD> node:                     1350
+Number of <LOGICAL_NOT> node:             92
+Number of <LOGICAL_OR> node:              732
+Number of <LOGICAL_AND> node:             240
+Number of <LOGICAL_XNOR> node:            711
+Number of <LOGICAL_XOR> node:             643
+Number of <MULTIPLY> node:                144
+Number of <MUX_2> node:                   4786
+Number of <MEMORY> node:                  1440
+Number of <GENERIC> node:                 7588
+Total estimated number of lut:            8054
+Total number of node:                     13432
+Longest path:                             1327
+Average path:                             3
+
+	BLIF file available at brainwave.odin.blif
+
+Total Synthesis Time: 7393.6ms
+--------------------------------------------------------------------
+Odin_II synthesis has finished with code: 0
+
+--------------------------------------------------------------------
+Total time: 7525.6ms
+Odin ran with exit status: 0
+Odin II took 7.53 seconds (max_rss 56.1 MiB)
+	Command being timed: "/export/aman/vtr_aman/vtr-verilog-to-routing/ODIN_II/odin_II --adder_type default --elaborator yosys --fflegalize -U0 -c odin_config.xml"
+	User time (seconds): 7.29
+	System time (seconds): 0.12
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:07.53
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 69472
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 31289
+	Voluntary context switches: 4600
+	Involuntary context switches: 578
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

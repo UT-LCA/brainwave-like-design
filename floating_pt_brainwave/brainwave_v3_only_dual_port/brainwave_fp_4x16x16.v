@@ -2,7 +2,7 @@
 // THIS FILE WAS AUTOMATICALLY GENERATED FROM includes.v.mako
 // DO NOT EDIT
 ////////////////////////////////////////////////////////////////////////////////
-
+`define SIMULATION
 
 `define NUM_TILES 4
 `define NUM_LDPES 16
@@ -10197,10 +10197,6 @@ module tanh_dp_ram(
 
 reg [16-1:0] ram [((1<<10)-1):0];
 
-initial begin
-   $readmemb("/home/tanmay/Koios++ - Copy/Multi_tile_design/tanh_activation_mem.txt" ,ram ,0); 
-end
-
 // Port A
 always @(posedge clk)  begin
 
@@ -10253,10 +10249,6 @@ module sigmoid_dp_ram(
 `ifdef SIMULATION
 
 reg [16-1:0] ram [((1<<10)-1):0];
-
-initial begin
-   $readmemb("/home/tanmay/Koios++ - Copy/Multi_tile_design/sigmoid_activation_mem.txt" ,ram ,0); 
-end
 
 // Port A
 always @(posedge clk)  begin
