@@ -1,5 +1,5 @@
 <%!
-    num_ldpes = 16 #32
+    num_ldpes = 4 #32
 %>
 
 //`include "includes_gen.v"
