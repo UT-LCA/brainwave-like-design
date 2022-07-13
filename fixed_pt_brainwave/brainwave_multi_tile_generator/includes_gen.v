@@ -11,9 +11,9 @@
 
 `define NUM_TILES 4
 
-`define NUM_LDPES 4
-`define DSPS_PER_LDPE 4
-`define DSPS_PER_SUB_LDPE 4
+`define NUM_LDPES 16
+`define DSPS_PER_LDPE 16
+`define DSPS_PER_SUB_LDPE 16
 `define SUB_LDPES_PER_LDPE (`DSPS_PER_LDPE/`DSPS_PER_SUB_LDPE)
 
 `define MULTS_PER_DSP 2
@@ -37,17 +37,17 @@
 
 `define LDPES_PER_MRF 1
 `define DSPS_PER_MRF (`DSPS_PER_LDPE * `LDPES_PER_MRF)
-`define MAT_BRAM_AWIDTH 10
+`define MAT_BRAM_AWIDTH 9
 `define MAT_BRAM_DWIDTH 32
-`define MAT_BRAMS_PER_MRF_SUBSET 2
+`define MAT_BRAMS_PER_MRF_SUBSET 8
 `define SUBSETS_PER_MRF 1
 `define BRAMS_PER_MRF (`MAT_BRAMS_PER_MRF_SUBSET * `SUBSETS_PER_MRF)
 `define MRF_AWIDTH (`MAT_BRAM_AWIDTH + $clog2(`SUBSETS_PER_MRF))
 `define MRF_DWIDTH (`MAT_BRAM_DWIDTH * `MAT_BRAMS_PER_MRF_SUBSET)
 
-`define ORF_DWIDTH 32 //64
+`define ORF_DWIDTH 128 //256
 
-`define MAX_VRF_DWIDTH 64
+`define MAX_VRF_DWIDTH 256
 `define DRAM_DWIDTH (`MRF_DWIDTH + `ORF_DWIDTH + `VRF_DWIDTH) //KEEP THIS LARGE TO AVOID OPTIMIZATION IN VTR 
 `define DRAM_AWIDTH `MRF_AWIDTH
 
@@ -55,7 +55,7 @@
 `define DSPS_PER_VRF (`DSPS_PER_LDPE * `LDPES_PER_VRF)
 `define VEC_BRAM_AWIDTH 10
 `define VEC_BRAM_DWIDTH 16
-`define BRAMS_PER_VRF 4
+`define BRAMS_PER_VRF 16
 `define VRF_AWIDTH `VEC_BRAM_AWIDTH
 `define VRF_DWIDTH (`VEC_BRAM_DWIDTH * `BRAMS_PER_VRF)
 
@@ -136,15 +136,63 @@
 `define MRF_13 13
 `define MRF_14 14
 `define MRF_15 15
+`define MRF_16 16
+`define MRF_17 17
+`define MRF_18 18
+`define MRF_19 19
+`define MRF_20 20
+`define MRF_21 21
+`define MRF_22 22
+`define MRF_23 23
+`define MRF_24 24
+`define MRF_25 25
+`define MRF_26 26
+`define MRF_27 27
+`define MRF_28 28
+`define MRF_29 29
+`define MRF_30 30
+`define MRF_31 31
+`define MRF_32 32
+`define MRF_33 33
+`define MRF_34 34
+`define MRF_35 35
+`define MRF_36 36
+`define MRF_37 37
+`define MRF_38 38
+`define MRF_39 39
+`define MRF_40 40
+`define MRF_41 41
+`define MRF_42 42
+`define MRF_43 43
+`define MRF_44 44
+`define MRF_45 45
+`define MRF_46 46
+`define MRF_47 47
+`define MRF_48 48
+`define MRF_49 49
+`define MRF_50 50
+`define MRF_51 51
+`define MRF_52 52
+`define MRF_53 53
+`define MRF_54 54
+`define MRF_55 55
+`define MRF_56 56
+`define MRF_57 57
+`define MRF_58 58
+`define MRF_59 59
+`define MRF_60 60
+`define MRF_61 61
+`define MRF_62 62
+`define MRF_63 63
 
 `define MFU_0 0
 `define MFU_1 1
 
 `define INSTR_MEM_AWIDTH 10
 
-`define NUM_MVM_CYCLES 7
+`define NUM_MVM_CYCLES 19
 
 `define OPCODE_WIDTH 4 
-`define TARGET_OP_WIDTH 5
+`define TARGET_OP_WIDTH 7
 
 `define INSTR_WIDTH `OPCODE_WIDTH+`TARGET_OP_WIDTH+`DRAM_AWIDTH+`TARGET_OP_WIDTH+`VRF_AWIDTH + `VRF_AWIDTH

@@ -1,9 +1,9 @@
 <%!
     import math
 
-    num_tiles = 4
-    num_ldpes = 4
-    num_dsp_per_ldpe = 4
+    num_tiles = 4 #CHANGE THIS
+    num_ldpes = 16 #CHANGE THIS
+    num_dsp_per_ldpe = 16 #CHANGE THIS
     num_reduction_stages = int(math.log2(num_tiles))
     in_precision = 8
     out_precision = 8
@@ -48,7 +48,7 @@
 
 `define LDPES_PER_MRF 1
 `define DSPS_PER_MRF (`DSPS_PER_LDPE * `LDPES_PER_MRF)
-`define MAT_BRAM_AWIDTH 10
+`define MAT_BRAM_AWIDTH 9
 `define MAT_BRAM_DWIDTH ${mat_bram_dwidth}
 `define MAT_BRAMS_PER_MRF_SUBSET ${int(num_dsp_per_ldpe*mac_per_dsp*in_precision/mat_bram_dwidth)}
 `define SUBSETS_PER_MRF 1
