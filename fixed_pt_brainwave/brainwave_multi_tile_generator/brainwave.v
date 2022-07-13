@@ -4,7 +4,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-`define SIMULATION
 
 `define IN_PRECISION 8
 `define OUT_PRECISION 8
@@ -2392,8 +2391,8 @@ assign result = result_reg;
 
 `else
 
-wire [11:0] mode;
-assign mode = 12'b0101_0101_0011;
+wire [10:0] mode;
+assign mode = 11'b101_0101_0011;
 
 int_sop_2 mac_component (
     .mode_sigs(mode),
@@ -2404,7 +2403,7 @@ int_sop_2 mac_component (
     .bx(bx),
     .by(by),
     .chainin(chainin),
-    .result(result),
+    .resulta(result),
     .chainout(chainout)
 );
 
@@ -2504,8 +2503,8 @@ end
 `else
 
 
-defparam u_dual_port_ram.ADDR_WIDTH = AWIDTH;
-defparam u_dual_port_ram.DATA_WIDTH = DWIDTH;
+defparam u_single_port_ram.ADDR_WIDTH = AWIDTH;
+defparam u_single_port_ram.DATA_WIDTH = DWIDTH;
 
 single_port_ram u_single_port_ram(
 .addr(addr),
