@@ -447,6 +447,70 @@ module elt_wise_add(
     wire [(`DWIDTH)-1:0] y_15;
     
     add a15(.p(out_data[(16*`DWIDTH)-1:(15*`DWIDTH)]),.x(x_15),.y(y_15), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_16; 
+    wire [(`DWIDTH)-1:0] y_16;
+    
+    add a16(.p(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]),.x(x_16),.y(y_16), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_17; 
+    wire [(`DWIDTH)-1:0] y_17;
+    
+    add a17(.p(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]),.x(x_17),.y(y_17), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_18; 
+    wire [(`DWIDTH)-1:0] y_18;
+    
+    add a18(.p(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]),.x(x_18),.y(y_18), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_19; 
+    wire [(`DWIDTH)-1:0] y_19;
+    
+    add a19(.p(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]),.x(x_19),.y(y_19), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_20; 
+    wire [(`DWIDTH)-1:0] y_20;
+    
+    add a20(.p(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]),.x(x_20),.y(y_20), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_21; 
+    wire [(`DWIDTH)-1:0] y_21;
+    
+    add a21(.p(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]),.x(x_21),.y(y_21), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_22; 
+    wire [(`DWIDTH)-1:0] y_22;
+    
+    add a22(.p(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]),.x(x_22),.y(y_22), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_23; 
+    wire [(`DWIDTH)-1:0] y_23;
+    
+    add a23(.p(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]),.x(x_23),.y(y_23), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_24; 
+    wire [(`DWIDTH)-1:0] y_24;
+    
+    add a24(.p(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]),.x(x_24),.y(y_24), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_25; 
+    wire [(`DWIDTH)-1:0] y_25;
+    
+    add a25(.p(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]),.x(x_25),.y(y_25), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_26; 
+    wire [(`DWIDTH)-1:0] y_26;
+    
+    add a26(.p(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]),.x(x_26),.y(y_26), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_27; 
+    wire [(`DWIDTH)-1:0] y_27;
+    
+    add a27(.p(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]),.x(x_27),.y(y_27), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_28; 
+    wire [(`DWIDTH)-1:0] y_28;
+    
+    add a28(.p(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]),.x(x_28),.y(y_28), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_29; 
+    wire [(`DWIDTH)-1:0] y_29;
+    
+    add a29(.p(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]),.x(x_29),.y(y_29), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_30; 
+    wire [(`DWIDTH)-1:0] y_30;
+    
+    add a30(.p(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]),.x(x_30),.y(y_30), .clk(clk), .reset(~enable_add));
+    wire [(`DWIDTH)-1:0] x_31; 
+    wire [(`DWIDTH)-1:0] y_31;
+    
+    add a31(.p(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]),.x(x_31),.y(y_31), .clk(clk), .reset(~enable_add));
 
     assign x_0 = primary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign x_1 = primary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -464,6 +528,22 @@ module elt_wise_add(
     assign x_13 = primary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
     assign x_14 = primary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
     assign x_15 = primary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
+    assign x_16 = primary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
+    assign x_17 = primary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
+    assign x_18 = primary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
+    assign x_19 = primary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
+    assign x_20 = primary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
+    assign x_21 = primary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
+    assign x_22 = primary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
+    assign x_23 = primary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
+    assign x_24 = primary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
+    assign x_25 = primary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
+    assign x_26 = primary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
+    assign x_27 = primary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
+    assign x_28 = primary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
+    assign x_29 = primary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
+    assign x_30 = primary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
+    assign x_31 = primary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
 
     assign y_0 = secondary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign y_1 = secondary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -481,6 +561,22 @@ module elt_wise_add(
     assign y_13 = secondary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
     assign y_14 = secondary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
     assign y_15 = secondary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
+    assign y_16 = secondary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
+    assign y_17 = secondary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
+    assign y_18 = secondary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
+    assign y_19 = secondary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
+    assign y_20 = secondary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
+    assign y_21 = secondary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
+    assign y_22 = secondary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
+    assign y_23 = secondary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
+    assign y_24 = secondary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
+    assign y_25 = secondary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
+    assign y_26 = secondary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
+    assign y_27 = secondary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
+    assign y_28 = secondary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
+    assign y_29 = secondary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
+    assign y_30 = secondary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
+    assign y_31 = secondary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
 
      reg[`LOG_ADD_LATENCY-1:0] state;
      always @(posedge clk) begin
@@ -573,6 +669,70 @@ module elt_wise_mul(
     wire [(`DWIDTH)-1:0] y_15;
     
     mult m15(.p(out_data[(16*`DWIDTH)-1:(15*`DWIDTH)]),.x(x_15),.y(y_15), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_16; 
+    wire [(`DWIDTH)-1:0] y_16;
+    
+    mult m16(.p(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]),.x(x_16),.y(y_16), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_17; 
+    wire [(`DWIDTH)-1:0] y_17;
+    
+    mult m17(.p(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]),.x(x_17),.y(y_17), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_18; 
+    wire [(`DWIDTH)-1:0] y_18;
+    
+    mult m18(.p(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]),.x(x_18),.y(y_18), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_19; 
+    wire [(`DWIDTH)-1:0] y_19;
+    
+    mult m19(.p(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]),.x(x_19),.y(y_19), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_20; 
+    wire [(`DWIDTH)-1:0] y_20;
+    
+    mult m20(.p(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]),.x(x_20),.y(y_20), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_21; 
+    wire [(`DWIDTH)-1:0] y_21;
+    
+    mult m21(.p(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]),.x(x_21),.y(y_21), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_22; 
+    wire [(`DWIDTH)-1:0] y_22;
+    
+    mult m22(.p(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]),.x(x_22),.y(y_22), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_23; 
+    wire [(`DWIDTH)-1:0] y_23;
+    
+    mult m23(.p(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]),.x(x_23),.y(y_23), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_24; 
+    wire [(`DWIDTH)-1:0] y_24;
+    
+    mult m24(.p(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]),.x(x_24),.y(y_24), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_25; 
+    wire [(`DWIDTH)-1:0] y_25;
+    
+    mult m25(.p(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]),.x(x_25),.y(y_25), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_26; 
+    wire [(`DWIDTH)-1:0] y_26;
+    
+    mult m26(.p(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]),.x(x_26),.y(y_26), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_27; 
+    wire [(`DWIDTH)-1:0] y_27;
+    
+    mult m27(.p(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]),.x(x_27),.y(y_27), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_28; 
+    wire [(`DWIDTH)-1:0] y_28;
+    
+    mult m28(.p(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]),.x(x_28),.y(y_28), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_29; 
+    wire [(`DWIDTH)-1:0] y_29;
+    
+    mult m29(.p(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]),.x(x_29),.y(y_29), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_30; 
+    wire [(`DWIDTH)-1:0] y_30;
+    
+    mult m30(.p(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]),.x(x_30),.y(y_30), .clk(clk), .reset(~enable_mul));
+    wire [(`DWIDTH)-1:0] x_31; 
+    wire [(`DWIDTH)-1:0] y_31;
+    
+    mult m31(.p(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]),.x(x_31),.y(y_31), .clk(clk), .reset(~enable_mul));
 
     assign x_0 = primary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign x_1 = primary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -590,6 +750,22 @@ module elt_wise_mul(
     assign x_13 = primary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
     assign x_14 = primary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
     assign x_15 = primary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
+    assign x_16 = primary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
+    assign x_17 = primary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
+    assign x_18 = primary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
+    assign x_19 = primary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
+    assign x_20 = primary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
+    assign x_21 = primary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
+    assign x_22 = primary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
+    assign x_23 = primary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
+    assign x_24 = primary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
+    assign x_25 = primary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
+    assign x_26 = primary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
+    assign x_27 = primary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
+    assign x_28 = primary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
+    assign x_29 = primary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
+    assign x_30 = primary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
+    assign x_31 = primary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
 
     assign y_0 = secondary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign y_1 = secondary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -607,6 +783,22 @@ module elt_wise_mul(
     assign y_13 = secondary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
     assign y_14 = secondary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
     assign y_15 = secondary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
+    assign y_16 = secondary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
+    assign y_17 = secondary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
+    assign y_18 = secondary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
+    assign y_19 = secondary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
+    assign y_20 = secondary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
+    assign y_21 = secondary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
+    assign y_22 = secondary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
+    assign y_23 = secondary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
+    assign y_24 = secondary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
+    assign y_25 = secondary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
+    assign y_26 = secondary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
+    assign y_27 = secondary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
+    assign y_28 = secondary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
+    assign y_29 = secondary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
+    assign y_30 = secondary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
+    assign y_31 = secondary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
     
      reg[`LOG_MUL_LATENCY-1:0] state;
         always @(posedge clk) begin

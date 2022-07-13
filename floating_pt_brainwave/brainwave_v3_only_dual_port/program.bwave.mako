@@ -1,6 +1,6 @@
 <%!
     num_tiles = 4
-    num_ldpes = 32
+    num_ldpes = 16
 %>
 .code
 VRD 0 VMV0 0 

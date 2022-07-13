@@ -2,8 +2,8 @@
     import math
 
     num_tiles = 4
-    num_ldpes = 4 #32
-    num_dsp_per_ldpe = 4 #8
+    num_ldpes = 16
+    num_dsp_per_ldpe = 16
     num_reduction_stages = int(math.log2(num_tiles))
 %>
 

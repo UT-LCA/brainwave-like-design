@@ -1,5 +1,5 @@
 <%!
-    num_ldpes = 4 #32
+    num_ldpes = 16
 %>
 
 //`include "includes_gen.v"
@@ -409,13 +409,15 @@ module tanh_dp_ram(
     output reg [16-1:0] outa, outb
 );
 
-`ifdef SIMULATION
+`ifndef hard_mem
 
 reg [16-1:0] ram [((1<<10)-1):0];
 
+`ifdef SIMULATION
 initial begin
    $readmemb("/home/tanmay/Koios++ - Copy/Multi_tile_design/tanh_activation_mem.txt" ,ram ,0); 
 end
+`endif
 
 // Port A
 always @(posedge clk)  begin
@@ -466,13 +468,15 @@ module sigmoid_dp_ram(
     output reg [16-1:0] outa, outb
 );
 
-`ifdef SIMULATION
+`ifndef hard_mem
 
 reg [16-1:0] ram [((1<<10)-1):0];
 
+`ifdef SIMULATION
 initial begin
    $readmemb("/home/tanmay/Koios++ - Copy/Multi_tile_design/sigmoid_activation_mem.txt" ,ram ,0); 
 end
+`endif
 
 // Port A
 always @(posedge clk)  begin

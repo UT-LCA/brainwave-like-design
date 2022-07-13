@@ -1,5 +1,5 @@
 <%! 
-    num_ldpes = 16 #CHANGE THIS
+    num_ldpes = 32 #CHANGE THIS
 %>
 
 module MFU( 

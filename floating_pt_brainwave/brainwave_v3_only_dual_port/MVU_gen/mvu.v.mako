@@ -2,8 +2,8 @@
     import math
 
     num_tiles = 4
-    num_ldpes = 4 #32
-    num_dsp_per_ldpe = 4 #8
+    num_ldpes = 16
+    num_dsp_per_ldpe = 16
     num_reduction_stages = int(math.log2(num_tiles))
 %>
 
@@ -726,7 +726,7 @@ module dsp_block_18_18_int_sop_2 (
     output [`DSP_AVA_OUTPUT_WIDTH-1:0] result
 );
 
-`ifdef SIMULATION
+`ifndef complex_dsp
 
 reg [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_reg;
 reg [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_reg;
@@ -790,7 +790,7 @@ module dp_ram # (
     output reg [DWIDTH-1:0] outa, outb
 );
 
-`ifdef SIMULATION
+`ifndef hard_mem
 
 reg [DWIDTH-1:0] ram [((1<<AWIDTH)-1):0];
 
@@ -849,7 +849,7 @@ module sp_ram # (
     output reg [DWIDTH-1:0] out
 );
 
-`ifdef SIMULATION
+`ifndef hard_mem
 
 reg [DWIDTH-1:0] ram [((1<<AWIDTH)-1):0];
 

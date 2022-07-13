@@ -530,222 +530,6 @@ module SUB_LDPE (
         .chainout(chainout_temp_8),
         .result(result_temp_8)
     );
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_wire_9;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_wire_9;
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] bx_wire_9;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] by_wire_9;
-
-    assign ax_wire_9 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax[9*`DSP_USED_INPUT_WIDTH-1:(9-1)*`DSP_USED_INPUT_WIDTH]};
-    assign ay_wire_9 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay[9*`DSP_USED_INPUT_WIDTH-1:(9-1)*`DSP_USED_INPUT_WIDTH]};
-
-    assign bx_wire_9 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx[9*`DSP_USED_INPUT_WIDTH-1:(9-1)*`DSP_USED_INPUT_WIDTH]};
-    assign by_wire_9 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, by[9*`DSP_USED_INPUT_WIDTH-1:(9-1)*`DSP_USED_INPUT_WIDTH]};
-
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout_temp_9;
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] result_temp_9;
-
-    assign dsp_result[9*`DSP_USED_OUTPUT_WIDTH-1:(9-1)*`DSP_USED_OUTPUT_WIDTH] = result_temp_9[`DSP_USED_OUTPUT_WIDTH-1:0];
-
-    dsp_block_18_18_int_sop_2 dsp_9 (
-        .clk(clk),
-        .aclr(reset),
-        .ax(ax_wire_9),
-        .ay(ay_wire_9),
-        .bx(bx_wire_9),
-        .by(by_wire_9),
-        .chainin(chainout_temp_8),
-        .chainout(chainout_temp_9),
-        .result(result_temp_9)
-    );
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_wire_10;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_wire_10;
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] bx_wire_10;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] by_wire_10;
-
-    assign ax_wire_10 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax[10*`DSP_USED_INPUT_WIDTH-1:(10-1)*`DSP_USED_INPUT_WIDTH]};
-    assign ay_wire_10 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay[10*`DSP_USED_INPUT_WIDTH-1:(10-1)*`DSP_USED_INPUT_WIDTH]};
-
-    assign bx_wire_10 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx[10*`DSP_USED_INPUT_WIDTH-1:(10-1)*`DSP_USED_INPUT_WIDTH]};
-    assign by_wire_10 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, by[10*`DSP_USED_INPUT_WIDTH-1:(10-1)*`DSP_USED_INPUT_WIDTH]};
-
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout_temp_10;
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] result_temp_10;
-
-    assign dsp_result[10*`DSP_USED_OUTPUT_WIDTH-1:(10-1)*`DSP_USED_OUTPUT_WIDTH] = result_temp_10[`DSP_USED_OUTPUT_WIDTH-1:0];
-
-    dsp_block_18_18_int_sop_2 dsp_10 (
-        .clk(clk),
-        .aclr(reset),
-        .ax(ax_wire_10),
-        .ay(ay_wire_10),
-        .bx(bx_wire_10),
-        .by(by_wire_10),
-        .chainin(chainout_temp_9),
-        .chainout(chainout_temp_10),
-        .result(result_temp_10)
-    );
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_wire_11;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_wire_11;
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] bx_wire_11;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] by_wire_11;
-
-    assign ax_wire_11 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax[11*`DSP_USED_INPUT_WIDTH-1:(11-1)*`DSP_USED_INPUT_WIDTH]};
-    assign ay_wire_11 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay[11*`DSP_USED_INPUT_WIDTH-1:(11-1)*`DSP_USED_INPUT_WIDTH]};
-
-    assign bx_wire_11 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx[11*`DSP_USED_INPUT_WIDTH-1:(11-1)*`DSP_USED_INPUT_WIDTH]};
-    assign by_wire_11 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, by[11*`DSP_USED_INPUT_WIDTH-1:(11-1)*`DSP_USED_INPUT_WIDTH]};
-
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout_temp_11;
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] result_temp_11;
-
-    assign dsp_result[11*`DSP_USED_OUTPUT_WIDTH-1:(11-1)*`DSP_USED_OUTPUT_WIDTH] = result_temp_11[`DSP_USED_OUTPUT_WIDTH-1:0];
-
-    dsp_block_18_18_int_sop_2 dsp_11 (
-        .clk(clk),
-        .aclr(reset),
-        .ax(ax_wire_11),
-        .ay(ay_wire_11),
-        .bx(bx_wire_11),
-        .by(by_wire_11),
-        .chainin(chainout_temp_10),
-        .chainout(chainout_temp_11),
-        .result(result_temp_11)
-    );
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_wire_12;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_wire_12;
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] bx_wire_12;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] by_wire_12;
-
-    assign ax_wire_12 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax[12*`DSP_USED_INPUT_WIDTH-1:(12-1)*`DSP_USED_INPUT_WIDTH]};
-    assign ay_wire_12 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay[12*`DSP_USED_INPUT_WIDTH-1:(12-1)*`DSP_USED_INPUT_WIDTH]};
-
-    assign bx_wire_12 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx[12*`DSP_USED_INPUT_WIDTH-1:(12-1)*`DSP_USED_INPUT_WIDTH]};
-    assign by_wire_12 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, by[12*`DSP_USED_INPUT_WIDTH-1:(12-1)*`DSP_USED_INPUT_WIDTH]};
-
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout_temp_12;
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] result_temp_12;
-
-    assign dsp_result[12*`DSP_USED_OUTPUT_WIDTH-1:(12-1)*`DSP_USED_OUTPUT_WIDTH] = result_temp_12[`DSP_USED_OUTPUT_WIDTH-1:0];
-
-    dsp_block_18_18_int_sop_2 dsp_12 (
-        .clk(clk),
-        .aclr(reset),
-        .ax(ax_wire_12),
-        .ay(ay_wire_12),
-        .bx(bx_wire_12),
-        .by(by_wire_12),
-        .chainin(chainout_temp_11),
-        .chainout(chainout_temp_12),
-        .result(result_temp_12)
-    );
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_wire_13;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_wire_13;
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] bx_wire_13;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] by_wire_13;
-
-    assign ax_wire_13 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax[13*`DSP_USED_INPUT_WIDTH-1:(13-1)*`DSP_USED_INPUT_WIDTH]};
-    assign ay_wire_13 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay[13*`DSP_USED_INPUT_WIDTH-1:(13-1)*`DSP_USED_INPUT_WIDTH]};
-
-    assign bx_wire_13 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx[13*`DSP_USED_INPUT_WIDTH-1:(13-1)*`DSP_USED_INPUT_WIDTH]};
-    assign by_wire_13 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, by[13*`DSP_USED_INPUT_WIDTH-1:(13-1)*`DSP_USED_INPUT_WIDTH]};
-
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout_temp_13;
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] result_temp_13;
-
-    assign dsp_result[13*`DSP_USED_OUTPUT_WIDTH-1:(13-1)*`DSP_USED_OUTPUT_WIDTH] = result_temp_13[`DSP_USED_OUTPUT_WIDTH-1:0];
-
-    dsp_block_18_18_int_sop_2 dsp_13 (
-        .clk(clk),
-        .aclr(reset),
-        .ax(ax_wire_13),
-        .ay(ay_wire_13),
-        .bx(bx_wire_13),
-        .by(by_wire_13),
-        .chainin(chainout_temp_12),
-        .chainout(chainout_temp_13),
-        .result(result_temp_13)
-    );
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_wire_14;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_wire_14;
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] bx_wire_14;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] by_wire_14;
-
-    assign ax_wire_14 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax[14*`DSP_USED_INPUT_WIDTH-1:(14-1)*`DSP_USED_INPUT_WIDTH]};
-    assign ay_wire_14 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay[14*`DSP_USED_INPUT_WIDTH-1:(14-1)*`DSP_USED_INPUT_WIDTH]};
-
-    assign bx_wire_14 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx[14*`DSP_USED_INPUT_WIDTH-1:(14-1)*`DSP_USED_INPUT_WIDTH]};
-    assign by_wire_14 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, by[14*`DSP_USED_INPUT_WIDTH-1:(14-1)*`DSP_USED_INPUT_WIDTH]};
-
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout_temp_14;
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] result_temp_14;
-
-    assign dsp_result[14*`DSP_USED_OUTPUT_WIDTH-1:(14-1)*`DSP_USED_OUTPUT_WIDTH] = result_temp_14[`DSP_USED_OUTPUT_WIDTH-1:0];
-
-    dsp_block_18_18_int_sop_2 dsp_14 (
-        .clk(clk),
-        .aclr(reset),
-        .ax(ax_wire_14),
-        .ay(ay_wire_14),
-        .bx(bx_wire_14),
-        .by(by_wire_14),
-        .chainin(chainout_temp_13),
-        .chainout(chainout_temp_14),
-        .result(result_temp_14)
-    );
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_wire_15;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_wire_15;
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] bx_wire_15;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] by_wire_15;
-
-    assign ax_wire_15 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax[15*`DSP_USED_INPUT_WIDTH-1:(15-1)*`DSP_USED_INPUT_WIDTH]};
-    assign ay_wire_15 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay[15*`DSP_USED_INPUT_WIDTH-1:(15-1)*`DSP_USED_INPUT_WIDTH]};
-
-    assign bx_wire_15 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx[15*`DSP_USED_INPUT_WIDTH-1:(15-1)*`DSP_USED_INPUT_WIDTH]};
-    assign by_wire_15 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, by[15*`DSP_USED_INPUT_WIDTH-1:(15-1)*`DSP_USED_INPUT_WIDTH]};
-
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout_temp_15;
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] result_temp_15;
-
-    assign dsp_result[15*`DSP_USED_OUTPUT_WIDTH-1:(15-1)*`DSP_USED_OUTPUT_WIDTH] = result_temp_15[`DSP_USED_OUTPUT_WIDTH-1:0];
-
-    dsp_block_18_18_int_sop_2 dsp_15 (
-        .clk(clk),
-        .aclr(reset),
-        .ax(ax_wire_15),
-        .ay(ay_wire_15),
-        .bx(bx_wire_15),
-        .by(by_wire_15),
-        .chainin(chainout_temp_14),
-        .chainout(chainout_temp_15),
-        .result(result_temp_15)
-    );
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_wire_16;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_wire_16;
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] bx_wire_16;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] by_wire_16;
-
-    assign ax_wire_16 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax[16*`DSP_USED_INPUT_WIDTH-1:(16-1)*`DSP_USED_INPUT_WIDTH]};
-    assign ay_wire_16 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay[16*`DSP_USED_INPUT_WIDTH-1:(16-1)*`DSP_USED_INPUT_WIDTH]};
-
-    assign bx_wire_16 = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx[16*`DSP_USED_INPUT_WIDTH-1:(16-1)*`DSP_USED_INPUT_WIDTH]};
-    assign by_wire_16 = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, by[16*`DSP_USED_INPUT_WIDTH-1:(16-1)*`DSP_USED_INPUT_WIDTH]};
-
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout_temp_16;
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] result_temp_16;
-
-    assign dsp_result[16*`DSP_USED_OUTPUT_WIDTH-1:(16-1)*`DSP_USED_OUTPUT_WIDTH] = result_temp_16[`DSP_USED_OUTPUT_WIDTH-1:0];
-
-    dsp_block_18_18_int_sop_2 dsp_16 (
-        .clk(clk),
-        .aclr(reset),
-        .ax(ax_wire_16),
-        .ay(ay_wire_16),
-        .bx(bx_wire_16),
-        .by(by_wire_16),
-        .chainin(chainout_temp_15),
-        .chainout(chainout_temp_16),
-        .result(result_temp_16)
-    );
     
     always @(*) begin
         if (reset) begin
@@ -814,7 +598,7 @@ module dsp_block_18_18_int_sop_2 (
     output [`DSP_AVA_OUTPUT_WIDTH-1:0] result
 );
 
-`ifdef SIMULATION
+`ifndef complex_dsp 
 
 reg [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_reg;
 reg [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_reg;
@@ -878,7 +662,7 @@ module dp_ram # (
     output reg [DWIDTH-1:0] outa, outb
 );
 
-`ifdef SIMULATION
+`ifndef hard_mem 
 
 reg [DWIDTH-1:0] ram [((1<<AWIDTH)-1):0];
 
@@ -939,7 +723,7 @@ module sp_ram # (
     output reg [DWIDTH-1:0] out
 );
 
-`ifdef SIMULATION
+`ifndef hard_mem
 
 reg [DWIDTH-1:0] ram [((1<<AWIDTH)-1):0];
 
@@ -1048,4 +832,20 @@ assign reduction_output_final[13*`OUT_DWIDTH-1:12*`OUT_DWIDTH] = reduction_outpu
 assign reduction_output_final[14*`OUT_DWIDTH-1:13*`OUT_DWIDTH] = reduction_output_0_stage_2[14*(`OUT_DWIDTH+2)-1:13*(`OUT_DWIDTH+2)];
 assign reduction_output_final[15*`OUT_DWIDTH-1:14*`OUT_DWIDTH] = reduction_output_0_stage_2[15*(`OUT_DWIDTH+2)-1:14*(`OUT_DWIDTH+2)];
 assign reduction_output_final[16*`OUT_DWIDTH-1:15*`OUT_DWIDTH] = reduction_output_0_stage_2[16*(`OUT_DWIDTH+2)-1:15*(`OUT_DWIDTH+2)];
+assign reduction_output_final[17*`OUT_DWIDTH-1:16*`OUT_DWIDTH] = reduction_output_0_stage_2[17*(`OUT_DWIDTH+2)-1:16*(`OUT_DWIDTH+2)];
+assign reduction_output_final[18*`OUT_DWIDTH-1:17*`OUT_DWIDTH] = reduction_output_0_stage_2[18*(`OUT_DWIDTH+2)-1:17*(`OUT_DWIDTH+2)];
+assign reduction_output_final[19*`OUT_DWIDTH-1:18*`OUT_DWIDTH] = reduction_output_0_stage_2[19*(`OUT_DWIDTH+2)-1:18*(`OUT_DWIDTH+2)];
+assign reduction_output_final[20*`OUT_DWIDTH-1:19*`OUT_DWIDTH] = reduction_output_0_stage_2[20*(`OUT_DWIDTH+2)-1:19*(`OUT_DWIDTH+2)];
+assign reduction_output_final[21*`OUT_DWIDTH-1:20*`OUT_DWIDTH] = reduction_output_0_stage_2[21*(`OUT_DWIDTH+2)-1:20*(`OUT_DWIDTH+2)];
+assign reduction_output_final[22*`OUT_DWIDTH-1:21*`OUT_DWIDTH] = reduction_output_0_stage_2[22*(`OUT_DWIDTH+2)-1:21*(`OUT_DWIDTH+2)];
+assign reduction_output_final[23*`OUT_DWIDTH-1:22*`OUT_DWIDTH] = reduction_output_0_stage_2[23*(`OUT_DWIDTH+2)-1:22*(`OUT_DWIDTH+2)];
+assign reduction_output_final[24*`OUT_DWIDTH-1:23*`OUT_DWIDTH] = reduction_output_0_stage_2[24*(`OUT_DWIDTH+2)-1:23*(`OUT_DWIDTH+2)];
+assign reduction_output_final[25*`OUT_DWIDTH-1:24*`OUT_DWIDTH] = reduction_output_0_stage_2[25*(`OUT_DWIDTH+2)-1:24*(`OUT_DWIDTH+2)];
+assign reduction_output_final[26*`OUT_DWIDTH-1:25*`OUT_DWIDTH] = reduction_output_0_stage_2[26*(`OUT_DWIDTH+2)-1:25*(`OUT_DWIDTH+2)];
+assign reduction_output_final[27*`OUT_DWIDTH-1:26*`OUT_DWIDTH] = reduction_output_0_stage_2[27*(`OUT_DWIDTH+2)-1:26*(`OUT_DWIDTH+2)];
+assign reduction_output_final[28*`OUT_DWIDTH-1:27*`OUT_DWIDTH] = reduction_output_0_stage_2[28*(`OUT_DWIDTH+2)-1:27*(`OUT_DWIDTH+2)];
+assign reduction_output_final[29*`OUT_DWIDTH-1:28*`OUT_DWIDTH] = reduction_output_0_stage_2[29*(`OUT_DWIDTH+2)-1:28*(`OUT_DWIDTH+2)];
+assign reduction_output_final[30*`OUT_DWIDTH-1:29*`OUT_DWIDTH] = reduction_output_0_stage_2[30*(`OUT_DWIDTH+2)-1:29*(`OUT_DWIDTH+2)];
+assign reduction_output_final[31*`OUT_DWIDTH-1:30*`OUT_DWIDTH] = reduction_output_0_stage_2[31*(`OUT_DWIDTH+2)-1:30*(`OUT_DWIDTH+2)];
+assign reduction_output_final[32*`OUT_DWIDTH-1:31*`OUT_DWIDTH] = reduction_output_0_stage_2[32*(`OUT_DWIDTH+2)-1:31*(`OUT_DWIDTH+2)];
 endmodule

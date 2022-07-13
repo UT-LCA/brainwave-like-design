@@ -2,7 +2,7 @@
     import math
 
     num_tiles = 4 #CHANGE THIS
-    num_ldpes = 16 #CHANGE THIS
+    num_ldpes = 32 #CHANGE THIS
     target_op_width = int(math.log2(num_ldpes*num_tiles+8)+1)
 %>
 

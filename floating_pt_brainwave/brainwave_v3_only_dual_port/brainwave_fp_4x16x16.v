@@ -2,7 +2,7 @@
 // THIS FILE WAS AUTOMATICALLY GENERATED FROM includes.v.mako
 // DO NOT EDIT
 ////////////////////////////////////////////////////////////////////////////////
-`define SIMULATION
+
 
 `define NUM_TILES 4
 `define NUM_LDPES 16
@@ -6505,7 +6505,8 @@ module controller(
             end
          end
        end          
-endmodule             ////////////////////////////////////////////////////////////////////////////////
+endmodule             
+////////////////////////////////////////////////////////////////////////////////
 // THIS FILE WAS AUTOMATICALLY GENERATED FROM mvu.v.mako
 // DO NOT EDIT
 ////////////////////////////////////////////////////////////////////////////////
@@ -9063,7 +9064,7 @@ module dsp_block_18_18_int_sop_2 (
     output [`DSP_AVA_OUTPUT_WIDTH-1:0] result
 );
 
-`ifdef SIMULATION
+`ifndef complex_dsp
 
 reg [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_reg;
 reg [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_reg;
@@ -9127,7 +9128,7 @@ module dp_ram # (
     output reg [DWIDTH-1:0] outa, outb
 );
 
-`ifdef SIMULATION
+`ifndef hard_mem
 
 reg [DWIDTH-1:0] ram [((1<<AWIDTH)-1):0];
 
@@ -9186,7 +9187,7 @@ module sp_ram # (
     output reg [DWIDTH-1:0] out
 );
 
-`ifdef SIMULATION
+`ifndef hard_mem
 
 reg [DWIDTH-1:0] ram [((1<<AWIDTH)-1):0];
 
@@ -10193,9 +10194,15 @@ module tanh_dp_ram(
     output reg [16-1:0] outa, outb
 );
 
-`ifdef SIMULATION
+`ifndef hard_mem
 
 reg [16-1:0] ram [((1<<10)-1):0];
+
+`ifdef SIMULATION
+initial begin
+   $readmemb("/home/tanmay/Koios++ - Copy/Multi_tile_design/tanh_activation_mem.txt" ,ram ,0); 
+end
+`endif
 
 // Port A
 always @(posedge clk)  begin
@@ -10246,9 +10253,15 @@ module sigmoid_dp_ram(
     output reg [16-1:0] outa, outb
 );
 
-`ifdef SIMULATION
+`ifndef hard_mem
 
 reg [16-1:0] ram [((1<<10)-1):0];
+
+`ifdef SIMULATION
+initial begin
+   $readmemb("/home/tanmay/Koios++ - Copy/Multi_tile_design/sigmoid_activation_mem.txt" ,ram ,0); 
+end
+`endif
 
 // Port A
 always @(posedge clk)  begin

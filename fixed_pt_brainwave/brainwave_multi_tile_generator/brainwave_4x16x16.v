@@ -4,7 +4,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-`define SIMULATION
 
 `define IN_PRECISION 8
 `define OUT_PRECISION 8
@@ -6815,7 +6814,7 @@ module dsp_block_18_18_int_sop_2 (
     output [`DSP_AVA_OUTPUT_WIDTH-1:0] result
 );
 
-`ifdef SIMULATION
+`ifndef complex_dsp
 
 reg [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_reg;
 reg [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_reg;
@@ -6879,7 +6878,7 @@ module dp_ram # (
     output reg [DWIDTH-1:0] outa, outb
 );
 
-`ifdef SIMULATION
+`ifndef hard_mem 
 
 reg [DWIDTH-1:0] ram [((1<<AWIDTH)-1):0];
 
@@ -6940,7 +6939,7 @@ module sp_ram # (
     output reg [DWIDTH-1:0] out
 );
 
-`ifdef SIMULATION
+`ifndef hard_mem
 
 reg [DWIDTH-1:0] ram [((1<<AWIDTH)-1):0];
 

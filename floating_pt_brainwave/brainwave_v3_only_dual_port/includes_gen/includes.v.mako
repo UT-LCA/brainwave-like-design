@@ -2,8 +2,8 @@
     import math
 
     num_tiles = 4
-    num_ldpes = 4 #32
-    num_dsp_per_ldpe = 4 #8
+    num_ldpes = 16
+    num_dsp_per_ldpe = 16
     num_reduction_stages = int(math.log2(num_tiles))
     in_precision = 16
     out_precision = 16
@@ -17,7 +17,6 @@
     mac_per_ldpe = num_dsp_per_ldpe*mac_per_dsp
     num_comparison_stages = int(math.log2(mac_per_ldpe))
 %>
-`define SIMULATION
 
 `define NUM_TILES ${num_tiles}
 `define NUM_LDPES ${num_ldpes}

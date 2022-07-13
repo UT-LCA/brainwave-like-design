@@ -21,6 +21,54 @@ module exponent_comparator_tree_ldpe (
     input[`BFLOAT_EXP-1:0] inp13,
     input[`BFLOAT_EXP-1:0] inp14,
     input[`BFLOAT_EXP-1:0] inp15,
+    input[`BFLOAT_EXP-1:0] inp16,
+    input[`BFLOAT_EXP-1:0] inp17,
+    input[`BFLOAT_EXP-1:0] inp18,
+    input[`BFLOAT_EXP-1:0] inp19,
+    input[`BFLOAT_EXP-1:0] inp20,
+    input[`BFLOAT_EXP-1:0] inp21,
+    input[`BFLOAT_EXP-1:0] inp22,
+    input[`BFLOAT_EXP-1:0] inp23,
+    input[`BFLOAT_EXP-1:0] inp24,
+    input[`BFLOAT_EXP-1:0] inp25,
+    input[`BFLOAT_EXP-1:0] inp26,
+    input[`BFLOAT_EXP-1:0] inp27,
+    input[`BFLOAT_EXP-1:0] inp28,
+    input[`BFLOAT_EXP-1:0] inp29,
+    input[`BFLOAT_EXP-1:0] inp30,
+    input[`BFLOAT_EXP-1:0] inp31,
+    input[`BFLOAT_EXP-1:0] inp32,
+    input[`BFLOAT_EXP-1:0] inp33,
+    input[`BFLOAT_EXP-1:0] inp34,
+    input[`BFLOAT_EXP-1:0] inp35,
+    input[`BFLOAT_EXP-1:0] inp36,
+    input[`BFLOAT_EXP-1:0] inp37,
+    input[`BFLOAT_EXP-1:0] inp38,
+    input[`BFLOAT_EXP-1:0] inp39,
+    input[`BFLOAT_EXP-1:0] inp40,
+    input[`BFLOAT_EXP-1:0] inp41,
+    input[`BFLOAT_EXP-1:0] inp42,
+    input[`BFLOAT_EXP-1:0] inp43,
+    input[`BFLOAT_EXP-1:0] inp44,
+    input[`BFLOAT_EXP-1:0] inp45,
+    input[`BFLOAT_EXP-1:0] inp46,
+    input[`BFLOAT_EXP-1:0] inp47,
+    input[`BFLOAT_EXP-1:0] inp48,
+    input[`BFLOAT_EXP-1:0] inp49,
+    input[`BFLOAT_EXP-1:0] inp50,
+    input[`BFLOAT_EXP-1:0] inp51,
+    input[`BFLOAT_EXP-1:0] inp52,
+    input[`BFLOAT_EXP-1:0] inp53,
+    input[`BFLOAT_EXP-1:0] inp54,
+    input[`BFLOAT_EXP-1:0] inp55,
+    input[`BFLOAT_EXP-1:0] inp56,
+    input[`BFLOAT_EXP-1:0] inp57,
+    input[`BFLOAT_EXP-1:0] inp58,
+    input[`BFLOAT_EXP-1:0] inp59,
+    input[`BFLOAT_EXP-1:0] inp60,
+    input[`BFLOAT_EXP-1:0] inp61,
+    input[`BFLOAT_EXP-1:0] inp62,
+    input[`BFLOAT_EXP-1:0] inp63,
     output [`BFLOAT_EXP-1:0] result_final_stage,
 	output out_data_available,
     
@@ -102,6 +150,162 @@ module exponent_comparator_tree_ldpe (
         .out(comparator_output_3_stage_1)
     );
 
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_4_stage_1;
+	wire out_data_available_4_stage_1;
+  
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_initial_4 (
+        .a(inp8),
+        .b(inp9),
+        .clk(clk),
+        .reset(reset),
+		.start(start),
+		.out_data_available(out_data_available_4_stage_1),
+        .out(comparator_output_4_stage_1)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_5_stage_1;
+	wire out_data_available_5_stage_1;
+  
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_initial_5 (
+        .a(inp10),
+        .b(inp11),
+        .clk(clk),
+        .reset(reset),
+		.start(start),
+		.out_data_available(out_data_available_5_stage_1),
+        .out(comparator_output_5_stage_1)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_6_stage_1;
+	wire out_data_available_6_stage_1;
+  
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_initial_6 (
+        .a(inp12),
+        .b(inp13),
+        .clk(clk),
+        .reset(reset),
+		.start(start),
+		.out_data_available(out_data_available_6_stage_1),
+        .out(comparator_output_6_stage_1)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_7_stage_1;
+	wire out_data_available_7_stage_1;
+  
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_initial_7 (
+        .a(inp14),
+        .b(inp15),
+        .clk(clk),
+        .reset(reset),
+		.start(start),
+		.out_data_available(out_data_available_7_stage_1),
+        .out(comparator_output_7_stage_1)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_8_stage_1;
+	wire out_data_available_8_stage_1;
+  
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_initial_8 (
+        .a(inp16),
+        .b(inp17),
+        .clk(clk),
+        .reset(reset),
+		.start(start),
+		.out_data_available(out_data_available_8_stage_1),
+        .out(comparator_output_8_stage_1)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_9_stage_1;
+	wire out_data_available_9_stage_1;
+  
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_initial_9 (
+        .a(inp18),
+        .b(inp19),
+        .clk(clk),
+        .reset(reset),
+		.start(start),
+		.out_data_available(out_data_available_9_stage_1),
+        .out(comparator_output_9_stage_1)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_10_stage_1;
+	wire out_data_available_10_stage_1;
+  
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_initial_10 (
+        .a(inp20),
+        .b(inp21),
+        .clk(clk),
+        .reset(reset),
+		.start(start),
+		.out_data_available(out_data_available_10_stage_1),
+        .out(comparator_output_10_stage_1)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_11_stage_1;
+	wire out_data_available_11_stage_1;
+  
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_initial_11 (
+        .a(inp22),
+        .b(inp23),
+        .clk(clk),
+        .reset(reset),
+		.start(start),
+		.out_data_available(out_data_available_11_stage_1),
+        .out(comparator_output_11_stage_1)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_12_stage_1;
+	wire out_data_available_12_stage_1;
+  
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_initial_12 (
+        .a(inp24),
+        .b(inp25),
+        .clk(clk),
+        .reset(reset),
+		.start(start),
+		.out_data_available(out_data_available_12_stage_1),
+        .out(comparator_output_12_stage_1)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_13_stage_1;
+	wire out_data_available_13_stage_1;
+  
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_initial_13 (
+        .a(inp26),
+        .b(inp27),
+        .clk(clk),
+        .reset(reset),
+		.start(start),
+		.out_data_available(out_data_available_13_stage_1),
+        .out(comparator_output_13_stage_1)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_14_stage_1;
+	wire out_data_available_14_stage_1;
+  
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_initial_14 (
+        .a(inp28),
+        .b(inp29),
+        .clk(clk),
+        .reset(reset),
+		.start(start),
+		.out_data_available(out_data_available_14_stage_1),
+        .out(comparator_output_14_stage_1)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_15_stage_1;
+	wire out_data_available_15_stage_1;
+  
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_initial_15 (
+        .a(inp30),
+        .b(inp31),
+        .clk(clk),
+        .reset(reset),
+		.start(start),
+		.out_data_available(out_data_available_15_stage_1),
+        .out(comparator_output_15_stage_1)
+    );
+
 
     wire[(`BFLOAT_EXP)-1:0] comparator_output_0_stage_2;
 	wire out_data_available_0_stage_2;
@@ -129,6 +333,84 @@ module exponent_comparator_tree_ldpe (
         .out(comparator_output_1_stage_2)
     );
 
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_2_stage_2;
+	wire out_data_available_2_stage_2;
+
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_2_stage_1 (
+        .a(comparator_output_4_stage_1),
+        .b(comparator_output_5_stage_1),
+        .clk(clk),
+        .reset(reset),
+		.start(out_data_available_0_stage_1),
+		.out_data_available(out_data_available_2_stage_2),
+        .out(comparator_output_2_stage_2)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_3_stage_2;
+	wire out_data_available_3_stage_2;
+
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_3_stage_1 (
+        .a(comparator_output_6_stage_1),
+        .b(comparator_output_7_stage_1),
+        .clk(clk),
+        .reset(reset),
+		.start(out_data_available_0_stage_1),
+		.out_data_available(out_data_available_3_stage_2),
+        .out(comparator_output_3_stage_2)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_4_stage_2;
+	wire out_data_available_4_stage_2;
+
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_4_stage_1 (
+        .a(comparator_output_8_stage_1),
+        .b(comparator_output_9_stage_1),
+        .clk(clk),
+        .reset(reset),
+		.start(out_data_available_0_stage_1),
+		.out_data_available(out_data_available_4_stage_2),
+        .out(comparator_output_4_stage_2)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_5_stage_2;
+	wire out_data_available_5_stage_2;
+
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_5_stage_1 (
+        .a(comparator_output_10_stage_1),
+        .b(comparator_output_11_stage_1),
+        .clk(clk),
+        .reset(reset),
+		.start(out_data_available_0_stage_1),
+		.out_data_available(out_data_available_5_stage_2),
+        .out(comparator_output_5_stage_2)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_6_stage_2;
+	wire out_data_available_6_stage_2;
+
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_6_stage_1 (
+        .a(comparator_output_12_stage_1),
+        .b(comparator_output_13_stage_1),
+        .clk(clk),
+        .reset(reset),
+		.start(out_data_available_0_stage_1),
+		.out_data_available(out_data_available_6_stage_2),
+        .out(comparator_output_6_stage_2)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_7_stage_2;
+	wire out_data_available_7_stage_2;
+
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_7_stage_1 (
+        .a(comparator_output_14_stage_1),
+        .b(comparator_output_15_stage_1),
+        .clk(clk),
+        .reset(reset),
+		.start(out_data_available_0_stage_1),
+		.out_data_available(out_data_available_7_stage_2),
+        .out(comparator_output_7_stage_2)
+    );
+
     wire[(`BFLOAT_EXP)-1:0] comparator_output_0_stage_3;
 	wire out_data_available_0_stage_3;
 
@@ -142,10 +424,88 @@ module exponent_comparator_tree_ldpe (
         .out(comparator_output_0_stage_3)
     );
 
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_1_stage_3;
+	wire out_data_available_1_stage_3;
+
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_1_stage_2 (
+        .a(comparator_output_2_stage_2),
+        .b(comparator_output_3_stage_2),
+        .clk(clk),
+        .reset(reset),
+		.start(out_data_available_0_stage_2),
+		.out_data_available(out_data_available_1_stage_3),
+        .out(comparator_output_1_stage_3)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_2_stage_3;
+	wire out_data_available_2_stage_3;
+
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_2_stage_2 (
+        .a(comparator_output_4_stage_2),
+        .b(comparator_output_5_stage_2),
+        .clk(clk),
+        .reset(reset),
+		.start(out_data_available_0_stage_2),
+		.out_data_available(out_data_available_2_stage_3),
+        .out(comparator_output_2_stage_3)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_3_stage_3;
+	wire out_data_available_3_stage_3;
+
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_3_stage_2 (
+        .a(comparator_output_6_stage_2),
+        .b(comparator_output_7_stage_2),
+        .clk(clk),
+        .reset(reset),
+		.start(out_data_available_0_stage_2),
+		.out_data_available(out_data_available_3_stage_3),
+        .out(comparator_output_3_stage_3)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_0_stage_4;
+	wire out_data_available_0_stage_4;
+
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_0_stage_3 (
+        .a(comparator_output_0_stage_3),
+        .b(comparator_output_1_stage_3),
+        .clk(clk),
+        .reset(reset),
+		.start(out_data_available_0_stage_3),
+		.out_data_available(out_data_available_0_stage_4),
+        .out(comparator_output_0_stage_4)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_1_stage_4;
+	wire out_data_available_1_stage_4;
+
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_1_stage_3 (
+        .a(comparator_output_2_stage_3),
+        .b(comparator_output_3_stage_3),
+        .clk(clk),
+        .reset(reset),
+		.start(out_data_available_0_stage_3),
+		.out_data_available(out_data_available_1_stage_4),
+        .out(comparator_output_1_stage_4)
+    );
+
+    wire[(`BFLOAT_EXP)-1:0] comparator_output_0_stage_5;
+	wire out_data_available_0_stage_5;
+
+    comparator #(.DWIDTH(`BFLOAT_EXP)) comparator_units_0_stage_4 (
+        .a(comparator_output_0_stage_4),
+        .b(comparator_output_1_stage_4),
+        .clk(clk),
+        .reset(reset),
+		.start(out_data_available_0_stage_4),
+		.out_data_available(out_data_available_0_stage_5),
+        .out(comparator_output_0_stage_5)
+    );
 
 
-assign result_final_stage = comparator_output_0_stage_3;
-assign out_data_available =  out_data_available_0_stage_3;
+
+assign result_final_stage = comparator_output_0_stage_5;
+assign out_data_available =  out_data_available_0_stage_5;
 
 endmodule
 
@@ -235,6 +595,18 @@ assign result_final_stage[1*`BFLOAT_EXP-1:0*`BFLOAT_EXP] = comparator_output_0_s
 assign result_final_stage[2*`BFLOAT_EXP-1:1*`BFLOAT_EXP] = comparator_output_0_stage_2[2*(`BFLOAT_EXP)-1:1*(`BFLOAT_EXP)];
 assign result_final_stage[3*`BFLOAT_EXP-1:2*`BFLOAT_EXP] = comparator_output_0_stage_2[3*(`BFLOAT_EXP)-1:2*(`BFLOAT_EXP)];
 assign result_final_stage[4*`BFLOAT_EXP-1:3*`BFLOAT_EXP] = comparator_output_0_stage_2[4*(`BFLOAT_EXP)-1:3*(`BFLOAT_EXP)];
+assign result_final_stage[5*`BFLOAT_EXP-1:4*`BFLOAT_EXP] = comparator_output_0_stage_2[5*(`BFLOAT_EXP)-1:4*(`BFLOAT_EXP)];
+assign result_final_stage[6*`BFLOAT_EXP-1:5*`BFLOAT_EXP] = comparator_output_0_stage_2[6*(`BFLOAT_EXP)-1:5*(`BFLOAT_EXP)];
+assign result_final_stage[7*`BFLOAT_EXP-1:6*`BFLOAT_EXP] = comparator_output_0_stage_2[7*(`BFLOAT_EXP)-1:6*(`BFLOAT_EXP)];
+assign result_final_stage[8*`BFLOAT_EXP-1:7*`BFLOAT_EXP] = comparator_output_0_stage_2[8*(`BFLOAT_EXP)-1:7*(`BFLOAT_EXP)];
+assign result_final_stage[9*`BFLOAT_EXP-1:8*`BFLOAT_EXP] = comparator_output_0_stage_2[9*(`BFLOAT_EXP)-1:8*(`BFLOAT_EXP)];
+assign result_final_stage[10*`BFLOAT_EXP-1:9*`BFLOAT_EXP] = comparator_output_0_stage_2[10*(`BFLOAT_EXP)-1:9*(`BFLOAT_EXP)];
+assign result_final_stage[11*`BFLOAT_EXP-1:10*`BFLOAT_EXP] = comparator_output_0_stage_2[11*(`BFLOAT_EXP)-1:10*(`BFLOAT_EXP)];
+assign result_final_stage[12*`BFLOAT_EXP-1:11*`BFLOAT_EXP] = comparator_output_0_stage_2[12*(`BFLOAT_EXP)-1:11*(`BFLOAT_EXP)];
+assign result_final_stage[13*`BFLOAT_EXP-1:12*`BFLOAT_EXP] = comparator_output_0_stage_2[13*(`BFLOAT_EXP)-1:12*(`BFLOAT_EXP)];
+assign result_final_stage[14*`BFLOAT_EXP-1:13*`BFLOAT_EXP] = comparator_output_0_stage_2[14*(`BFLOAT_EXP)-1:13*(`BFLOAT_EXP)];
+assign result_final_stage[15*`BFLOAT_EXP-1:14*`BFLOAT_EXP] = comparator_output_0_stage_2[15*(`BFLOAT_EXP)-1:14*(`BFLOAT_EXP)];
+assign result_final_stage[16*`BFLOAT_EXP-1:15*`BFLOAT_EXP] = comparator_output_0_stage_2[16*(`BFLOAT_EXP)-1:15*(`BFLOAT_EXP)];
 assign out_data_available = out_data_available_0_stage_2;
 endmodule
 
