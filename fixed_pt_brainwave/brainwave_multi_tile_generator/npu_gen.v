@@ -4,11 +4,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-`include "controller_gen.v"
-`include "mvu_gen.v"
-`include "mfu_gen.v"
-`define NUM_MVM_CYCLES 11
-
 
 module NPU(
     input reset_npu,
@@ -35,7 +30,7 @@ module NPU(
     reg reset_tile_with_single_cyc_latency;
     //
 
-    wire [`ORF_DWIDTH-1:0] vrf_in_data;
+    wire [`MAX_VRF_DWIDTH-1:0] vrf_in_data;
     wire[`VRF_AWIDTH-1:0] vrf_addr_wr;
     wire[`VRF_AWIDTH-1:0] vrf_addr_read;
     wire [`MRF_DWIDTH-1:0] mrf_in_data;
@@ -384,7 +379,7 @@ module NPU(
     wire out_data_available_0;
    assign out_data_available_0 = done_mfu_0;
    MFU mfu_stage_0( 
-    .activation_type(activation),
+    .activation_type(activation[0]),
     .operation(operation),
     .in_data_available(in_data_available_mfu_0),
     
@@ -418,7 +413,7 @@ module NPU(
     assign out_data_available_1 = done_mfu_1;
 
     MFU mfu_stage_1( 
-    .activation_type(activation),
+    .activation_type(activation[0]),
     .operation(operation),
     .in_data_available(in_data_available_mfu_1),
     

@@ -1,24 +1,6 @@
 <%!
-    num_ldpes = 32
+    num_ldpes = 4
 %>
-
-`include "includes_gen.v"
-
-`define DESIGN_SIZE `NUM_LDPES
-`define DWIDTH `OUT_PRECISION
-`define MASK_WIDTH `OUT_PRECISION
-
-`define ACTIVATION 2'b00
-`define ELT_WISE_MULTIPY 2'b10
-`define ELT_WISE_ADD 2'b01
-`define BYPASS 2'b11
-
-`define ADD_LATENCY 1
-`define LOG_ADD_LATENCY 1
-`define MUL_LATENCY 1
-`define LOG_MUL_LATENCY 1 
-`define ACTIVATION_LATENCY 1
-`define TANH_LATENCY `ACTIVATION_LATENCY+1
 
 module MFU( 
     input activation_type,
@@ -90,7 +72,7 @@ module MFU(
             end
             `ELT_WISE_ADD: begin out_data = out_data_add;
             end
-            `ELT_WISE_MULTIPY: begin out_data = out_data_mul;
+            `ELT_WISE_MULTIPLY: begin out_data = out_data_mul;
             end
             `BYPASS: begin out_data = primary_inp; //Bypass the MFU
             end
@@ -151,8 +133,8 @@ endmodule
 
 
 module mult(
-    input [(`DWIDTH-1)-1:0] x, 
-    input [(`DWIDTH-1)-1:0] y,
+    input [(`DWIDTH)-1:0] x, 
+    input [(`DWIDTH)-1:0] y,
     input clk,
     input reset,
     output [`DWIDTH-1:0] p

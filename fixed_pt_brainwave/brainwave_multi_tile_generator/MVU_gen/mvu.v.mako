@@ -2,14 +2,10 @@
     import math
 
     num_tiles = 4
-    num_ldpes = 32
-    num_dsp_per_ldpe = 8
+    num_ldpes = 4
+    num_dsp_per_ldpe = 4
     num_reduction_stages = int(math.log2(num_tiles))
 %>
-
-`include "includes_gen.v"
-`define NUM_TILES ${num_tiles}
-
 
 module MVU (
     input clk,
@@ -34,7 +30,7 @@ module MVU (
 );
 % for i in range(num_tiles):
     wire[`ORF_DWIDTH-1:0] result_mvm_${i};
-    
+
     MVU_tile tile_${i}(.clk(clk),
     .start(start),
     .reset(reset),
