@@ -2,11 +2,10 @@
     import math
 
     num_tiles = 4 #CHANGE THIS
-    num_ldpes = 32 #CHANGE THIS
+    num_ldpes = 16 #CHANGE THIS
     num_dsp_per_ldpe = 8 #CHANGE THIS
     num_reduction_stages = int(math.log2(num_tiles))
 %>
-
 
 module NPU(
     input reset_npu,
@@ -28,15 +27,15 @@ module NPU(
     wire start_mfu_1_signal;
     
 
-    //SAME SIGNAL FOR BOTH THE TILES AS PARALLEL EXECUTION OF TILES IS REQUIRED
-    reg start_tile_with_single_cyc_latency;
-    reg reset_tile_with_single_cyc_latency;
+    //SAME SIGNAL FOR ALL THE TILES AS PARALLEL EXECUTION OF TILES IS REQUIRED
+    reg[`NUM_LDPES-1:0] start_tile_with_single_cyc_latency;
+    reg[`NUM_LDPES-1:0] reset_tile_with_single_cyc_latency;
     //
 
     wire [`MAX_VRF_DWIDTH-1:0] vrf_in_data;
     wire[`VRF_AWIDTH-1:0] vrf_addr_wr;
     wire[`VRF_AWIDTH-1:0] vrf_addr_read;
-    wire [`MRF_DWIDTH-1:0] mrf_in_data;
+    wire [`MRF_DWIDTH*`NUM_LDPES*`NUM_TILES-1:0] mrf_in_data;
     
     
     //MRF SIGNALS
@@ -57,13 +56,17 @@ module NPU(
     wire vrf_mvu_readn_enable_${i};
 % endfor
     
-    reg done_mvm; //CHANGES THE REST STATE OF INSTR DECODER
-  
+    wire done_mvm; //CHANGES THE REST STATE OF INSTR DECODER
+    wire out_data_available_mvm;
+
+    wire[`NUM_TILES*`NUM_LDPES-1:0] mrf_we_for_dram;
+    wire [`NUM_TILES*`MRF_AWIDTH*`NUM_LDPES-1:0] mrf_addr_for_dram;
+    wire [`NUM_TILES*`MRF_DWIDTH*`NUM_LDPES-1:0] mrf_outa_to_dram;
+
     MVU mvm_unit (
     .clk(clk),
     .start(start_tile_with_single_cyc_latency),
     .reset(reset_tile_with_single_cyc_latency),
-    .done(done_mvm), //WITH TAG
     
     .vrf_wr_addr(vrf_addr_wr),
     .vrf_read_addr(vrf_addr_read),
@@ -77,32 +80,20 @@ module NPU(
     .mrf_in(mrf_in_data),
     .mrf_we(mrf_we),  //WITH TAG 
     .mrf_addr(mrf_addr_wr),
-    
-    .mvm_result(result_mvm) //WITH TAG
 
+    .mrf_we_for_dram(mrf_we_for_dram),
+    .mrf_addr_for_dram(mrf_addr_for_dram),
+    .mrf_outa_to_dram(mrf_outa_to_dram),
+
+    .out_data_available(out_data_available_mvm),
+    .mvm_result(result_mvm) //WITH TAG
     );
    
+    assign done_mvm = out_data_available_mvm;
     
     reg[3:0] num_cycles_mvm;
     
-    //*******SCHEDULING NEXT MFU INSTRUCTIION BY CHECKING IF MVU IS COMPELETE *******
-    
-    always@(posedge clk) begin
-       // $display("%b", mrf_addr_wr);
-        if((reset_npu==1'b1) || (start_mv_mul_signal==1'b0)) begin
-            done_mvm <= 1'b0;
-            num_cycles_mvm<=0;
-        end
-        else begin
-            if(num_cycles_mvm!=`NUM_MVM_CYCLES-1) begin
-                num_cycles_mvm <= num_cycles_mvm+1'b1;
-            end
-            else begin
-                done_mvm<=1'b1;
-            end
-        end
-    end
-
+ 
     //*******************************************************************************
     
     wire in_data_available_mfu_0;
@@ -154,18 +145,6 @@ module NPU(
     wire[`NUM_LDPES*`OUT_DWIDTH-1:0] output_mvu_stage;
     //************************************************************
 
-    //****************************REDUCTION UNIT FOR MVM *******************************************
-    /*
-   wire[`NUM_LDPES*`OUT_DWIDTH-1:0] output_mvu_stage;
-    mvm_reduction_unit mvm_reduction(
-      .clk(clk),
-      .reset_reduction_mvm(reset_tile_with_single_cyc_latency),
-      .inp0(result_mvm_0),
-      .inp1(result_mvm_1),
-      .result_mvm_final_stage(result_mvm)
-    );
-    */
-    //wire[`TARGET_OP_WIDTH-1:0] dstn_id;
     assign output_mvu_stage = result_mvm;
     
     //************** INTER MFU MVU DATAPATH SIGNALS *************************************************
@@ -238,9 +217,8 @@ module NPU(
     
     //*********************************CONTROLLER FOR NPU*****************************************
     controller controller_for_npu(
-     .clk(clk),
-     
-     .reset_npu(reset_npu),
+    .clk(clk), 
+    .reset_npu(reset_npu),
     .instruction(instruction),
     .get_instr(get_instr),
     .get_instr_addr(get_instr_addr),
@@ -252,11 +230,9 @@ module NPU(
     
     .output_final_stage(output_final_stage),
 
-    //.start_mvu(start_tile),
     .start_mfu_0(start_mfu_0_signal),
     .start_mfu_1(start_mfu_1_signal),
     .start_mv_mul(start_mv_mul_signal),
-    //.reset_mvu(reset_tile), //FIX NOMENCLATURE FOR MVU AND MFU FOR RESET SIGNALS - FIXED
     .in_data_available_mfu_0(in_data_available_mfu_0),
     .in_data_available_mfu_1(in_data_available_mfu_1),
 
@@ -319,6 +295,10 @@ module NPU(
     .mrf_addr_wr(mrf_addr_wr),
     .mrf_wr_enable(mrf_we),
     .mrf_in_data(mrf_in_data),
+
+    .mrf_we_for_dram(mrf_we_for_dram),
+    .mrf_addr_for_dram(mrf_addr_for_dram),
+    .mrf_outa_to_dram(mrf_outa_to_dram),
     
     //.orf_addr_increment(orf_addr_increment),
     
@@ -326,15 +306,15 @@ module NPU(
     );
     //***************************************************************************
     
-    //DELAYS START SIGNALS OF MVU TILE BY ONE CYCLE TO AVOID ARITHEMETIC OF DONT CARES ***********
+    //DELAYS START SIGNALS OF MVU TILE BY ONE CYCLE TO AVOID HIGH FANOUT AND ARITHEMETIC OF DONT CARES ***********
     always@(posedge clk) begin
         if(start_mv_mul_signal==1'b1) begin
-            start_tile_with_single_cyc_latency<=1'b1;
-            reset_tile_with_single_cyc_latency<=1'b0;
+            start_tile_with_single_cyc_latency<={`NUM_LDPES{1'b1}};
+            reset_tile_with_single_cyc_latency<={`NUM_LDPES{1'b0}};
         end
         else begin
-            start_tile_with_single_cyc_latency<=1'b0;
-            reset_tile_with_single_cyc_latency<=1'b1;
+            start_tile_with_single_cyc_latency<={`NUM_LDPES{1'b0}};
+            reset_tile_with_single_cyc_latency<={`NUM_LDPES{1'b1}};
         end
     end
     
@@ -361,7 +341,7 @@ module NPU(
     wire out_data_available_0;
    assign out_data_available_0 = done_mfu_0;
    MFU mfu_stage_0( 
-    .activation_type(activation[0]),
+    .activation_type(activation),
     .operation(operation),
     .in_data_available(in_data_available_mfu_0),
     
@@ -395,7 +375,7 @@ module NPU(
     assign out_data_available_1 = done_mfu_1;
 
     MFU mfu_stage_1( 
-    .activation_type(activation[0]),
+    .activation_type(activation),
     .operation(operation),
     .in_data_available(in_data_available_mfu_1),
     

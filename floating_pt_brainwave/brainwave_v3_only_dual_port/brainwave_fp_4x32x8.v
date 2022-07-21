@@ -2,7 +2,8 @@
 // THIS FILE WAS AUTOMATICALLY GENERATED FROM includes.v.mako
 // DO NOT EDIT
 ////////////////////////////////////////////////////////////////////////////////
-
+`define hard_mem
+`define complex_dsp
 
 `define NUM_TILES 4
 `define NUM_LDPES 32

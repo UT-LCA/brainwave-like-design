@@ -2,8 +2,8 @@
     import math
 
     num_tiles = 4
-    num_ldpes = 16
-    num_dsp_per_ldpe = 16
+    num_ldpes = 32
+    num_dsp_per_ldpe = 4
     num_reduction_stages = int(math.log2(num_tiles))
 %>
 
@@ -295,7 +295,7 @@ module compute_unit (
     output [`BFLOAT_EXP-1:0] max_exp
 );
 
-    // Port A of BRAMs is used for feed DSPs and Port B is used to load matrix from off-chip memory
+    // Port B of BRAMs is used for feed DSPs and Port A is used to interact with DRAM
 
   
     wire [`MRF_DWIDTH-1:0] mrf_outb_wire;
@@ -680,23 +680,7 @@ module MRF (
     input wea, web,
     output [`MRF_DWIDTH-1:0] outa, outb
 );
-/*
-    genvar i;
-    generate
-    for(i=1;i<=`BRAMS_PER_MRF;i=i+1) begin
-        sp_ram # (
-            .AWIDTH(`MAT_BRAM_AWIDTH),
-            .DWIDTH(`MAT_BRAM_DWIDTH)
-        ) mat_mem (
-            .clk(clk),
-            .addr(addr),
-            .in(in[i*`MAT_BRAM_DWIDTH-1:(i-1)*`MAT_BRAM_DWIDTH]),
-            .we(we),
-            .out(out[i*`MAT_BRAM_DWIDTH-1:(i-1)*`MAT_BRAM_DWIDTH])
-        );
-    end
-    endgenerate
-*/
+
     dp_ram # (
             .AWIDTH(`MRF_AWIDTH),
             .DWIDTH(`MRF_DWIDTH)

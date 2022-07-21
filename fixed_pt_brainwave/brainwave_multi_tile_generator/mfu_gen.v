@@ -5,7 +5,7 @@
 
 
 module MFU( 
-    input activation_type,
+    input[1:0] activation_type,
     input[1:0] operation,
     input in_data_available,
     input [`ORF_AWIDTH-1:0] vrf_addr_read_add,
@@ -48,17 +48,21 @@ module MFU(
     wire [`DESIGN_SIZE*`DWIDTH-1:0] out_data_mul;
     wire [`DESIGN_SIZE*`DWIDTH-1:0] out_data_act;
     
-    wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_1;
+    wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_1_add;
+    wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_1_mul;
+    wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_1_act;
     
-    assign compute_operand_1 = (in_data_available==1'b1)?primary_inp:'bX;
-    
+    assign compute_operand_1_add = ((in_data_available==1'b1)&enable_add) ? primary_inp : 'bX;
+    assign compute_operand_1_mul = ((in_data_available==1'b1)&enable_mul) ? primary_inp : 'bX;
+    assign compute_operand_1_act = ((in_data_available==1'b1)&enable_activation) ? primary_inp : 'bX;
+
     wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_2_add;                    
                                                                          
-    assign compute_operand_2_add = (in_data_available==1'b1)?vrf_outa_add_for_compute:'bX;
+    assign compute_operand_2_add = ((in_data_available==1'b1)&enable_add) ?vrf_outa_add_for_compute:'bX;
     
     wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_2_mul;                    
                                                                          
-    assign compute_operand_2_mul = (in_data_available==1'b1)?vrf_outa_mul_for_compute:'bX;
+    assign compute_operand_2_mul = ((in_data_available==1'b1)&enable_mul) ?vrf_outa_mul_for_compute:'bX;
     
     VRF #(.VRF_DWIDTH(`ORF_DWIDTH),.VRF_AWIDTH(`ORF_AWIDTH)) v0(.clk(clk),.addra(vrf_addr_wr_add),.addrb(vrf_addr_read_add),.inb(ina_fake),.ina(secondary_inp),.wea(vrf_wr_enable_add),.web(vrf_readn_enable_add),.outb(vrf_outa_add_for_compute),.outa(out_vrf_add));
 
@@ -86,12 +90,16 @@ module MFU(
     //FOR ELTWISE ADD-MUL, THE OPERATION IS DONE WHEN THE OUTPUT IS AVAILABLE AT THE OUTPUT PORT
     
     wire done_add;
+    wire add_or_sub;
+    assign add_or_sub = activation_type[0];
+
     elt_wise_add elt_add_unit(
         .enable_add(enable_add),
-        .primary_inp(compute_operand_1),
+        .primary_inp(compute_operand_1_add),
         .in_data_available(in_data_available),
         .secondary_inp(compute_operand_2_add),
         .out_data(out_data_add),
+        .add_or_sub(add_or_sub), //IMP
         .output_available_add(done_add),
         .clk(clk)
       );
@@ -100,7 +108,7 @@ module MFU(
     elt_wise_mul elt_mul_unit(
         .enable_mul(enable_mul),
         .in_data_available(in_data_available),
-        .primary_inp(compute_operand_1),
+        .primary_inp(compute_operand_1_mul),
         .secondary_inp(compute_operand_2_mul),
         .out_data(out_data_mul),
         .output_available_mul(done_mul),
@@ -115,10 +123,9 @@ module MFU(
     .activation_type(activation_type),
     .enable_activation(enable_activation),
     .in_data_available(in_data_available),
-    .inp_data(compute_operand_1),
+    .inp_data(compute_operand_1_act),
     .out_data(out_data_act),
     .out_data_available(out_data_available_act),
-    .validity_mask(8'b00000000), //TODO: Should this be all 1s ?
     .done_activation(done_activation),
     .clk(clk),
     .reset(reset)
@@ -174,13 +181,12 @@ module add(
 endmodule
 
 module activation(
-    input activation_type,
+    input[1:0] activation_type,
     input enable_activation,
     input in_data_available,
     input [`DESIGN_SIZE*`DWIDTH-1:0] inp_data,
     output [`DESIGN_SIZE*`DWIDTH-1:0] out_data,
     output out_data_available,
-    input [`MASK_WIDTH-1:0] validity_mask,
     output done_activation,
     input clk,
     input reset
@@ -197,8 +203,12 @@ integer cycle_count;
 reg activation_in_progress;
 
 reg [(`DESIGN_SIZE*4)-1:0] address;
-reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_slope;
-reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept;
+
+reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_slope_tanh;
+reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept_tanh;
+reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_slope_sigmoid;
+reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept_sigmoid;
+
 reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept_delayed;
 
 // If the activation block is not enabled, just forward the input data
@@ -220,9 +230,14 @@ always @(posedge clk) begin
       cycle_count = cycle_count + 1;
 
       for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-         if(activation_type==1'b1) begin // tanH
-            slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
-            data_intercept_delayed[i*8 +: 8] <= data_intercept[i*8 +: 8];
+         if(activation_type==1) begin // tanH
+            slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_tanh[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
+            data_intercept_delayed[i*8 +: 8] <= data_intercept_tanh[i*8 +: 8];
+            intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
+         end 
+         else if(activation_type==2) begin // tanH
+            slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_sigmoid[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
+            data_intercept_delayed[i*8 +: 8] <= data_intercept_sigmoid[i*8 +: 8];
             intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
          end else begin // ReLU
             relu_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= inp_data[i*`DWIDTH] ? {`DWIDTH{1'b0}} : inp_data[i*`DWIDTH +:`DWIDTH];
@@ -230,7 +245,7 @@ always @(posedge clk) begin
       end   
 
       //TANH needs 1 extra cycle
-      if (activation_type==1'b1) begin
+      if ((activation_type==1) || (activation_type==2)) begin
          if (cycle_count==`TANH_LATENCY-1) begin
             out_data_available_internal <= 1;
          end
@@ -241,7 +256,7 @@ always @(posedge clk) begin
       end
 
       //TANH needs 1 extra cycle
-      if (activation_type==1'b1) begin
+      if ((activation_type==1) || (activation_type==2)) begin
         if(cycle_count==`TANH_LATENCY-1) begin //REPLACED DESIGN SIZE WITH 1 on the LEFT ****************************************
            done_activation_internal <= 1'b1;
            activation_in_progress <= 0;
@@ -280,18 +295,18 @@ assign out_data_internal = (activation_type) ? intercept_applied_data_internal :
 always @(address) begin
     for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
     case (address[i*4+:4])
-      4'b0000: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0001: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0010: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
-      4'b0011: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
-      4'b0100: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
-      4'b0101: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0110: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
-      4'b0111: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
-      4'b1000: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
-      4'b1001: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b1010: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      default: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0000: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0001: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0010: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
+      4'b0011: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
+      4'b0100: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
+      4'b0101: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0110: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
+      4'b0111: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
+      4'b1000: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
+      4'b1001: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b1010: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      default: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
     endcase  
     end
 end
@@ -300,18 +315,57 @@ end
 always @(address) begin
     for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
     case (address[i*4+:4])
-      4'b0000: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd127;
-      4'b0001: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd99;
-      4'b0010: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd46;
-      4'b0011: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd18;
-      4'b0100: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0101: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0110: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0111: data_intercept[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd18;
-      4'b1000: data_intercept[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd46;
-      4'b1001: data_intercept[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd99;
-      4'b1010: data_intercept[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd127;
-      default: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0000: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd127;
+      4'b0001: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd99;
+      4'b0010: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd46;
+      4'b0011: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd18;
+      4'b0100: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0101: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0110: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0111: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd18;
+      4'b1000: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd46;
+      4'b1001: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd99;
+      4'b1010: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd127;
+      default: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+    endcase  
+    end
+end
+
+always @(address) begin
+    for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
+    case (address[i*4+:4])
+      4'b0000: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0001: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0010: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
+      4'b0011: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
+      4'b0100: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
+      4'b0101: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0110: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
+      4'b0111: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
+      4'b1000: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
+      4'b1001: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b1010: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      default: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+    endcase  
+    end
+end
+
+//LUT for the intercept
+always @(address) begin
+    for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
+    case (address[i*4+:4])
+      4'b0000: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd127;
+      4'b0001: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd99;
+      4'b0010: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd46;
+      4'b0011: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd18;
+      4'b0100: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0101: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0110: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0111: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd18;
+      4'b1000: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd46;
+      4'b1001: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd99;
+      4'b1010: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd127;
+      default: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
     endcase  
     end
 end
@@ -358,28 +412,16 @@ always @(inp_data) begin
     end
 end
 
-//Adding a dummy signal to use validity_mask input, to make ODIN happy
-//TODO: Need to correctly use validity_mask
-wire [`MASK_WIDTH-1:0] dummy;
-assign dummy = validity_mask;
-
-// generate multiple ReLU block based on the DESIGN_SIZE
-//genvar i;
-//generate 
-//  for (i = 1; i <= `DESIGN_SIZE; i = i + 1) begin : loop_gen_ReLU
-//        ReLU ReLUinst (.inp_data(inp_data[i*`DWIDTH-1 -:`DWIDTH]), .out_data(temp[i*`DWIDTH-1 -:`DWIDTH]));
-//  end
-//endgenerate
-
 endmodule
 
 
 module elt_wise_add(
     input enable_add,
     input in_data_available,
-    input [`DESIGN_SIZE*`DWIDTH-1:0] primary_inp,
-    input [`DESIGN_SIZE*`DWIDTH-1:0] secondary_inp,
-    output [`DESIGN_SIZE*`DWIDTH-1:0] out_data,
+    input add_or_sub,
+    input [`NUM_LDPES*`DWIDTH-1:0] primary_inp,
+    input [`NUM_LDPES*`DWIDTH-1:0] secondary_inp,
+    output [`NUM_LDPES*`DWIDTH-1:0] out_data,
     output reg output_available_add,
     input clk
 );
@@ -447,70 +489,6 @@ module elt_wise_add(
     wire [(`DWIDTH)-1:0] y_15;
     
     add a15(.p(out_data[(16*`DWIDTH)-1:(15*`DWIDTH)]),.x(x_15),.y(y_15), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_16; 
-    wire [(`DWIDTH)-1:0] y_16;
-    
-    add a16(.p(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]),.x(x_16),.y(y_16), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_17; 
-    wire [(`DWIDTH)-1:0] y_17;
-    
-    add a17(.p(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]),.x(x_17),.y(y_17), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_18; 
-    wire [(`DWIDTH)-1:0] y_18;
-    
-    add a18(.p(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]),.x(x_18),.y(y_18), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_19; 
-    wire [(`DWIDTH)-1:0] y_19;
-    
-    add a19(.p(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]),.x(x_19),.y(y_19), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_20; 
-    wire [(`DWIDTH)-1:0] y_20;
-    
-    add a20(.p(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]),.x(x_20),.y(y_20), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_21; 
-    wire [(`DWIDTH)-1:0] y_21;
-    
-    add a21(.p(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]),.x(x_21),.y(y_21), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_22; 
-    wire [(`DWIDTH)-1:0] y_22;
-    
-    add a22(.p(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]),.x(x_22),.y(y_22), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_23; 
-    wire [(`DWIDTH)-1:0] y_23;
-    
-    add a23(.p(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]),.x(x_23),.y(y_23), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_24; 
-    wire [(`DWIDTH)-1:0] y_24;
-    
-    add a24(.p(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]),.x(x_24),.y(y_24), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_25; 
-    wire [(`DWIDTH)-1:0] y_25;
-    
-    add a25(.p(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]),.x(x_25),.y(y_25), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_26; 
-    wire [(`DWIDTH)-1:0] y_26;
-    
-    add a26(.p(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]),.x(x_26),.y(y_26), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_27; 
-    wire [(`DWIDTH)-1:0] y_27;
-    
-    add a27(.p(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]),.x(x_27),.y(y_27), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_28; 
-    wire [(`DWIDTH)-1:0] y_28;
-    
-    add a28(.p(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]),.x(x_28),.y(y_28), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_29; 
-    wire [(`DWIDTH)-1:0] y_29;
-    
-    add a29(.p(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]),.x(x_29),.y(y_29), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_30; 
-    wire [(`DWIDTH)-1:0] y_30;
-    
-    add a30(.p(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]),.x(x_30),.y(y_30), .clk(clk), .reset(~enable_add));
-    wire [(`DWIDTH)-1:0] x_31; 
-    wire [(`DWIDTH)-1:0] y_31;
-    
-    add a31(.p(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]),.x(x_31),.y(y_31), .clk(clk), .reset(~enable_add));
 
     assign x_0 = primary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign x_1 = primary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -528,22 +506,6 @@ module elt_wise_add(
     assign x_13 = primary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
     assign x_14 = primary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
     assign x_15 = primary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
-    assign x_16 = primary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
-    assign x_17 = primary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
-    assign x_18 = primary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
-    assign x_19 = primary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
-    assign x_20 = primary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
-    assign x_21 = primary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
-    assign x_22 = primary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
-    assign x_23 = primary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
-    assign x_24 = primary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
-    assign x_25 = primary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
-    assign x_26 = primary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
-    assign x_27 = primary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
-    assign x_28 = primary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
-    assign x_29 = primary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
-    assign x_30 = primary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
-    assign x_31 = primary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
 
     assign y_0 = secondary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign y_1 = secondary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -561,22 +523,6 @@ module elt_wise_add(
     assign y_13 = secondary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
     assign y_14 = secondary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
     assign y_15 = secondary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
-    assign y_16 = secondary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
-    assign y_17 = secondary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
-    assign y_18 = secondary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
-    assign y_19 = secondary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
-    assign y_20 = secondary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
-    assign y_21 = secondary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
-    assign y_22 = secondary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
-    assign y_23 = secondary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
-    assign y_24 = secondary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
-    assign y_25 = secondary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
-    assign y_26 = secondary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
-    assign y_27 = secondary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
-    assign y_28 = secondary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
-    assign y_29 = secondary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
-    assign y_30 = secondary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
-    assign y_31 = secondary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
 
      reg[`LOG_ADD_LATENCY-1:0] state;
      always @(posedge clk) begin
@@ -669,70 +615,6 @@ module elt_wise_mul(
     wire [(`DWIDTH)-1:0] y_15;
     
     mult m15(.p(out_data[(16*`DWIDTH)-1:(15*`DWIDTH)]),.x(x_15),.y(y_15), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_16; 
-    wire [(`DWIDTH)-1:0] y_16;
-    
-    mult m16(.p(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]),.x(x_16),.y(y_16), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_17; 
-    wire [(`DWIDTH)-1:0] y_17;
-    
-    mult m17(.p(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]),.x(x_17),.y(y_17), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_18; 
-    wire [(`DWIDTH)-1:0] y_18;
-    
-    mult m18(.p(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]),.x(x_18),.y(y_18), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_19; 
-    wire [(`DWIDTH)-1:0] y_19;
-    
-    mult m19(.p(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]),.x(x_19),.y(y_19), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_20; 
-    wire [(`DWIDTH)-1:0] y_20;
-    
-    mult m20(.p(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]),.x(x_20),.y(y_20), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_21; 
-    wire [(`DWIDTH)-1:0] y_21;
-    
-    mult m21(.p(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]),.x(x_21),.y(y_21), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_22; 
-    wire [(`DWIDTH)-1:0] y_22;
-    
-    mult m22(.p(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]),.x(x_22),.y(y_22), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_23; 
-    wire [(`DWIDTH)-1:0] y_23;
-    
-    mult m23(.p(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]),.x(x_23),.y(y_23), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_24; 
-    wire [(`DWIDTH)-1:0] y_24;
-    
-    mult m24(.p(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]),.x(x_24),.y(y_24), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_25; 
-    wire [(`DWIDTH)-1:0] y_25;
-    
-    mult m25(.p(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]),.x(x_25),.y(y_25), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_26; 
-    wire [(`DWIDTH)-1:0] y_26;
-    
-    mult m26(.p(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]),.x(x_26),.y(y_26), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_27; 
-    wire [(`DWIDTH)-1:0] y_27;
-    
-    mult m27(.p(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]),.x(x_27),.y(y_27), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_28; 
-    wire [(`DWIDTH)-1:0] y_28;
-    
-    mult m28(.p(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]),.x(x_28),.y(y_28), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_29; 
-    wire [(`DWIDTH)-1:0] y_29;
-    
-    mult m29(.p(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]),.x(x_29),.y(y_29), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_30; 
-    wire [(`DWIDTH)-1:0] y_30;
-    
-    mult m30(.p(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]),.x(x_30),.y(y_30), .clk(clk), .reset(~enable_mul));
-    wire [(`DWIDTH)-1:0] x_31; 
-    wire [(`DWIDTH)-1:0] y_31;
-    
-    mult m31(.p(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]),.x(x_31),.y(y_31), .clk(clk), .reset(~enable_mul));
 
     assign x_0 = primary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign x_1 = primary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -750,22 +632,6 @@ module elt_wise_mul(
     assign x_13 = primary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
     assign x_14 = primary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
     assign x_15 = primary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
-    assign x_16 = primary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
-    assign x_17 = primary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
-    assign x_18 = primary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
-    assign x_19 = primary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
-    assign x_20 = primary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
-    assign x_21 = primary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
-    assign x_22 = primary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
-    assign x_23 = primary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
-    assign x_24 = primary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
-    assign x_25 = primary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
-    assign x_26 = primary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
-    assign x_27 = primary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
-    assign x_28 = primary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
-    assign x_29 = primary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
-    assign x_30 = primary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
-    assign x_31 = primary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
 
     assign y_0 = secondary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign y_1 = secondary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -783,22 +649,6 @@ module elt_wise_mul(
     assign y_13 = secondary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
     assign y_14 = secondary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
     assign y_15 = secondary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
-    assign y_16 = secondary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
-    assign y_17 = secondary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
-    assign y_18 = secondary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
-    assign y_19 = secondary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
-    assign y_20 = secondary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
-    assign y_21 = secondary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
-    assign y_22 = secondary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
-    assign y_23 = secondary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
-    assign y_24 = secondary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
-    assign y_25 = secondary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
-    assign y_26 = secondary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
-    assign y_27 = secondary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
-    assign y_28 = secondary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
-    assign y_29 = secondary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
-    assign y_30 = secondary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
-    assign y_31 = secondary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
     
      reg[`LOG_MUL_LATENCY-1:0] state;
         always @(posedge clk) begin

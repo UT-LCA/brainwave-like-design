@@ -2,7 +2,7 @@
     import math
 
     num_tiles = 4
-    num_ldpes = 16
+    num_ldpes = 32
     target_op_width = int(math.log2(num_ldpes*num_tiles+8)+1)
 %>
 
@@ -98,8 +98,6 @@ module controller(
     output reg [`NUM_TILES*`MRF_AWIDTH*`NUM_LDPES-1:0] mrf_addr_for_dram,
     input [`NUM_TILES*`MRF_DWIDTH*`NUM_LDPES-1:0] mrf_outa_to_dram,
     //
-    
-   // output reg orf_addr_increment,
     
     //BYPASS SIGNALS
     output[`TARGET_OP_WIDTH-1:0] dstn_id

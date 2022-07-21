@@ -4,9 +4,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-//`include "includes_gen.v"
-//`include "floating_pt_gen.v"
-//HELLO
 
 module MFU( 
     input[1:0] activation_type,
@@ -206,6 +203,22 @@ always @(posedge clk) begin
             sigmoid_applied_data_internal[14*`DWIDTH-1:(14-1)*`DWIDTH] <= sigmoid_activation_file_output[14*`DWIDTH-1:(14-1)*`DWIDTH];
             sigmoid_applied_data_internal[15*`DWIDTH-1:(15-1)*`DWIDTH] <= sigmoid_activation_file_output[15*`DWIDTH-1:(15-1)*`DWIDTH];
             sigmoid_applied_data_internal[16*`DWIDTH-1:(16-1)*`DWIDTH] <= sigmoid_activation_file_output[16*`DWIDTH-1:(16-1)*`DWIDTH];
+            sigmoid_applied_data_internal[17*`DWIDTH-1:(17-1)*`DWIDTH] <= sigmoid_activation_file_output[17*`DWIDTH-1:(17-1)*`DWIDTH];
+            sigmoid_applied_data_internal[18*`DWIDTH-1:(18-1)*`DWIDTH] <= sigmoid_activation_file_output[18*`DWIDTH-1:(18-1)*`DWIDTH];
+            sigmoid_applied_data_internal[19*`DWIDTH-1:(19-1)*`DWIDTH] <= sigmoid_activation_file_output[19*`DWIDTH-1:(19-1)*`DWIDTH];
+            sigmoid_applied_data_internal[20*`DWIDTH-1:(20-1)*`DWIDTH] <= sigmoid_activation_file_output[20*`DWIDTH-1:(20-1)*`DWIDTH];
+            sigmoid_applied_data_internal[21*`DWIDTH-1:(21-1)*`DWIDTH] <= sigmoid_activation_file_output[21*`DWIDTH-1:(21-1)*`DWIDTH];
+            sigmoid_applied_data_internal[22*`DWIDTH-1:(22-1)*`DWIDTH] <= sigmoid_activation_file_output[22*`DWIDTH-1:(22-1)*`DWIDTH];
+            sigmoid_applied_data_internal[23*`DWIDTH-1:(23-1)*`DWIDTH] <= sigmoid_activation_file_output[23*`DWIDTH-1:(23-1)*`DWIDTH];
+            sigmoid_applied_data_internal[24*`DWIDTH-1:(24-1)*`DWIDTH] <= sigmoid_activation_file_output[24*`DWIDTH-1:(24-1)*`DWIDTH];
+            sigmoid_applied_data_internal[25*`DWIDTH-1:(25-1)*`DWIDTH] <= sigmoid_activation_file_output[25*`DWIDTH-1:(25-1)*`DWIDTH];
+            sigmoid_applied_data_internal[26*`DWIDTH-1:(26-1)*`DWIDTH] <= sigmoid_activation_file_output[26*`DWIDTH-1:(26-1)*`DWIDTH];
+            sigmoid_applied_data_internal[27*`DWIDTH-1:(27-1)*`DWIDTH] <= sigmoid_activation_file_output[27*`DWIDTH-1:(27-1)*`DWIDTH];
+            sigmoid_applied_data_internal[28*`DWIDTH-1:(28-1)*`DWIDTH] <= sigmoid_activation_file_output[28*`DWIDTH-1:(28-1)*`DWIDTH];
+            sigmoid_applied_data_internal[29*`DWIDTH-1:(29-1)*`DWIDTH] <= sigmoid_activation_file_output[29*`DWIDTH-1:(29-1)*`DWIDTH];
+            sigmoid_applied_data_internal[30*`DWIDTH-1:(30-1)*`DWIDTH] <= sigmoid_activation_file_output[30*`DWIDTH-1:(30-1)*`DWIDTH];
+            sigmoid_applied_data_internal[31*`DWIDTH-1:(31-1)*`DWIDTH] <= sigmoid_activation_file_output[31*`DWIDTH-1:(31-1)*`DWIDTH];
+            sigmoid_applied_data_internal[32*`DWIDTH-1:(32-1)*`DWIDTH] <= sigmoid_activation_file_output[32*`DWIDTH-1:(32-1)*`DWIDTH];
       end 
       else if (activation_type==1) begin
             tanh_applied_data_internal[1*`DWIDTH-1:(1-1)*`DWIDTH] <= tanh_activation_file_output[1*`DWIDTH-1:(1-1)*`DWIDTH];
@@ -224,6 +237,22 @@ always @(posedge clk) begin
             tanh_applied_data_internal[14*`DWIDTH-1:(14-1)*`DWIDTH] <= tanh_activation_file_output[14*`DWIDTH-1:(14-1)*`DWIDTH];
             tanh_applied_data_internal[15*`DWIDTH-1:(15-1)*`DWIDTH] <= tanh_activation_file_output[15*`DWIDTH-1:(15-1)*`DWIDTH];
             tanh_applied_data_internal[16*`DWIDTH-1:(16-1)*`DWIDTH] <= tanh_activation_file_output[16*`DWIDTH-1:(16-1)*`DWIDTH];
+            tanh_applied_data_internal[17*`DWIDTH-1:(17-1)*`DWIDTH] <= tanh_activation_file_output[17*`DWIDTH-1:(17-1)*`DWIDTH];
+            tanh_applied_data_internal[18*`DWIDTH-1:(18-1)*`DWIDTH] <= tanh_activation_file_output[18*`DWIDTH-1:(18-1)*`DWIDTH];
+            tanh_applied_data_internal[19*`DWIDTH-1:(19-1)*`DWIDTH] <= tanh_activation_file_output[19*`DWIDTH-1:(19-1)*`DWIDTH];
+            tanh_applied_data_internal[20*`DWIDTH-1:(20-1)*`DWIDTH] <= tanh_activation_file_output[20*`DWIDTH-1:(20-1)*`DWIDTH];
+            tanh_applied_data_internal[21*`DWIDTH-1:(21-1)*`DWIDTH] <= tanh_activation_file_output[21*`DWIDTH-1:(21-1)*`DWIDTH];
+            tanh_applied_data_internal[22*`DWIDTH-1:(22-1)*`DWIDTH] <= tanh_activation_file_output[22*`DWIDTH-1:(22-1)*`DWIDTH];
+            tanh_applied_data_internal[23*`DWIDTH-1:(23-1)*`DWIDTH] <= tanh_activation_file_output[23*`DWIDTH-1:(23-1)*`DWIDTH];
+            tanh_applied_data_internal[24*`DWIDTH-1:(24-1)*`DWIDTH] <= tanh_activation_file_output[24*`DWIDTH-1:(24-1)*`DWIDTH];
+            tanh_applied_data_internal[25*`DWIDTH-1:(25-1)*`DWIDTH] <= tanh_activation_file_output[25*`DWIDTH-1:(25-1)*`DWIDTH];
+            tanh_applied_data_internal[26*`DWIDTH-1:(26-1)*`DWIDTH] <= tanh_activation_file_output[26*`DWIDTH-1:(26-1)*`DWIDTH];
+            tanh_applied_data_internal[27*`DWIDTH-1:(27-1)*`DWIDTH] <= tanh_activation_file_output[27*`DWIDTH-1:(27-1)*`DWIDTH];
+            tanh_applied_data_internal[28*`DWIDTH-1:(28-1)*`DWIDTH] <= tanh_activation_file_output[28*`DWIDTH-1:(28-1)*`DWIDTH];
+            tanh_applied_data_internal[29*`DWIDTH-1:(29-1)*`DWIDTH] <= tanh_activation_file_output[29*`DWIDTH-1:(29-1)*`DWIDTH];
+            tanh_applied_data_internal[30*`DWIDTH-1:(30-1)*`DWIDTH] <= tanh_activation_file_output[30*`DWIDTH-1:(30-1)*`DWIDTH];
+            tanh_applied_data_internal[31*`DWIDTH-1:(31-1)*`DWIDTH] <= tanh_activation_file_output[31*`DWIDTH-1:(31-1)*`DWIDTH];
+            tanh_applied_data_internal[32*`DWIDTH-1:(32-1)*`DWIDTH] <= tanh_activation_file_output[32*`DWIDTH-1:(32-1)*`DWIDTH];
       end
       else begin // ReLU
             relu_applied_data_internal[1*`DWIDTH-1:(1-1)*`DWIDTH] <= inp_data[1*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[1*`DWIDTH-1:(1-1)*`DWIDTH];
@@ -242,6 +271,22 @@ always @(posedge clk) begin
             relu_applied_data_internal[14*`DWIDTH-1:(14-1)*`DWIDTH] <= inp_data[14*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[14*`DWIDTH-1:(14-1)*`DWIDTH];
             relu_applied_data_internal[15*`DWIDTH-1:(15-1)*`DWIDTH] <= inp_data[15*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[15*`DWIDTH-1:(15-1)*`DWIDTH];
             relu_applied_data_internal[16*`DWIDTH-1:(16-1)*`DWIDTH] <= inp_data[16*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[16*`DWIDTH-1:(16-1)*`DWIDTH];
+            relu_applied_data_internal[17*`DWIDTH-1:(17-1)*`DWIDTH] <= inp_data[17*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[17*`DWIDTH-1:(17-1)*`DWIDTH];
+            relu_applied_data_internal[18*`DWIDTH-1:(18-1)*`DWIDTH] <= inp_data[18*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[18*`DWIDTH-1:(18-1)*`DWIDTH];
+            relu_applied_data_internal[19*`DWIDTH-1:(19-1)*`DWIDTH] <= inp_data[19*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[19*`DWIDTH-1:(19-1)*`DWIDTH];
+            relu_applied_data_internal[20*`DWIDTH-1:(20-1)*`DWIDTH] <= inp_data[20*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[20*`DWIDTH-1:(20-1)*`DWIDTH];
+            relu_applied_data_internal[21*`DWIDTH-1:(21-1)*`DWIDTH] <= inp_data[21*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[21*`DWIDTH-1:(21-1)*`DWIDTH];
+            relu_applied_data_internal[22*`DWIDTH-1:(22-1)*`DWIDTH] <= inp_data[22*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[22*`DWIDTH-1:(22-1)*`DWIDTH];
+            relu_applied_data_internal[23*`DWIDTH-1:(23-1)*`DWIDTH] <= inp_data[23*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[23*`DWIDTH-1:(23-1)*`DWIDTH];
+            relu_applied_data_internal[24*`DWIDTH-1:(24-1)*`DWIDTH] <= inp_data[24*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[24*`DWIDTH-1:(24-1)*`DWIDTH];
+            relu_applied_data_internal[25*`DWIDTH-1:(25-1)*`DWIDTH] <= inp_data[25*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[25*`DWIDTH-1:(25-1)*`DWIDTH];
+            relu_applied_data_internal[26*`DWIDTH-1:(26-1)*`DWIDTH] <= inp_data[26*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[26*`DWIDTH-1:(26-1)*`DWIDTH];
+            relu_applied_data_internal[27*`DWIDTH-1:(27-1)*`DWIDTH] <= inp_data[27*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[27*`DWIDTH-1:(27-1)*`DWIDTH];
+            relu_applied_data_internal[28*`DWIDTH-1:(28-1)*`DWIDTH] <= inp_data[28*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[28*`DWIDTH-1:(28-1)*`DWIDTH];
+            relu_applied_data_internal[29*`DWIDTH-1:(29-1)*`DWIDTH] <= inp_data[29*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[29*`DWIDTH-1:(29-1)*`DWIDTH];
+            relu_applied_data_internal[30*`DWIDTH-1:(30-1)*`DWIDTH] <= inp_data[30*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[30*`DWIDTH-1:(30-1)*`DWIDTH];
+            relu_applied_data_internal[31*`DWIDTH-1:(31-1)*`DWIDTH] <= inp_data[31*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[31*`DWIDTH-1:(31-1)*`DWIDTH];
+            relu_applied_data_internal[32*`DWIDTH-1:(32-1)*`DWIDTH] <= inp_data[32*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[32*`DWIDTH-1:(32-1)*`DWIDTH];
       end
 
       //TANH needs 1 extra cycle
@@ -556,6 +601,214 @@ module elt_wise_add(
        .operation(add_or_sub), 
        .flags(flag_fake_15)
     );
+    wire [(`DWIDTH)-1:0] x_16; 
+    wire [(`DWIDTH)-1:0] y_16;
+    wire [4:0] flag_fake_16;
+
+    FPAddSub a16(
+       .result(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]),
+       .a(x_16),
+       .b(y_16), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_16)
+    );
+    wire [(`DWIDTH)-1:0] x_17; 
+    wire [(`DWIDTH)-1:0] y_17;
+    wire [4:0] flag_fake_17;
+
+    FPAddSub a17(
+       .result(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]),
+       .a(x_17),
+       .b(y_17), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_17)
+    );
+    wire [(`DWIDTH)-1:0] x_18; 
+    wire [(`DWIDTH)-1:0] y_18;
+    wire [4:0] flag_fake_18;
+
+    FPAddSub a18(
+       .result(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]),
+       .a(x_18),
+       .b(y_18), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_18)
+    );
+    wire [(`DWIDTH)-1:0] x_19; 
+    wire [(`DWIDTH)-1:0] y_19;
+    wire [4:0] flag_fake_19;
+
+    FPAddSub a19(
+       .result(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]),
+       .a(x_19),
+       .b(y_19), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_19)
+    );
+    wire [(`DWIDTH)-1:0] x_20; 
+    wire [(`DWIDTH)-1:0] y_20;
+    wire [4:0] flag_fake_20;
+
+    FPAddSub a20(
+       .result(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]),
+       .a(x_20),
+       .b(y_20), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_20)
+    );
+    wire [(`DWIDTH)-1:0] x_21; 
+    wire [(`DWIDTH)-1:0] y_21;
+    wire [4:0] flag_fake_21;
+
+    FPAddSub a21(
+       .result(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]),
+       .a(x_21),
+       .b(y_21), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_21)
+    );
+    wire [(`DWIDTH)-1:0] x_22; 
+    wire [(`DWIDTH)-1:0] y_22;
+    wire [4:0] flag_fake_22;
+
+    FPAddSub a22(
+       .result(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]),
+       .a(x_22),
+       .b(y_22), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_22)
+    );
+    wire [(`DWIDTH)-1:0] x_23; 
+    wire [(`DWIDTH)-1:0] y_23;
+    wire [4:0] flag_fake_23;
+
+    FPAddSub a23(
+       .result(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]),
+       .a(x_23),
+       .b(y_23), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_23)
+    );
+    wire [(`DWIDTH)-1:0] x_24; 
+    wire [(`DWIDTH)-1:0] y_24;
+    wire [4:0] flag_fake_24;
+
+    FPAddSub a24(
+       .result(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]),
+       .a(x_24),
+       .b(y_24), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_24)
+    );
+    wire [(`DWIDTH)-1:0] x_25; 
+    wire [(`DWIDTH)-1:0] y_25;
+    wire [4:0] flag_fake_25;
+
+    FPAddSub a25(
+       .result(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]),
+       .a(x_25),
+       .b(y_25), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_25)
+    );
+    wire [(`DWIDTH)-1:0] x_26; 
+    wire [(`DWIDTH)-1:0] y_26;
+    wire [4:0] flag_fake_26;
+
+    FPAddSub a26(
+       .result(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]),
+       .a(x_26),
+       .b(y_26), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_26)
+    );
+    wire [(`DWIDTH)-1:0] x_27; 
+    wire [(`DWIDTH)-1:0] y_27;
+    wire [4:0] flag_fake_27;
+
+    FPAddSub a27(
+       .result(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]),
+       .a(x_27),
+       .b(y_27), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_27)
+    );
+    wire [(`DWIDTH)-1:0] x_28; 
+    wire [(`DWIDTH)-1:0] y_28;
+    wire [4:0] flag_fake_28;
+
+    FPAddSub a28(
+       .result(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]),
+       .a(x_28),
+       .b(y_28), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_28)
+    );
+    wire [(`DWIDTH)-1:0] x_29; 
+    wire [(`DWIDTH)-1:0] y_29;
+    wire [4:0] flag_fake_29;
+
+    FPAddSub a29(
+       .result(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]),
+       .a(x_29),
+       .b(y_29), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_29)
+    );
+    wire [(`DWIDTH)-1:0] x_30; 
+    wire [(`DWIDTH)-1:0] y_30;
+    wire [4:0] flag_fake_30;
+
+    FPAddSub a30(
+       .result(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]),
+       .a(x_30),
+       .b(y_30), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_30)
+    );
+    wire [(`DWIDTH)-1:0] x_31; 
+    wire [(`DWIDTH)-1:0] y_31;
+    wire [4:0] flag_fake_31;
+
+    FPAddSub a31(
+       .result(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]),
+       .a(x_31),
+       .b(y_31), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_31)
+    );
 
     assign x_0 = primary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign x_1 = primary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -573,6 +826,22 @@ module elt_wise_add(
     assign x_13 = primary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
     assign x_14 = primary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
     assign x_15 = primary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
+    assign x_16 = primary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
+    assign x_17 = primary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
+    assign x_18 = primary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
+    assign x_19 = primary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
+    assign x_20 = primary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
+    assign x_21 = primary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
+    assign x_22 = primary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
+    assign x_23 = primary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
+    assign x_24 = primary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
+    assign x_25 = primary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
+    assign x_26 = primary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
+    assign x_27 = primary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
+    assign x_28 = primary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
+    assign x_29 = primary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
+    assign x_30 = primary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
+    assign x_31 = primary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
 
     assign y_0 = secondary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign y_1 = secondary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -590,6 +859,22 @@ module elt_wise_add(
     assign y_13 = secondary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
     assign y_14 = secondary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
     assign y_15 = secondary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
+    assign y_16 = secondary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
+    assign y_17 = secondary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
+    assign y_18 = secondary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
+    assign y_19 = secondary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
+    assign y_20 = secondary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
+    assign y_21 = secondary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
+    assign y_22 = secondary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
+    assign y_23 = secondary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
+    assign y_24 = secondary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
+    assign y_25 = secondary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
+    assign y_26 = secondary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
+    assign y_27 = secondary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
+    assign y_28 = secondary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
+    assign y_29 = secondary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
+    assign y_30 = secondary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
+    assign y_31 = secondary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
 
      reg[`LOG_ADD_LATENCY-1:0] state;
      always @(posedge clk) begin
@@ -809,6 +1094,198 @@ module elt_wise_mul(
        .rst(~enable_mul), 
        .flags(flag_fake_15)
     );
+    wire [(`DWIDTH)-1:0] x_16; 
+    wire [(`DWIDTH)-1:0] y_16;
+    wire [4:0] flag_fake_16;
+
+    FPMult_16 m16(
+       .result(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]),
+       .a(x_16),
+       .b(y_16), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_16)
+    );
+    wire [(`DWIDTH)-1:0] x_17; 
+    wire [(`DWIDTH)-1:0] y_17;
+    wire [4:0] flag_fake_17;
+
+    FPMult_16 m17(
+       .result(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]),
+       .a(x_17),
+       .b(y_17), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_17)
+    );
+    wire [(`DWIDTH)-1:0] x_18; 
+    wire [(`DWIDTH)-1:0] y_18;
+    wire [4:0] flag_fake_18;
+
+    FPMult_16 m18(
+       .result(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]),
+       .a(x_18),
+       .b(y_18), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_18)
+    );
+    wire [(`DWIDTH)-1:0] x_19; 
+    wire [(`DWIDTH)-1:0] y_19;
+    wire [4:0] flag_fake_19;
+
+    FPMult_16 m19(
+       .result(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]),
+       .a(x_19),
+       .b(y_19), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_19)
+    );
+    wire [(`DWIDTH)-1:0] x_20; 
+    wire [(`DWIDTH)-1:0] y_20;
+    wire [4:0] flag_fake_20;
+
+    FPMult_16 m20(
+       .result(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]),
+       .a(x_20),
+       .b(y_20), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_20)
+    );
+    wire [(`DWIDTH)-1:0] x_21; 
+    wire [(`DWIDTH)-1:0] y_21;
+    wire [4:0] flag_fake_21;
+
+    FPMult_16 m21(
+       .result(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]),
+       .a(x_21),
+       .b(y_21), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_21)
+    );
+    wire [(`DWIDTH)-1:0] x_22; 
+    wire [(`DWIDTH)-1:0] y_22;
+    wire [4:0] flag_fake_22;
+
+    FPMult_16 m22(
+       .result(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]),
+       .a(x_22),
+       .b(y_22), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_22)
+    );
+    wire [(`DWIDTH)-1:0] x_23; 
+    wire [(`DWIDTH)-1:0] y_23;
+    wire [4:0] flag_fake_23;
+
+    FPMult_16 m23(
+       .result(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]),
+       .a(x_23),
+       .b(y_23), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_23)
+    );
+    wire [(`DWIDTH)-1:0] x_24; 
+    wire [(`DWIDTH)-1:0] y_24;
+    wire [4:0] flag_fake_24;
+
+    FPMult_16 m24(
+       .result(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]),
+       .a(x_24),
+       .b(y_24), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_24)
+    );
+    wire [(`DWIDTH)-1:0] x_25; 
+    wire [(`DWIDTH)-1:0] y_25;
+    wire [4:0] flag_fake_25;
+
+    FPMult_16 m25(
+       .result(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]),
+       .a(x_25),
+       .b(y_25), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_25)
+    );
+    wire [(`DWIDTH)-1:0] x_26; 
+    wire [(`DWIDTH)-1:0] y_26;
+    wire [4:0] flag_fake_26;
+
+    FPMult_16 m26(
+       .result(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]),
+       .a(x_26),
+       .b(y_26), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_26)
+    );
+    wire [(`DWIDTH)-1:0] x_27; 
+    wire [(`DWIDTH)-1:0] y_27;
+    wire [4:0] flag_fake_27;
+
+    FPMult_16 m27(
+       .result(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]),
+       .a(x_27),
+       .b(y_27), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_27)
+    );
+    wire [(`DWIDTH)-1:0] x_28; 
+    wire [(`DWIDTH)-1:0] y_28;
+    wire [4:0] flag_fake_28;
+
+    FPMult_16 m28(
+       .result(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]),
+       .a(x_28),
+       .b(y_28), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_28)
+    );
+    wire [(`DWIDTH)-1:0] x_29; 
+    wire [(`DWIDTH)-1:0] y_29;
+    wire [4:0] flag_fake_29;
+
+    FPMult_16 m29(
+       .result(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]),
+       .a(x_29),
+       .b(y_29), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_29)
+    );
+    wire [(`DWIDTH)-1:0] x_30; 
+    wire [(`DWIDTH)-1:0] y_30;
+    wire [4:0] flag_fake_30;
+
+    FPMult_16 m30(
+       .result(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]),
+       .a(x_30),
+       .b(y_30), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_30)
+    );
+    wire [(`DWIDTH)-1:0] x_31; 
+    wire [(`DWIDTH)-1:0] y_31;
+    wire [4:0] flag_fake_31;
+
+    FPMult_16 m31(
+       .result(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]),
+       .a(x_31),
+       .b(y_31), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_31)
+    );
 
     assign x_0 = primary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign x_1 = primary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -826,6 +1303,22 @@ module elt_wise_mul(
     assign x_13 = primary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
     assign x_14 = primary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
     assign x_15 = primary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
+    assign x_16 = primary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
+    assign x_17 = primary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
+    assign x_18 = primary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
+    assign x_19 = primary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
+    assign x_20 = primary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
+    assign x_21 = primary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
+    assign x_22 = primary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
+    assign x_23 = primary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
+    assign x_24 = primary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
+    assign x_25 = primary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
+    assign x_26 = primary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
+    assign x_27 = primary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
+    assign x_28 = primary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
+    assign x_29 = primary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
+    assign x_30 = primary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
+    assign x_31 = primary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
 
     assign y_0 = secondary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign y_1 = secondary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -843,6 +1336,22 @@ module elt_wise_mul(
     assign y_13 = secondary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
     assign y_14 = secondary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
     assign y_15 = secondary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
+    assign y_16 = secondary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
+    assign y_17 = secondary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
+    assign y_18 = secondary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
+    assign y_19 = secondary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
+    assign y_20 = secondary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
+    assign y_21 = secondary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
+    assign y_22 = secondary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
+    assign y_23 = secondary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
+    assign y_24 = secondary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
+    assign y_25 = secondary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
+    assign y_26 = secondary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
+    assign y_27 = secondary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
+    assign y_28 = secondary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
+    assign y_29 = secondary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
+    assign y_30 = secondary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
+    assign y_31 = secondary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
     
      reg[`LOG_MUL_LATENCY-1:0] state;
         always @(posedge clk) begin

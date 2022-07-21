@@ -1,10 +1,7 @@
 <%!
-    num_ldpes = 16
+    num_ldpes = 32
 %>
 
-//`include "includes_gen.v"
-//`include "floating_pt_gen.v"
-//HELLO
 
 module MFU( 
     input[1:0] activation_type,

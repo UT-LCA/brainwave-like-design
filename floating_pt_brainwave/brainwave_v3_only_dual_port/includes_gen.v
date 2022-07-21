@@ -5,8 +5,8 @@
 
 
 `define NUM_TILES 4
-`define NUM_LDPES 16
-`define DSPS_PER_LDPE 16
+`define NUM_LDPES 32
+`define DSPS_PER_LDPE 4
 
 `define IN_PRECISION 16
 `define OUT_PRECISION 16
@@ -21,7 +21,7 @@
 `define BFLOAT_MANTISA_WITH_LO (`BFLOAT_MANTISA+1)
 
 
-`define DSPS_PER_SUB_LDPE 16
+`define DSPS_PER_SUB_LDPE 4
 `define SUB_LDPES_PER_LDPE (`DSPS_PER_LDPE/`DSPS_PER_SUB_LDPE)
 
 `define MULTS_PER_DSP 2
@@ -48,7 +48,7 @@
 `define DSPS_PER_MRF (`DSPS_PER_LDPE * `LDPES_PER_MRF)
 `define MAT_BRAM_AWIDTH 10
 `define MAT_BRAM_DWIDTH 16
-`define MAT_BRAMS_PER_MRF_SUBSET 32
+`define MAT_BRAMS_PER_MRF_SUBSET 8
 `define SUBSETS_PER_MRF 1
 `define BRAMS_PER_MRF (`MAT_BRAMS_PER_MRF_SUBSET * `SUBSETS_PER_MRF)
 `define MRF_AWIDTH (`MAT_BRAM_AWIDTH)
@@ -58,7 +58,7 @@
 `define DSPS_PER_VRF (`DSPS_PER_LDPE * `LDPES_PER_VRF)
 `define VEC_BRAM_AWIDTH 10
 `define VEC_BRAM_DWIDTH 16
-`define BRAMS_PER_VRF 32
+`define BRAMS_PER_VRF 8
 `define VRF_AWIDTH `VEC_BRAM_AWIDTH
 `define VRF_DWIDTH (`VEC_BRAM_DWIDTH * `BRAMS_PER_VRF)
 
@@ -68,14 +68,14 @@
 `define OUT_BRAM_DWIDTH 16
 `define ORF_AWIDTH `OUT_BRAM_AWIDTH
 `define OUT_DWIDTH 16
-`define ORF_DWIDTH 256 //512
+`define ORF_DWIDTH 512 //512
 
 `define MAX_VRF_DWIDTH 512
 `define DRAM_DWIDTH (`MRF_DWIDTH + `ORF_DWIDTH + `VRF_DWIDTH) //KEEP THIS LARGE TO AVOID OPTIMIZATION IN VTR 
 `define DRAM_AWIDTH `MRF_AWIDTH
 
 `define OPCODE_WIDTH 4 
-`define TARGET_OP_WIDTH 7
+`define TARGET_OP_WIDTH 8
 
 `define INSTR_WIDTH (`OPCODE_WIDTH+`TARGET_OP_WIDTH+`DRAM_AWIDTH+`TARGET_OP_WIDTH+`VRF_AWIDTH + `VRF_AWIDTH)
 
@@ -182,6 +182,70 @@
 `define MRF_61 61
 `define MRF_62 62
 `define MRF_63 63
+`define MRF_64 64
+`define MRF_65 65
+`define MRF_66 66
+`define MRF_67 67
+`define MRF_68 68
+`define MRF_69 69
+`define MRF_70 70
+`define MRF_71 71
+`define MRF_72 72
+`define MRF_73 73
+`define MRF_74 74
+`define MRF_75 75
+`define MRF_76 76
+`define MRF_77 77
+`define MRF_78 78
+`define MRF_79 79
+`define MRF_80 80
+`define MRF_81 81
+`define MRF_82 82
+`define MRF_83 83
+`define MRF_84 84
+`define MRF_85 85
+`define MRF_86 86
+`define MRF_87 87
+`define MRF_88 88
+`define MRF_89 89
+`define MRF_90 90
+`define MRF_91 91
+`define MRF_92 92
+`define MRF_93 93
+`define MRF_94 94
+`define MRF_95 95
+`define MRF_96 96
+`define MRF_97 97
+`define MRF_98 98
+`define MRF_99 99
+`define MRF_100 100
+`define MRF_101 101
+`define MRF_102 102
+`define MRF_103 103
+`define MRF_104 104
+`define MRF_105 105
+`define MRF_106 106
+`define MRF_107 107
+`define MRF_108 108
+`define MRF_109 109
+`define MRF_110 110
+`define MRF_111 111
+`define MRF_112 112
+`define MRF_113 113
+`define MRF_114 114
+`define MRF_115 115
+`define MRF_116 116
+`define MRF_117 117
+`define MRF_118 118
+`define MRF_119 119
+`define MRF_120 120
+`define MRF_121 121
+`define MRF_122 122
+`define MRF_123 123
+`define MRF_124 124
+`define MRF_125 125
+`define MRF_126 126
+`define MRF_127 127
 
 `define MFU_0 0
 `define MFU_1 1
@@ -191,7 +255,7 @@
 `define MANTISSA 10
 
 `define SIGN 1
-`define NUM_COMPARATOR_TREE_CYCLES 7
+`define NUM_COMPARATOR_TREE_CYCLES 5
 `define NUM_COMPARATOR_TREE_CYCLES_FOR_TILE 4
 `define NUM_LZD_CYCLES 5
 
@@ -208,5 +272,5 @@
 `define SIGMOID_LATENCY (`ACTIVATION_LATENCY+1)
 
 `define NUM_REDUCTION_CYCLES 2
-`define NUM_MVM_CYCLES 28
+`define NUM_MVM_CYCLES 16
 `define NUM_NORMALISE_CYCLES 6

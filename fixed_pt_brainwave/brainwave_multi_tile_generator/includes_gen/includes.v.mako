@@ -2,14 +2,14 @@
     import math
 
     num_tiles = 4 #CHANGE THIS
-    num_ldpes = 32 #CHANGE THIS
+    num_ldpes = 16 #CHANGE THIS
     num_dsp_per_ldpe = 8 #CHANGE THIS
     num_reduction_stages = int(math.log2(num_tiles))
     in_precision = 8
     out_precision = 8
 
     vec_bram_dwidth = 16
-    mat_bram_dwidth = 32
+    mat_bram_dwidth = 16
     mac_per_dsp = 2
 
     target_op_width = int(math.log2(num_ldpes*num_tiles+8)+1)
@@ -46,12 +46,10 @@
 
 `define LDPES_PER_MRF 1
 `define DSPS_PER_MRF (`DSPS_PER_LDPE * `LDPES_PER_MRF)
-`define MAT_BRAM_AWIDTH 9
+`define MAT_BRAM_AWIDTH 10
 `define MAT_BRAM_DWIDTH ${mat_bram_dwidth}
 `define MAT_BRAMS_PER_MRF_SUBSET ${int(num_dsp_per_ldpe*mac_per_dsp*in_precision/mat_bram_dwidth)}
-`define SUBSETS_PER_MRF 1
-`define BRAMS_PER_MRF (`MAT_BRAMS_PER_MRF_SUBSET * `SUBSETS_PER_MRF)
-`define MRF_AWIDTH (`MAT_BRAM_AWIDTH + $clog2(`SUBSETS_PER_MRF))
+`define MRF_AWIDTH (`MAT_BRAM_AWIDTH)
 `define MRF_DWIDTH (`MAT_BRAM_DWIDTH * `MAT_BRAMS_PER_MRF_SUBSET)
 
 `define ORF_DWIDTH ${out_precision*num_ldpes} //${max(out_precision*num_ldpes,vec_bram_dwidth*int(num_dsp_per_ldpe*mac_per_dsp*in_precision/vec_bram_dwidth))}
@@ -102,15 +100,16 @@
 `define V_RD 0
 `define V_WR 1
 `define M_RD 2
-`define MV_MUL 3
-`define VV_ADD 4
-`define VV_SUB 5 //QUESTIONED
-`define VV_PASS 6
-`define VV_MUL 7
-`define V_RELU 8
-`define V_SIGM 9
-`define V_TANH 10
-`define END_CHAIN 11
+`define M_WR 3
+`define MV_MUL 4
+`define VV_ADD 5
+`define VV_SUB 6 //QUESTIONED
+`define VV_PASS 7
+`define VV_MUL 8
+`define V_RELU 9
+`define V_SIGM 10
+`define V_TANH 11
+`define END_CHAIN 12
 
 //MEM_IDS
 

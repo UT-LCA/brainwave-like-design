@@ -1,9 +1,9 @@
 <%! 
-    num_ldpes = 32 #CHANGE THIS
+    num_ldpes = 16 #CHANGE THIS
 %>
 
 module MFU( 
-    input activation_type,
+    input[1:0] activation_type,
     input[1:0] operation,
     input in_data_available,
     input [`ORF_AWIDTH-1:0] vrf_addr_read_add,
@@ -46,17 +46,21 @@ module MFU(
     wire [`DESIGN_SIZE*`DWIDTH-1:0] out_data_mul;
     wire [`DESIGN_SIZE*`DWIDTH-1:0] out_data_act;
     
-    wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_1;
+    wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_1_add;
+    wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_1_mul;
+    wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_1_act;
     
-    assign compute_operand_1 = (in_data_available==1'b1)?primary_inp:'bX;
-    
+    assign compute_operand_1_add = ((in_data_available==1'b1)&enable_add) ? primary_inp : 'bX;
+    assign compute_operand_1_mul = ((in_data_available==1'b1)&enable_mul) ? primary_inp : 'bX;
+    assign compute_operand_1_act = ((in_data_available==1'b1)&enable_activation) ? primary_inp : 'bX;
+
     wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_2_add;                    
                                                                          
-    assign compute_operand_2_add = (in_data_available==1'b1)?vrf_outa_add_for_compute:'bX;
+    assign compute_operand_2_add = ((in_data_available==1'b1)&enable_add) ?vrf_outa_add_for_compute:'bX;
     
     wire[`DESIGN_SIZE*`DWIDTH-1:0] compute_operand_2_mul;                    
                                                                          
-    assign compute_operand_2_mul = (in_data_available==1'b1)?vrf_outa_mul_for_compute:'bX;
+    assign compute_operand_2_mul = ((in_data_available==1'b1)&enable_mul) ?vrf_outa_mul_for_compute:'bX;
     
     VRF #(.VRF_DWIDTH(`ORF_DWIDTH),.VRF_AWIDTH(`ORF_AWIDTH)) v0(.clk(clk),.addra(vrf_addr_wr_add),.addrb(vrf_addr_read_add),.inb(ina_fake),.ina(secondary_inp),.wea(vrf_wr_enable_add),.web(vrf_readn_enable_add),.outb(vrf_outa_add_for_compute),.outa(out_vrf_add));
 
@@ -84,12 +88,16 @@ module MFU(
     //FOR ELTWISE ADD-MUL, THE OPERATION IS DONE WHEN THE OUTPUT IS AVAILABLE AT THE OUTPUT PORT
     
     wire done_add;
+    wire add_or_sub;
+    assign add_or_sub = activation_type[0];
+
     elt_wise_add elt_add_unit(
         .enable_add(enable_add),
-        .primary_inp(compute_operand_1),
+        .primary_inp(compute_operand_1_add),
         .in_data_available(in_data_available),
         .secondary_inp(compute_operand_2_add),
         .out_data(out_data_add),
+        .add_or_sub(add_or_sub), //IMP
         .output_available_add(done_add),
         .clk(clk)
       );
@@ -98,7 +106,7 @@ module MFU(
     elt_wise_mul elt_mul_unit(
         .enable_mul(enable_mul),
         .in_data_available(in_data_available),
-        .primary_inp(compute_operand_1),
+        .primary_inp(compute_operand_1_mul),
         .secondary_inp(compute_operand_2_mul),
         .out_data(out_data_mul),
         .output_available_mul(done_mul),
@@ -113,10 +121,9 @@ module MFU(
     .activation_type(activation_type),
     .enable_activation(enable_activation),
     .in_data_available(in_data_available),
-    .inp_data(compute_operand_1),
+    .inp_data(compute_operand_1_act),
     .out_data(out_data_act),
     .out_data_available(out_data_available_act),
-    .validity_mask(8'b00000000), //TODO: Should this be all 1s ?
     .done_activation(done_activation),
     .clk(clk),
     .reset(reset)
@@ -172,13 +179,12 @@ module add(
 endmodule
 
 module activation(
-    input activation_type,
+    input[1:0] activation_type,
     input enable_activation,
     input in_data_available,
     input [`DESIGN_SIZE*`DWIDTH-1:0] inp_data,
     output [`DESIGN_SIZE*`DWIDTH-1:0] out_data,
     output out_data_available,
-    input [`MASK_WIDTH-1:0] validity_mask,
     output done_activation,
     input clk,
     input reset
@@ -195,8 +201,12 @@ integer cycle_count;
 reg activation_in_progress;
 
 reg [(`DESIGN_SIZE*4)-1:0] address;
-reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_slope;
-reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept;
+
+reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_slope_tanh;
+reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept_tanh;
+reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_slope_sigmoid;
+reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept_sigmoid;
+
 reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept_delayed;
 
 // If the activation block is not enabled, just forward the input data
@@ -218,9 +228,14 @@ always @(posedge clk) begin
       cycle_count = cycle_count + 1;
 
       for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-         if(activation_type==1'b1) begin // tanH
-            slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
-            data_intercept_delayed[i*8 +: 8] <= data_intercept[i*8 +: 8];
+         if(activation_type==1) begin // tanH
+            slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_tanh[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
+            data_intercept_delayed[i*8 +: 8] <= data_intercept_tanh[i*8 +: 8];
+            intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
+         end 
+         else if(activation_type==2) begin // tanH
+            slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_sigmoid[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
+            data_intercept_delayed[i*8 +: 8] <= data_intercept_sigmoid[i*8 +: 8];
             intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
          end else begin // ReLU
             relu_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= inp_data[i*`DWIDTH] ? {`DWIDTH{1'b0}} : inp_data[i*`DWIDTH +:`DWIDTH];
@@ -228,7 +243,7 @@ always @(posedge clk) begin
       end   
 
       //TANH needs 1 extra cycle
-      if (activation_type==1'b1) begin
+      if ((activation_type==1) || (activation_type==2)) begin
          if (cycle_count==`TANH_LATENCY-1) begin
             out_data_available_internal <= 1;
          end
@@ -239,7 +254,7 @@ always @(posedge clk) begin
       end
 
       //TANH needs 1 extra cycle
-      if (activation_type==1'b1) begin
+      if ((activation_type==1) || (activation_type==2)) begin
         if(cycle_count==`TANH_LATENCY-1) begin //REPLACED DESIGN SIZE WITH 1 on the LEFT ****************************************
            done_activation_internal <= 1'b1;
            activation_in_progress <= 0;
@@ -278,18 +293,18 @@ assign out_data_internal = (activation_type) ? intercept_applied_data_internal :
 always @(address) begin
     for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
     case (address[i*4+:4])
-      4'b0000: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0001: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0010: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
-      4'b0011: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
-      4'b0100: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
-      4'b0101: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0110: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
-      4'b0111: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
-      4'b1000: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
-      4'b1001: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b1010: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      default: data_slope[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0000: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0001: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0010: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
+      4'b0011: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
+      4'b0100: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
+      4'b0101: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0110: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
+      4'b0111: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
+      4'b1000: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
+      4'b1001: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b1010: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      default: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
     endcase  
     end
 end
@@ -298,18 +313,57 @@ end
 always @(address) begin
     for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
     case (address[i*4+:4])
-      4'b0000: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd127;
-      4'b0001: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd99;
-      4'b0010: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd46;
-      4'b0011: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd18;
-      4'b0100: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0101: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0110: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0111: data_intercept[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd18;
-      4'b1000: data_intercept[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd46;
-      4'b1001: data_intercept[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd99;
-      4'b1010: data_intercept[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd127;
-      default: data_intercept[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0000: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd127;
+      4'b0001: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd99;
+      4'b0010: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd46;
+      4'b0011: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd18;
+      4'b0100: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0101: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0110: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0111: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd18;
+      4'b1000: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd46;
+      4'b1001: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd99;
+      4'b1010: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd127;
+      default: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+    endcase  
+    end
+end
+
+always @(address) begin
+    for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
+    case (address[i*4+:4])
+      4'b0000: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0001: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0010: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
+      4'b0011: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
+      4'b0100: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
+      4'b0101: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0110: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
+      4'b0111: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
+      4'b1000: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
+      4'b1001: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b1010: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      default: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+    endcase  
+    end
+end
+
+//LUT for the intercept
+always @(address) begin
+    for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
+    case (address[i*4+:4])
+      4'b0000: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd127;
+      4'b0001: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd99;
+      4'b0010: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd46;
+      4'b0011: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd18;
+      4'b0100: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0101: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0110: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+      4'b0111: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd18;
+      4'b1000: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd46;
+      4'b1001: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd99;
+      4'b1010: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd127;
+      default: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
     endcase  
     end
 end
@@ -356,28 +410,16 @@ always @(inp_data) begin
     end
 end
 
-//Adding a dummy signal to use validity_mask input, to make ODIN happy
-//TODO: Need to correctly use validity_mask
-wire [`MASK_WIDTH-1:0] dummy;
-assign dummy = validity_mask;
-
-// generate multiple ReLU block based on the DESIGN_SIZE
-//genvar i;
-//generate 
-//  for (i = 1; i <= `DESIGN_SIZE; i = i + 1) begin : loop_gen_ReLU
-//        ReLU ReLUinst (.inp_data(inp_data[i*`DWIDTH-1 -:`DWIDTH]), .out_data(temp[i*`DWIDTH-1 -:`DWIDTH]));
-//  end
-//endgenerate
-
 endmodule
 
 
 module elt_wise_add(
     input enable_add,
     input in_data_available,
-    input [`DESIGN_SIZE*`DWIDTH-1:0] primary_inp,
-    input [`DESIGN_SIZE*`DWIDTH-1:0] secondary_inp,
-    output [`DESIGN_SIZE*`DWIDTH-1:0] out_data,
+    input add_or_sub,
+    input [`NUM_LDPES*`DWIDTH-1:0] primary_inp,
+    input [`NUM_LDPES*`DWIDTH-1:0] secondary_inp,
+    output [`NUM_LDPES*`DWIDTH-1:0] out_data,
     output reg output_available_add,
     input clk
 );

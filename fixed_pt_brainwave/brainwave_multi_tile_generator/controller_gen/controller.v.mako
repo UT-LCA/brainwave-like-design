@@ -2,7 +2,7 @@
     import math
 
     num_tiles = 4 #CHANGE THIS
-    num_ldpes = 32 #CHANGE THIS
+    num_ldpes = 16 #CHANGE THIS
     target_op_width = int(math.log2(num_ldpes*num_tiles+8)+1)
 %>
 
@@ -91,10 +91,12 @@ module controller(
     //MRF IO PORTS
     output reg[`MRF_AWIDTH*`NUM_LDPES*`NUM_TILES-1:0] mrf_addr_wr,
     output reg[`NUM_LDPES*`NUM_TILES-1:0] mrf_wr_enable, //NOTE: LOG(NUM_LDPES) = TARGET_OP_WIDTH
-    output reg[`MRF_DWIDTH-1:0] mrf_in_data,
-    //
+    output reg[`MRF_DWIDTH*`NUM_LDPES*`NUM_TILES-1:0] mrf_in_data,
     
-   // output reg orf_addr_increment,
+    output reg[`NUM_TILES*`NUM_LDPES-1:0] mrf_we_for_dram,
+    output reg [`NUM_TILES*`MRF_AWIDTH*`NUM_LDPES-1:0] mrf_addr_for_dram,
+    input [`NUM_TILES*`MRF_DWIDTH*`NUM_LDPES-1:0] mrf_outa_to_dram,
+    //
     
     //BYPASS SIGNALS
     output[`TARGET_OP_WIDTH-1:0] dstn_id
@@ -239,9 +241,26 @@ module controller(
                 dram_addr_wr <= dstn_address;
                 dram_write_enable <= 1'b1;
             end
+            `M_WR: begin
+                state <= 2;
+                get_instr<=0;
+    
+                case(src1_id) 
+% for i in range(num_tiles*num_ldpes):
+                `MRF_${i}: begin mrf_we_for_dram[${i}] <= 1'b0;
+                mrf_addr_for_dram[${i+1}*`MRF_AWIDTH-1:${i}*`MRF_AWIDTH] <= op1_address; 
+                end
+% endfor
+                default: begin mrf_we_for_dram <= 'bX;
+                mrf_addr_for_dram <= 'bX;
+                end
+                endcase
+                
+                dram_addr_wr <= dstn_address;
+                dram_write_enable <= 1'b1;
+            end
             `V_RD: begin
                 state <= 2;
-                
                 get_instr<=0;
                 dram_addr_wr <= op1_address;
                 dram_write_enable <= 1'b0;
@@ -257,7 +276,7 @@ module controller(
             end
             `MV_MUL: begin
               //op1_id is don't care for this instructions
-              //$display("------------- in instr dec %b", mrf_addr_wr);
+    
                state <= 2;
                get_instr<=1'b0;
                start_mv_mul <= 1'b1;
@@ -270,12 +289,13 @@ module controller(
 % endfor                  
                mrf_wr_enable <= 0;
             end
-            `VV_ADD,`VV_SUB:begin
+            `VV_ADD:begin
             
               //MFU_STAGE-0 DESIGNATED FOR ELTWISE ADD
               state <= 2;
-              get_instr<=1'b0;
-              operation<=`ELT_WISE_ADD;      //NOTE - 2nd VRF INDEX IS FOR ADD UNITS ELT WISE
+              get_instr <= 1'b0;
+              operation <= `ELT_WISE_ADD;      //NOTE - 2nd VRF INDEX IS FOR ADD UNITS ELT WISE
+              activation <= 0;
 
               case(src1_id) 
               
@@ -283,7 +303,50 @@ module controller(
                 start_mfu_0 <= 1'b1;
 
                 vrf_muxed_readn_enable <= 1'b0;
-                vrf_muxed_wr_addr_dram <= op2_address;
+                vrf_muxed_read_addr <= op2_address;
+
+                in_data_available_mfu_0 <= 1'b1;
+                vrf_addr_read_mfu_add_0 <= op1_address;
+                vrf_readn_enable_mfu_add_0 <= 1'b0; 
+               end
+              
+               
+               `VRF_${num_tiles+2}: begin 
+                start_mfu_1 <= 1'b1;
+                in_data_available_mfu_1 <= 1'b1;
+                vrf_addr_read_mfu_add_1 <= op1_address;
+                vrf_readn_enable_mfu_add_1 <= 1'b0; 
+               end
+               
+               
+               default: begin
+                start_mfu_0 <= 1'bX;
+                in_data_available_mfu_0 <= 1'bX;
+                vrf_addr_read_mfu_add_0 <= 'bX;
+                vrf_readn_enable_mfu_add_0 <= 1'bX; 
+                vrf_addr_read_mfu_add_1 <= 'bX;
+                vrf_readn_enable_mfu_add_1 <= 1'bX;
+               end
+               
+             endcase
+
+            end
+            `VV_SUB:begin
+            
+              //MFU_STAGE-0 DESIGNATED FOR ELTWISE ADD
+              state <= 2;
+              get_instr<=1'b0;
+              operation<=`ELT_WISE_ADD;      //NOTE - 2nd VRF INDEX IS FOR ADD UNITS ELT WISE
+
+              activation <= 1;
+
+              case(src1_id) 
+              
+               `VRF_${num_tiles}: begin 
+                start_mfu_0 <= 1'b1;
+
+                vrf_muxed_readn_enable <= 1'b0;
+                vrf_muxed_read_addr <= op2_address;
 
                 in_data_available_mfu_0 <= 1'b1;
                 vrf_addr_read_mfu_add_0 <= op1_address;
@@ -322,7 +385,7 @@ module controller(
                 start_mfu_0 <= 1'b1;
 
                 vrf_muxed_readn_enable <= 1'b0;
-                vrf_muxed_wr_addr_dram <= op2_address;
+                vrf_muxed_read_addr <= op2_address;
 
                 in_data_available_mfu_0 <= 1'b1;
                 vrf_addr_read_mfu_mul_0 <= op1_address;
@@ -358,7 +421,7 @@ module controller(
                 in_data_available_mfu_0<=1'b1;
 
                 vrf_muxed_readn_enable <= 1'b0;
-                vrf_muxed_wr_addr_dram <= op2_address;
+                vrf_muxed_read_addr <= op2_address;
                end
                
                `MFU_1: begin
@@ -387,7 +450,7 @@ module controller(
                 in_data_available_mfu_0<=1'b1;
 
                 vrf_muxed_readn_enable <= 1'b0;
-                vrf_muxed_wr_addr_dram <= op2_address;
+                vrf_muxed_read_addr <= op2_address;
                end
                
                `MFU_1: begin
@@ -415,7 +478,7 @@ module controller(
                 in_data_available_mfu_0<=1'b1;
 
                 vrf_muxed_readn_enable <= 1'b0;
-                vrf_muxed_wr_addr_dram <= op2_address;
+                vrf_muxed_read_addr <= op2_address;
                end
                
                `MFU_1: begin
@@ -434,7 +497,7 @@ module controller(
               state <= 2;
 
             end
-            `END_CHAIN, `VV_PASS:begin
+            `END_CHAIN :begin
 
               start_mv_mul<=1'b0;
               get_instr<=1'b0;
@@ -509,6 +572,24 @@ module controller(
                `VRF_MUXED: begin 
                     output_data_to_dram <= vrf_muxed_out_data_dram;
                 end
+                default: begin 
+                    output_data_to_dram <= 'bX;
+                end
+              endcase
+              
+            end
+            `M_WR: begin
+                state <= 0;
+                get_instr<=1'b1;
+                get_instr_addr<=get_instr_addr+1'b1;
+        
+                case(src1_id) 
+
+% for i in range(num_tiles*num_ldpes):
+                `MRF_${i}: begin 
+                output_data_to_dram <= mrf_outa_to_dram[${i+1}*`MRF_DWIDTH-1:${i}*`MRF_DWIDTH];
+                end
+% endfor    
                 default: begin 
                     output_data_to_dram <= 'bX;
                 end
@@ -631,24 +712,22 @@ module controller(
                 state <= 0;
                 get_instr<=1'b1;
                 get_instr_addr<=get_instr_addr+1'b1;
-                mrf_in_data <= input_data_from_dram;
-
+            
                 case(dstn_id) 
 % for i in range(num_tiles*num_ldpes):                
                   `MRF_${i}: begin 
 % for j in range(num_ldpes*num_tiles):
-                    mrf_wr_enable[${j}] <= ${int(i==j)};
+                    mrf_we_for_dram[${j}] <= ${int(i==j)};
 % endfor
-                    mrf_addr_wr[${i+1}*`MRF_AWIDTH-1:${i}*`MRF_AWIDTH] = dstn_address;            
+                    mrf_in_data[${i+1}*`MRF_DWIDTH-1:${i}*`MRF_DWIDTH] <= input_data_from_dram;
+                    mrf_addr_for_dram[${i+1}*`MRF_AWIDTH-1:${i}*`MRF_AWIDTH] = dstn_address;            
                   end
 % endfor    
                   
                   default: begin 
 % for j in range(num_ldpes*num_tiles):
-                    mrf_wr_enable[${j}] <= 1'bX;
-% endfor
-                    mrf_addr_wr[1*`MRF_AWIDTH-1:0*`MRF_AWIDTH] = 'bX;
-                       
+                    mrf_we_for_dram[${j}] <= 1'bX;
+% endfor                       
                   end
                   
                 endcase 
@@ -675,9 +754,7 @@ module controller(
                   vrf_wr_enable_mfu_mul_1 <= 1'b0;
                   vrf_muxed_wr_enable_dram <= 1'b0;
                   dram_write_enable<=1'b0;
-                  
                   vrf_in_data <= output_final_stage;
-                  
                   vrf_addr_wr<=dstn_address;
                   //vrf_addr_wr_mvu_0 <= dstn_address;
                   end
