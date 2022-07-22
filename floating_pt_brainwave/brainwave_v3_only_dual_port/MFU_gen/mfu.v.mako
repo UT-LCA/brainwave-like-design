@@ -1,5 +1,5 @@
 <%!
-    num_ldpes = 32
+    num_ldpes = 4
 %>
 
 

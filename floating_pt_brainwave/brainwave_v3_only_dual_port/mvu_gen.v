@@ -26,6 +26,42 @@ module MVU (
     input vrf_wr_enable_tile_3,
     input vrf_readn_enable_tile_3, 
     output[`VRF_DWIDTH-1:0] vrf_data_out_tile_3,
+    input vrf_wr_enable_tile_4,
+    input vrf_readn_enable_tile_4, 
+    output[`VRF_DWIDTH-1:0] vrf_data_out_tile_4,
+    input vrf_wr_enable_tile_5,
+    input vrf_readn_enable_tile_5, 
+    output[`VRF_DWIDTH-1:0] vrf_data_out_tile_5,
+    input vrf_wr_enable_tile_6,
+    input vrf_readn_enable_tile_6, 
+    output[`VRF_DWIDTH-1:0] vrf_data_out_tile_6,
+    input vrf_wr_enable_tile_7,
+    input vrf_readn_enable_tile_7, 
+    output[`VRF_DWIDTH-1:0] vrf_data_out_tile_7,
+    input vrf_wr_enable_tile_8,
+    input vrf_readn_enable_tile_8, 
+    output[`VRF_DWIDTH-1:0] vrf_data_out_tile_8,
+    input vrf_wr_enable_tile_9,
+    input vrf_readn_enable_tile_9, 
+    output[`VRF_DWIDTH-1:0] vrf_data_out_tile_9,
+    input vrf_wr_enable_tile_10,
+    input vrf_readn_enable_tile_10, 
+    output[`VRF_DWIDTH-1:0] vrf_data_out_tile_10,
+    input vrf_wr_enable_tile_11,
+    input vrf_readn_enable_tile_11, 
+    output[`VRF_DWIDTH-1:0] vrf_data_out_tile_11,
+    input vrf_wr_enable_tile_12,
+    input vrf_readn_enable_tile_12, 
+    output[`VRF_DWIDTH-1:0] vrf_data_out_tile_12,
+    input vrf_wr_enable_tile_13,
+    input vrf_readn_enable_tile_13, 
+    output[`VRF_DWIDTH-1:0] vrf_data_out_tile_13,
+    input vrf_wr_enable_tile_14,
+    input vrf_readn_enable_tile_14, 
+    output[`VRF_DWIDTH-1:0] vrf_data_out_tile_14,
+    input vrf_wr_enable_tile_15,
+    input vrf_readn_enable_tile_15, 
+    output[`VRF_DWIDTH-1:0] vrf_data_out_tile_15,
     
     input [`MRF_DWIDTH*`NUM_LDPES*`NUM_TILES-1:0] mrf_in,                 
     input[`NUM_TILES*`NUM_LDPES-1:0] mrf_we,               
@@ -153,6 +189,330 @@ module MVU (
     .mrf_we_for_dram(mrf_we_for_dram[4*`NUM_LDPES-1:3*`NUM_LDPES]),
     .result(result_mvm_3) //WITH TAG
     );
+    wire[`LDPE_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] result_mvm_4;
+    wire[`BFLOAT_EXP*`NUM_LDPES-1:0] max_exp_4;
+    wire[`NUM_LDPES-1:0] out_data_available_internal_comparator_tree_4;
+    
+    wire[`NUM_LDPES-1:0] out_data_available_mvm_tile_4;
+    
+    MVU_tile tile_4(.clk(clk),
+    .start(start),
+    .reset(reset),
+    .vrf_wr_addr(vrf_wr_addr),
+    .vec(vec),
+    .max_exp(max_exp_4),
+    .vrf_data_out(vrf_data_out_tile_4), //WITH TAG
+    .vrf_wr_enable(vrf_wr_enable_tile_4), //WITH TAG
+    .vrf_readn_enable(vrf_readn_enable_tile_4), //WITH TAG
+    .vrf_read_addr(vrf_read_addr),
+    .out_data_available_external_comparator_tree(out_data_available_comparator_tile),
+    .out_data_available_internal_comparator_tree(out_data_available_internal_comparator_tree_4),
+    .out_data_available(out_data_available_mvm_tile_4),
+    .mrf_in(mrf_in[5*`MRF_DWIDTH*`NUM_LDPES-1:4*`MRF_DWIDTH*`NUM_LDPES]),
+    .mrf_we(mrf_we[5*`NUM_LDPES-1:4*`NUM_LDPES]),  //WITH TAG 
+    .mrf_addr(mrf_addr[5*`NUM_LDPES*`MRF_AWIDTH-1:4*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_addr_for_dram(mrf_addr_for_dram[5*`NUM_LDPES*`MRF_AWIDTH-1:4*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_outa_to_dram(mrf_outa_to_dram[5*`NUM_LDPES*`MRF_DWIDTH-1:4*`NUM_LDPES*`MRF_DWIDTH]),
+    .mrf_we_for_dram(mrf_we_for_dram[5*`NUM_LDPES-1:4*`NUM_LDPES]),
+    .result(result_mvm_4) //WITH TAG
+    );
+    wire[`LDPE_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] result_mvm_5;
+    wire[`BFLOAT_EXP*`NUM_LDPES-1:0] max_exp_5;
+    wire[`NUM_LDPES-1:0] out_data_available_internal_comparator_tree_5;
+    
+    wire[`NUM_LDPES-1:0] out_data_available_mvm_tile_5;
+    
+    MVU_tile tile_5(.clk(clk),
+    .start(start),
+    .reset(reset),
+    .vrf_wr_addr(vrf_wr_addr),
+    .vec(vec),
+    .max_exp(max_exp_5),
+    .vrf_data_out(vrf_data_out_tile_5), //WITH TAG
+    .vrf_wr_enable(vrf_wr_enable_tile_5), //WITH TAG
+    .vrf_readn_enable(vrf_readn_enable_tile_5), //WITH TAG
+    .vrf_read_addr(vrf_read_addr),
+    .out_data_available_external_comparator_tree(out_data_available_comparator_tile),
+    .out_data_available_internal_comparator_tree(out_data_available_internal_comparator_tree_5),
+    .out_data_available(out_data_available_mvm_tile_5),
+    .mrf_in(mrf_in[6*`MRF_DWIDTH*`NUM_LDPES-1:5*`MRF_DWIDTH*`NUM_LDPES]),
+    .mrf_we(mrf_we[6*`NUM_LDPES-1:5*`NUM_LDPES]),  //WITH TAG 
+    .mrf_addr(mrf_addr[6*`NUM_LDPES*`MRF_AWIDTH-1:5*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_addr_for_dram(mrf_addr_for_dram[6*`NUM_LDPES*`MRF_AWIDTH-1:5*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_outa_to_dram(mrf_outa_to_dram[6*`NUM_LDPES*`MRF_DWIDTH-1:5*`NUM_LDPES*`MRF_DWIDTH]),
+    .mrf_we_for_dram(mrf_we_for_dram[6*`NUM_LDPES-1:5*`NUM_LDPES]),
+    .result(result_mvm_5) //WITH TAG
+    );
+    wire[`LDPE_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] result_mvm_6;
+    wire[`BFLOAT_EXP*`NUM_LDPES-1:0] max_exp_6;
+    wire[`NUM_LDPES-1:0] out_data_available_internal_comparator_tree_6;
+    
+    wire[`NUM_LDPES-1:0] out_data_available_mvm_tile_6;
+    
+    MVU_tile tile_6(.clk(clk),
+    .start(start),
+    .reset(reset),
+    .vrf_wr_addr(vrf_wr_addr),
+    .vec(vec),
+    .max_exp(max_exp_6),
+    .vrf_data_out(vrf_data_out_tile_6), //WITH TAG
+    .vrf_wr_enable(vrf_wr_enable_tile_6), //WITH TAG
+    .vrf_readn_enable(vrf_readn_enable_tile_6), //WITH TAG
+    .vrf_read_addr(vrf_read_addr),
+    .out_data_available_external_comparator_tree(out_data_available_comparator_tile),
+    .out_data_available_internal_comparator_tree(out_data_available_internal_comparator_tree_6),
+    .out_data_available(out_data_available_mvm_tile_6),
+    .mrf_in(mrf_in[7*`MRF_DWIDTH*`NUM_LDPES-1:6*`MRF_DWIDTH*`NUM_LDPES]),
+    .mrf_we(mrf_we[7*`NUM_LDPES-1:6*`NUM_LDPES]),  //WITH TAG 
+    .mrf_addr(mrf_addr[7*`NUM_LDPES*`MRF_AWIDTH-1:6*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_addr_for_dram(mrf_addr_for_dram[7*`NUM_LDPES*`MRF_AWIDTH-1:6*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_outa_to_dram(mrf_outa_to_dram[7*`NUM_LDPES*`MRF_DWIDTH-1:6*`NUM_LDPES*`MRF_DWIDTH]),
+    .mrf_we_for_dram(mrf_we_for_dram[7*`NUM_LDPES-1:6*`NUM_LDPES]),
+    .result(result_mvm_6) //WITH TAG
+    );
+    wire[`LDPE_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] result_mvm_7;
+    wire[`BFLOAT_EXP*`NUM_LDPES-1:0] max_exp_7;
+    wire[`NUM_LDPES-1:0] out_data_available_internal_comparator_tree_7;
+    
+    wire[`NUM_LDPES-1:0] out_data_available_mvm_tile_7;
+    
+    MVU_tile tile_7(.clk(clk),
+    .start(start),
+    .reset(reset),
+    .vrf_wr_addr(vrf_wr_addr),
+    .vec(vec),
+    .max_exp(max_exp_7),
+    .vrf_data_out(vrf_data_out_tile_7), //WITH TAG
+    .vrf_wr_enable(vrf_wr_enable_tile_7), //WITH TAG
+    .vrf_readn_enable(vrf_readn_enable_tile_7), //WITH TAG
+    .vrf_read_addr(vrf_read_addr),
+    .out_data_available_external_comparator_tree(out_data_available_comparator_tile),
+    .out_data_available_internal_comparator_tree(out_data_available_internal_comparator_tree_7),
+    .out_data_available(out_data_available_mvm_tile_7),
+    .mrf_in(mrf_in[8*`MRF_DWIDTH*`NUM_LDPES-1:7*`MRF_DWIDTH*`NUM_LDPES]),
+    .mrf_we(mrf_we[8*`NUM_LDPES-1:7*`NUM_LDPES]),  //WITH TAG 
+    .mrf_addr(mrf_addr[8*`NUM_LDPES*`MRF_AWIDTH-1:7*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_addr_for_dram(mrf_addr_for_dram[8*`NUM_LDPES*`MRF_AWIDTH-1:7*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_outa_to_dram(mrf_outa_to_dram[8*`NUM_LDPES*`MRF_DWIDTH-1:7*`NUM_LDPES*`MRF_DWIDTH]),
+    .mrf_we_for_dram(mrf_we_for_dram[8*`NUM_LDPES-1:7*`NUM_LDPES]),
+    .result(result_mvm_7) //WITH TAG
+    );
+    wire[`LDPE_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] result_mvm_8;
+    wire[`BFLOAT_EXP*`NUM_LDPES-1:0] max_exp_8;
+    wire[`NUM_LDPES-1:0] out_data_available_internal_comparator_tree_8;
+    
+    wire[`NUM_LDPES-1:0] out_data_available_mvm_tile_8;
+    
+    MVU_tile tile_8(.clk(clk),
+    .start(start),
+    .reset(reset),
+    .vrf_wr_addr(vrf_wr_addr),
+    .vec(vec),
+    .max_exp(max_exp_8),
+    .vrf_data_out(vrf_data_out_tile_8), //WITH TAG
+    .vrf_wr_enable(vrf_wr_enable_tile_8), //WITH TAG
+    .vrf_readn_enable(vrf_readn_enable_tile_8), //WITH TAG
+    .vrf_read_addr(vrf_read_addr),
+    .out_data_available_external_comparator_tree(out_data_available_comparator_tile),
+    .out_data_available_internal_comparator_tree(out_data_available_internal_comparator_tree_8),
+    .out_data_available(out_data_available_mvm_tile_8),
+    .mrf_in(mrf_in[9*`MRF_DWIDTH*`NUM_LDPES-1:8*`MRF_DWIDTH*`NUM_LDPES]),
+    .mrf_we(mrf_we[9*`NUM_LDPES-1:8*`NUM_LDPES]),  //WITH TAG 
+    .mrf_addr(mrf_addr[9*`NUM_LDPES*`MRF_AWIDTH-1:8*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_addr_for_dram(mrf_addr_for_dram[9*`NUM_LDPES*`MRF_AWIDTH-1:8*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_outa_to_dram(mrf_outa_to_dram[9*`NUM_LDPES*`MRF_DWIDTH-1:8*`NUM_LDPES*`MRF_DWIDTH]),
+    .mrf_we_for_dram(mrf_we_for_dram[9*`NUM_LDPES-1:8*`NUM_LDPES]),
+    .result(result_mvm_8) //WITH TAG
+    );
+    wire[`LDPE_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] result_mvm_9;
+    wire[`BFLOAT_EXP*`NUM_LDPES-1:0] max_exp_9;
+    wire[`NUM_LDPES-1:0] out_data_available_internal_comparator_tree_9;
+    
+    wire[`NUM_LDPES-1:0] out_data_available_mvm_tile_9;
+    
+    MVU_tile tile_9(.clk(clk),
+    .start(start),
+    .reset(reset),
+    .vrf_wr_addr(vrf_wr_addr),
+    .vec(vec),
+    .max_exp(max_exp_9),
+    .vrf_data_out(vrf_data_out_tile_9), //WITH TAG
+    .vrf_wr_enable(vrf_wr_enable_tile_9), //WITH TAG
+    .vrf_readn_enable(vrf_readn_enable_tile_9), //WITH TAG
+    .vrf_read_addr(vrf_read_addr),
+    .out_data_available_external_comparator_tree(out_data_available_comparator_tile),
+    .out_data_available_internal_comparator_tree(out_data_available_internal_comparator_tree_9),
+    .out_data_available(out_data_available_mvm_tile_9),
+    .mrf_in(mrf_in[10*`MRF_DWIDTH*`NUM_LDPES-1:9*`MRF_DWIDTH*`NUM_LDPES]),
+    .mrf_we(mrf_we[10*`NUM_LDPES-1:9*`NUM_LDPES]),  //WITH TAG 
+    .mrf_addr(mrf_addr[10*`NUM_LDPES*`MRF_AWIDTH-1:9*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_addr_for_dram(mrf_addr_for_dram[10*`NUM_LDPES*`MRF_AWIDTH-1:9*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_outa_to_dram(mrf_outa_to_dram[10*`NUM_LDPES*`MRF_DWIDTH-1:9*`NUM_LDPES*`MRF_DWIDTH]),
+    .mrf_we_for_dram(mrf_we_for_dram[10*`NUM_LDPES-1:9*`NUM_LDPES]),
+    .result(result_mvm_9) //WITH TAG
+    );
+    wire[`LDPE_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] result_mvm_10;
+    wire[`BFLOAT_EXP*`NUM_LDPES-1:0] max_exp_10;
+    wire[`NUM_LDPES-1:0] out_data_available_internal_comparator_tree_10;
+    
+    wire[`NUM_LDPES-1:0] out_data_available_mvm_tile_10;
+    
+    MVU_tile tile_10(.clk(clk),
+    .start(start),
+    .reset(reset),
+    .vrf_wr_addr(vrf_wr_addr),
+    .vec(vec),
+    .max_exp(max_exp_10),
+    .vrf_data_out(vrf_data_out_tile_10), //WITH TAG
+    .vrf_wr_enable(vrf_wr_enable_tile_10), //WITH TAG
+    .vrf_readn_enable(vrf_readn_enable_tile_10), //WITH TAG
+    .vrf_read_addr(vrf_read_addr),
+    .out_data_available_external_comparator_tree(out_data_available_comparator_tile),
+    .out_data_available_internal_comparator_tree(out_data_available_internal_comparator_tree_10),
+    .out_data_available(out_data_available_mvm_tile_10),
+    .mrf_in(mrf_in[11*`MRF_DWIDTH*`NUM_LDPES-1:10*`MRF_DWIDTH*`NUM_LDPES]),
+    .mrf_we(mrf_we[11*`NUM_LDPES-1:10*`NUM_LDPES]),  //WITH TAG 
+    .mrf_addr(mrf_addr[11*`NUM_LDPES*`MRF_AWIDTH-1:10*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_addr_for_dram(mrf_addr_for_dram[11*`NUM_LDPES*`MRF_AWIDTH-1:10*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_outa_to_dram(mrf_outa_to_dram[11*`NUM_LDPES*`MRF_DWIDTH-1:10*`NUM_LDPES*`MRF_DWIDTH]),
+    .mrf_we_for_dram(mrf_we_for_dram[11*`NUM_LDPES-1:10*`NUM_LDPES]),
+    .result(result_mvm_10) //WITH TAG
+    );
+    wire[`LDPE_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] result_mvm_11;
+    wire[`BFLOAT_EXP*`NUM_LDPES-1:0] max_exp_11;
+    wire[`NUM_LDPES-1:0] out_data_available_internal_comparator_tree_11;
+    
+    wire[`NUM_LDPES-1:0] out_data_available_mvm_tile_11;
+    
+    MVU_tile tile_11(.clk(clk),
+    .start(start),
+    .reset(reset),
+    .vrf_wr_addr(vrf_wr_addr),
+    .vec(vec),
+    .max_exp(max_exp_11),
+    .vrf_data_out(vrf_data_out_tile_11), //WITH TAG
+    .vrf_wr_enable(vrf_wr_enable_tile_11), //WITH TAG
+    .vrf_readn_enable(vrf_readn_enable_tile_11), //WITH TAG
+    .vrf_read_addr(vrf_read_addr),
+    .out_data_available_external_comparator_tree(out_data_available_comparator_tile),
+    .out_data_available_internal_comparator_tree(out_data_available_internal_comparator_tree_11),
+    .out_data_available(out_data_available_mvm_tile_11),
+    .mrf_in(mrf_in[12*`MRF_DWIDTH*`NUM_LDPES-1:11*`MRF_DWIDTH*`NUM_LDPES]),
+    .mrf_we(mrf_we[12*`NUM_LDPES-1:11*`NUM_LDPES]),  //WITH TAG 
+    .mrf_addr(mrf_addr[12*`NUM_LDPES*`MRF_AWIDTH-1:11*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_addr_for_dram(mrf_addr_for_dram[12*`NUM_LDPES*`MRF_AWIDTH-1:11*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_outa_to_dram(mrf_outa_to_dram[12*`NUM_LDPES*`MRF_DWIDTH-1:11*`NUM_LDPES*`MRF_DWIDTH]),
+    .mrf_we_for_dram(mrf_we_for_dram[12*`NUM_LDPES-1:11*`NUM_LDPES]),
+    .result(result_mvm_11) //WITH TAG
+    );
+    wire[`LDPE_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] result_mvm_12;
+    wire[`BFLOAT_EXP*`NUM_LDPES-1:0] max_exp_12;
+    wire[`NUM_LDPES-1:0] out_data_available_internal_comparator_tree_12;
+    
+    wire[`NUM_LDPES-1:0] out_data_available_mvm_tile_12;
+    
+    MVU_tile tile_12(.clk(clk),
+    .start(start),
+    .reset(reset),
+    .vrf_wr_addr(vrf_wr_addr),
+    .vec(vec),
+    .max_exp(max_exp_12),
+    .vrf_data_out(vrf_data_out_tile_12), //WITH TAG
+    .vrf_wr_enable(vrf_wr_enable_tile_12), //WITH TAG
+    .vrf_readn_enable(vrf_readn_enable_tile_12), //WITH TAG
+    .vrf_read_addr(vrf_read_addr),
+    .out_data_available_external_comparator_tree(out_data_available_comparator_tile),
+    .out_data_available_internal_comparator_tree(out_data_available_internal_comparator_tree_12),
+    .out_data_available(out_data_available_mvm_tile_12),
+    .mrf_in(mrf_in[13*`MRF_DWIDTH*`NUM_LDPES-1:12*`MRF_DWIDTH*`NUM_LDPES]),
+    .mrf_we(mrf_we[13*`NUM_LDPES-1:12*`NUM_LDPES]),  //WITH TAG 
+    .mrf_addr(mrf_addr[13*`NUM_LDPES*`MRF_AWIDTH-1:12*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_addr_for_dram(mrf_addr_for_dram[13*`NUM_LDPES*`MRF_AWIDTH-1:12*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_outa_to_dram(mrf_outa_to_dram[13*`NUM_LDPES*`MRF_DWIDTH-1:12*`NUM_LDPES*`MRF_DWIDTH]),
+    .mrf_we_for_dram(mrf_we_for_dram[13*`NUM_LDPES-1:12*`NUM_LDPES]),
+    .result(result_mvm_12) //WITH TAG
+    );
+    wire[`LDPE_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] result_mvm_13;
+    wire[`BFLOAT_EXP*`NUM_LDPES-1:0] max_exp_13;
+    wire[`NUM_LDPES-1:0] out_data_available_internal_comparator_tree_13;
+    
+    wire[`NUM_LDPES-1:0] out_data_available_mvm_tile_13;
+    
+    MVU_tile tile_13(.clk(clk),
+    .start(start),
+    .reset(reset),
+    .vrf_wr_addr(vrf_wr_addr),
+    .vec(vec),
+    .max_exp(max_exp_13),
+    .vrf_data_out(vrf_data_out_tile_13), //WITH TAG
+    .vrf_wr_enable(vrf_wr_enable_tile_13), //WITH TAG
+    .vrf_readn_enable(vrf_readn_enable_tile_13), //WITH TAG
+    .vrf_read_addr(vrf_read_addr),
+    .out_data_available_external_comparator_tree(out_data_available_comparator_tile),
+    .out_data_available_internal_comparator_tree(out_data_available_internal_comparator_tree_13),
+    .out_data_available(out_data_available_mvm_tile_13),
+    .mrf_in(mrf_in[14*`MRF_DWIDTH*`NUM_LDPES-1:13*`MRF_DWIDTH*`NUM_LDPES]),
+    .mrf_we(mrf_we[14*`NUM_LDPES-1:13*`NUM_LDPES]),  //WITH TAG 
+    .mrf_addr(mrf_addr[14*`NUM_LDPES*`MRF_AWIDTH-1:13*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_addr_for_dram(mrf_addr_for_dram[14*`NUM_LDPES*`MRF_AWIDTH-1:13*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_outa_to_dram(mrf_outa_to_dram[14*`NUM_LDPES*`MRF_DWIDTH-1:13*`NUM_LDPES*`MRF_DWIDTH]),
+    .mrf_we_for_dram(mrf_we_for_dram[14*`NUM_LDPES-1:13*`NUM_LDPES]),
+    .result(result_mvm_13) //WITH TAG
+    );
+    wire[`LDPE_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] result_mvm_14;
+    wire[`BFLOAT_EXP*`NUM_LDPES-1:0] max_exp_14;
+    wire[`NUM_LDPES-1:0] out_data_available_internal_comparator_tree_14;
+    
+    wire[`NUM_LDPES-1:0] out_data_available_mvm_tile_14;
+    
+    MVU_tile tile_14(.clk(clk),
+    .start(start),
+    .reset(reset),
+    .vrf_wr_addr(vrf_wr_addr),
+    .vec(vec),
+    .max_exp(max_exp_14),
+    .vrf_data_out(vrf_data_out_tile_14), //WITH TAG
+    .vrf_wr_enable(vrf_wr_enable_tile_14), //WITH TAG
+    .vrf_readn_enable(vrf_readn_enable_tile_14), //WITH TAG
+    .vrf_read_addr(vrf_read_addr),
+    .out_data_available_external_comparator_tree(out_data_available_comparator_tile),
+    .out_data_available_internal_comparator_tree(out_data_available_internal_comparator_tree_14),
+    .out_data_available(out_data_available_mvm_tile_14),
+    .mrf_in(mrf_in[15*`MRF_DWIDTH*`NUM_LDPES-1:14*`MRF_DWIDTH*`NUM_LDPES]),
+    .mrf_we(mrf_we[15*`NUM_LDPES-1:14*`NUM_LDPES]),  //WITH TAG 
+    .mrf_addr(mrf_addr[15*`NUM_LDPES*`MRF_AWIDTH-1:14*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_addr_for_dram(mrf_addr_for_dram[15*`NUM_LDPES*`MRF_AWIDTH-1:14*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_outa_to_dram(mrf_outa_to_dram[15*`NUM_LDPES*`MRF_DWIDTH-1:14*`NUM_LDPES*`MRF_DWIDTH]),
+    .mrf_we_for_dram(mrf_we_for_dram[15*`NUM_LDPES-1:14*`NUM_LDPES]),
+    .result(result_mvm_14) //WITH TAG
+    );
+    wire[`LDPE_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] result_mvm_15;
+    wire[`BFLOAT_EXP*`NUM_LDPES-1:0] max_exp_15;
+    wire[`NUM_LDPES-1:0] out_data_available_internal_comparator_tree_15;
+    
+    wire[`NUM_LDPES-1:0] out_data_available_mvm_tile_15;
+    
+    MVU_tile tile_15(.clk(clk),
+    .start(start),
+    .reset(reset),
+    .vrf_wr_addr(vrf_wr_addr),
+    .vec(vec),
+    .max_exp(max_exp_15),
+    .vrf_data_out(vrf_data_out_tile_15), //WITH TAG
+    .vrf_wr_enable(vrf_wr_enable_tile_15), //WITH TAG
+    .vrf_readn_enable(vrf_readn_enable_tile_15), //WITH TAG
+    .vrf_read_addr(vrf_read_addr),
+    .out_data_available_external_comparator_tree(out_data_available_comparator_tile),
+    .out_data_available_internal_comparator_tree(out_data_available_internal_comparator_tree_15),
+    .out_data_available(out_data_available_mvm_tile_15),
+    .mrf_in(mrf_in[16*`MRF_DWIDTH*`NUM_LDPES-1:15*`MRF_DWIDTH*`NUM_LDPES]),
+    .mrf_we(mrf_we[16*`NUM_LDPES-1:15*`NUM_LDPES]),  //WITH TAG 
+    .mrf_addr(mrf_addr[16*`NUM_LDPES*`MRF_AWIDTH-1:15*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_addr_for_dram(mrf_addr_for_dram[16*`NUM_LDPES*`MRF_AWIDTH-1:15*`NUM_LDPES*`MRF_AWIDTH]),
+    .mrf_outa_to_dram(mrf_outa_to_dram[16*`NUM_LDPES*`MRF_DWIDTH-1:15*`NUM_LDPES*`MRF_DWIDTH]),
+    .mrf_we_for_dram(mrf_we_for_dram[16*`NUM_LDPES-1:15*`NUM_LDPES]),
+    .result(result_mvm_15) //WITH TAG
+    );
 
 
 
@@ -167,6 +527,18 @@ exponent_comparator_tree_tile exp_cmp (
     .inp1(max_exp_1),
     .inp2(max_exp_2),
     .inp3(max_exp_3),
+    .inp4(max_exp_4),
+    .inp5(max_exp_5),
+    .inp6(max_exp_6),
+    .inp7(max_exp_7),
+    .inp8(max_exp_8),
+    .inp9(max_exp_9),
+    .inp10(max_exp_10),
+    .inp11(max_exp_11),
+    .inp12(max_exp_12),
+    .inp13(max_exp_13),
+    .inp14(max_exp_14),
+    .inp15(max_exp_15),
     .result_final_stage(max_exp_final)
 );
 
@@ -187,6 +559,18 @@ mvm_reduction_unit mvm_reduction (
     .inp1(result_mvm_1),
     .inp2(result_mvm_2),
     .inp3(result_mvm_3),
+    .inp4(result_mvm_4),
+    .inp5(result_mvm_5),
+    .inp6(result_mvm_6),
+    .inp7(result_mvm_7),
+    .inp8(result_mvm_8),
+    .inp9(result_mvm_9),
+    .inp10(result_mvm_10),
+    .inp11(result_mvm_11),
+    .inp12(result_mvm_12),
+    .inp13(result_mvm_13),
+    .inp14(result_mvm_14),
+    .inp15(result_mvm_15),
     .result_mvm_final_stage(reduction_unit_output)
 );
 
@@ -792,232 +1176,6 @@ module SUB_LDPE (
         .chainout(chainout_temp_2),
         .result(result_temp_2)
     );
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_wire_3;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_wire_3;
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] bx_wire_3;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] by_wire_3;
-
-    wire [`BFLOAT_DWIDTH-1:0] ax_wire_3_num;
-    wire [`BFLOAT_DWIDTH-1:0] ay_wire_3_num;
-    wire [`BFLOAT_DWIDTH-1:0] bx_wire_3_num;
-    wire [`BFLOAT_DWIDTH-1:0] by_wire_3_num;
-
-    wire [`BFLOAT_MANTISA_WITH_LO-1:0] ax_wire_3_mantisa_shifted;
-    wire [`BFLOAT_MANTISA_WITH_LO-1:0] ay_wire_3_mantisa_shifted;
-    wire [`BFLOAT_MANTISA_WITH_LO-1:0] bx_wire_3_mantisa_shifted;
-    wire [`BFLOAT_MANTISA_WITH_LO-1:0] by_wire_3_mantisa_shifted;
-
-    assign ax_wire_3_num = ax[3*`BFLOAT_DWIDTH-1:(3-1)*`BFLOAT_DWIDTH];
-    assign ay_wire_3_num = ay[3*`BFLOAT_DWIDTH-1:(3-1)*`BFLOAT_DWIDTH];
-    assign bx_wire_3_num = bx[3*`BFLOAT_DWIDTH-1:(3-1)*`BFLOAT_DWIDTH];
-    assign by_wire_3_num = by[3*`BFLOAT_DWIDTH-1:(3-1)*`BFLOAT_DWIDTH];
-    
-    wire[`BFLOAT_EXP-1:0] shift_amt_3_ax;
-    assign shift_amt_3_ax = max_exp - ax_wire_3_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA];
-    
-    wire out_data_available_barrel_shifter_ax_3;
-    wire start_barrel_shifter_ax_3;
-
-    assign start_barrel_shifter_ax_3 = out_data_available_external_comparator_tree;
-
-    barrel_shifter_right bshift_ax_3(
-        .clk(clk),
-        .reset(reset),
-        .start(start_barrel_shifter_ax_3),
-        .out_data_available(out_data_available_barrel_shifter_ax_3),
-        .shift_amt(shift_amt_3_ax),
-        .significand({1'b1,ax_wire_3_num[`BFLOAT_MANTISA-1:0]}),
-        .shifted_sig(ax_wire_3_mantisa_shifted)
-    );
-
-    wire[`BFLOAT_EXP-1:0] shift_amt_3_ay;
-    assign shift_amt_3_ay = max_exp - ay_wire_3_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA];
-    wire out_data_available_barrel_shifter_ay_3;
-    wire start_barrel_shifter_ay_3;
-
-    assign start_barrel_shifter_ay_3 = out_data_available_external_comparator_tree;
-
-    barrel_shifter_right bshift_ay_3(
-        .clk(clk),
-        .reset(reset),
-        .start(start_barrel_shifter_ay_3),
-        .out_data_available(out_data_available_barrel_shifter_ay_3),
-        .shift_amt(shift_amt_3_ay),
-        .significand({1'b1,ay_wire_3_num[`BFLOAT_MANTISA-1:0]}),
-        .shifted_sig(ay_wire_3_mantisa_shifted)
-    );
-
-    wire[`BFLOAT_EXP-1:0] shift_amt_3_bx;
-    assign shift_amt_3_bx = max_exp - bx_wire_3_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA];
-    wire out_data_available_barrel_shifter_bx_3;
-    wire start_barrel_shifter_bx_3;
-
-    assign start_barrel_shifter_bx_3 = out_data_available_external_comparator_tree;
-
-    barrel_shifter_right bshift_bx_3(
-        .clk(clk),
-        .reset(reset),
-        .start(start_barrel_shifter_bx_3),
-        .out_data_available(out_data_available_barrel_shifter_bx_3),
-        .shift_amt(shift_amt_3_bx),
-        .significand({1'b1,bx_wire_3_num[`BFLOAT_MANTISA-1:0]}),
-        .shifted_sig(bx_wire_3_mantisa_shifted)
-    );
-
-    wire[`BFLOAT_EXP-1:0] shift_amt_3_by;
-    assign shift_amt_3_by = max_exp - by_wire_3_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA];
-    wire out_data_available_barrel_shifter_by_3;
-    wire start_barrel_shifter_by_3;
-
-    assign start_barrel_shifter_by_3 = out_data_available_external_comparator_tree;
-
-    barrel_shifter_right bshift_by_3(
-        .clk(clk),
-        .reset(reset),
-        .start(start_barrel_shifter_by_3),
-        .out_data_available(out_data_available_barrel_shifter_by_3),
-        .shift_amt(shift_amt_3_by),
-        .significand({1'b1,by_wire_3_num[`BFLOAT_MANTISA-1:0]}),
-        .shifted_sig(by_wire_3_mantisa_shifted)
-    );
-
-    assign ax_wire_3 = (ax_wire_3_num[`BFLOAT_DWIDTH-1]==1'b1) ? -{{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax_wire_3_mantisa_shifted} : {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax_wire_3_mantisa_shifted};
-    assign ay_wire_3 = (ay_wire_3_num[`BFLOAT_DWIDTH-1]==1'b1) ? -{{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay_wire_3_mantisa_shifted} : {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay_wire_3_mantisa_shifted};
-    assign bx_wire_3 = (bx_wire_3_num[`BFLOAT_DWIDTH-1]==1'b1) ? -{{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx_wire_3_mantisa_shifted} : {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx_wire_3_mantisa_shifted};
-    assign by_wire_3 = (by_wire_3_num[`BFLOAT_DWIDTH-1]==1'b1) ? -{{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, by_wire_3_mantisa_shifted} : {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, by_wire_3_mantisa_shifted};    
-  
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout_temp_3;
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] result_temp_3;
-
-    assign dsp_result[3*`DSP_USED_OUTPUT_WIDTH-1:(3-1)*`DSP_USED_OUTPUT_WIDTH] = result_temp_3[`DSP_USED_OUTPUT_WIDTH-1:0];
-
-    wire reset_dsp_3;
-    assign reset_dsp_3 = ~out_data_available_barrel_shifter_ax_3;
-
-    dsp_block_18_18_int_sop_2 dsp_3 (
-        .clk(clk),
-        .aclr(reset_dsp_3),
-        .ax(ax_wire_3),
-        .ay(ay_wire_3),
-        .bx(bx_wire_3),
-        .by(by_wire_3),
-        .chainin(chainout_temp_2),
-        .chainout(chainout_temp_3),
-        .result(result_temp_3)
-    );
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_wire_4;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_wire_4;
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] bx_wire_4;
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] by_wire_4;
-
-    wire [`BFLOAT_DWIDTH-1:0] ax_wire_4_num;
-    wire [`BFLOAT_DWIDTH-1:0] ay_wire_4_num;
-    wire [`BFLOAT_DWIDTH-1:0] bx_wire_4_num;
-    wire [`BFLOAT_DWIDTH-1:0] by_wire_4_num;
-
-    wire [`BFLOAT_MANTISA_WITH_LO-1:0] ax_wire_4_mantisa_shifted;
-    wire [`BFLOAT_MANTISA_WITH_LO-1:0] ay_wire_4_mantisa_shifted;
-    wire [`BFLOAT_MANTISA_WITH_LO-1:0] bx_wire_4_mantisa_shifted;
-    wire [`BFLOAT_MANTISA_WITH_LO-1:0] by_wire_4_mantisa_shifted;
-
-    assign ax_wire_4_num = ax[4*`BFLOAT_DWIDTH-1:(4-1)*`BFLOAT_DWIDTH];
-    assign ay_wire_4_num = ay[4*`BFLOAT_DWIDTH-1:(4-1)*`BFLOAT_DWIDTH];
-    assign bx_wire_4_num = bx[4*`BFLOAT_DWIDTH-1:(4-1)*`BFLOAT_DWIDTH];
-    assign by_wire_4_num = by[4*`BFLOAT_DWIDTH-1:(4-1)*`BFLOAT_DWIDTH];
-    
-    wire[`BFLOAT_EXP-1:0] shift_amt_4_ax;
-    assign shift_amt_4_ax = max_exp - ax_wire_4_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA];
-    
-    wire out_data_available_barrel_shifter_ax_4;
-    wire start_barrel_shifter_ax_4;
-
-    assign start_barrel_shifter_ax_4 = out_data_available_external_comparator_tree;
-
-    barrel_shifter_right bshift_ax_4(
-        .clk(clk),
-        .reset(reset),
-        .start(start_barrel_shifter_ax_4),
-        .out_data_available(out_data_available_barrel_shifter_ax_4),
-        .shift_amt(shift_amt_4_ax),
-        .significand({1'b1,ax_wire_4_num[`BFLOAT_MANTISA-1:0]}),
-        .shifted_sig(ax_wire_4_mantisa_shifted)
-    );
-
-    wire[`BFLOAT_EXP-1:0] shift_amt_4_ay;
-    assign shift_amt_4_ay = max_exp - ay_wire_4_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA];
-    wire out_data_available_barrel_shifter_ay_4;
-    wire start_barrel_shifter_ay_4;
-
-    assign start_barrel_shifter_ay_4 = out_data_available_external_comparator_tree;
-
-    barrel_shifter_right bshift_ay_4(
-        .clk(clk),
-        .reset(reset),
-        .start(start_barrel_shifter_ay_4),
-        .out_data_available(out_data_available_barrel_shifter_ay_4),
-        .shift_amt(shift_amt_4_ay),
-        .significand({1'b1,ay_wire_4_num[`BFLOAT_MANTISA-1:0]}),
-        .shifted_sig(ay_wire_4_mantisa_shifted)
-    );
-
-    wire[`BFLOAT_EXP-1:0] shift_amt_4_bx;
-    assign shift_amt_4_bx = max_exp - bx_wire_4_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA];
-    wire out_data_available_barrel_shifter_bx_4;
-    wire start_barrel_shifter_bx_4;
-
-    assign start_barrel_shifter_bx_4 = out_data_available_external_comparator_tree;
-
-    barrel_shifter_right bshift_bx_4(
-        .clk(clk),
-        .reset(reset),
-        .start(start_barrel_shifter_bx_4),
-        .out_data_available(out_data_available_barrel_shifter_bx_4),
-        .shift_amt(shift_amt_4_bx),
-        .significand({1'b1,bx_wire_4_num[`BFLOAT_MANTISA-1:0]}),
-        .shifted_sig(bx_wire_4_mantisa_shifted)
-    );
-
-    wire[`BFLOAT_EXP-1:0] shift_amt_4_by;
-    assign shift_amt_4_by = max_exp - by_wire_4_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA];
-    wire out_data_available_barrel_shifter_by_4;
-    wire start_barrel_shifter_by_4;
-
-    assign start_barrel_shifter_by_4 = out_data_available_external_comparator_tree;
-
-    barrel_shifter_right bshift_by_4(
-        .clk(clk),
-        .reset(reset),
-        .start(start_barrel_shifter_by_4),
-        .out_data_available(out_data_available_barrel_shifter_by_4),
-        .shift_amt(shift_amt_4_by),
-        .significand({1'b1,by_wire_4_num[`BFLOAT_MANTISA-1:0]}),
-        .shifted_sig(by_wire_4_mantisa_shifted)
-    );
-
-    assign ax_wire_4 = (ax_wire_4_num[`BFLOAT_DWIDTH-1]==1'b1) ? -{{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax_wire_4_mantisa_shifted} : {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax_wire_4_mantisa_shifted};
-    assign ay_wire_4 = (ay_wire_4_num[`BFLOAT_DWIDTH-1]==1'b1) ? -{{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay_wire_4_mantisa_shifted} : {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay_wire_4_mantisa_shifted};
-    assign bx_wire_4 = (bx_wire_4_num[`BFLOAT_DWIDTH-1]==1'b1) ? -{{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx_wire_4_mantisa_shifted} : {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx_wire_4_mantisa_shifted};
-    assign by_wire_4 = (by_wire_4_num[`BFLOAT_DWIDTH-1]==1'b1) ? -{{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, by_wire_4_mantisa_shifted} : {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, by_wire_4_mantisa_shifted};    
-  
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout_temp_4;
-    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] result_temp_4;
-
-    assign dsp_result[4*`DSP_USED_OUTPUT_WIDTH-1:(4-1)*`DSP_USED_OUTPUT_WIDTH] = result_temp_4[`DSP_USED_OUTPUT_WIDTH-1:0];
-
-    wire reset_dsp_4;
-    assign reset_dsp_4 = ~out_data_available_barrel_shifter_ax_4;
-
-    dsp_block_18_18_int_sop_2 dsp_4 (
-        .clk(clk),
-        .aclr(reset_dsp_4),
-        .ax(ax_wire_4),
-        .ay(ay_wire_4),
-        .bx(bx_wire_4),
-        .by(by_wire_4),
-        .chainin(chainout_temp_3),
-        .chainout(chainout_temp_4),
-        .result(result_temp_4)
-    );
 
 
 exponent_comparator_tree_ldpe exp_cmp (
@@ -1027,20 +1185,12 @@ exponent_comparator_tree_ldpe exp_cmp (
         .out_data_available(out_data_available_internal_comparator_tree),
         .inp0(ax_wire_1_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
         .inp1(ax_wire_2_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp2(ax_wire_3_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp3(ax_wire_4_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp4(ay_wire_1_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp5(ay_wire_2_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp6(ay_wire_3_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp7(ay_wire_4_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp8(bx_wire_1_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp9(bx_wire_2_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp10(bx_wire_3_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp11(bx_wire_4_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp12(by_wire_1_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp13(by_wire_2_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp14(by_wire_3_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
-        .inp15(by_wire_4_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
+        .inp2(ay_wire_1_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
+        .inp3(ay_wire_2_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
+        .inp4(bx_wire_1_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
+        .inp5(bx_wire_2_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
+        .inp6(by_wire_1_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
+        .inp7(by_wire_2_num[`BFLOAT_EXP+`BFLOAT_MANTISA-1:`BFLOAT_MANTISA]),
         .result_final_stage(max_exp)
 );
 
@@ -1294,6 +1444,18 @@ module mvm_reduction_unit(
     input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp1,
     input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp2,
     input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp3,
+    input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp4,
+    input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp5,
+    input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp6,
+    input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp7,
+    input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp8,
+    input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp9,
+    input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp10,
+    input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp11,
+    input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp12,
+    input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp13,
+    input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp14,
+    input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp15,
     output [`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] result_mvm_final_stage,
     output [`NUM_LDPES-1:0] out_data_available,
     //CONTROL SIGNALS
@@ -1355,6 +1517,102 @@ module mvm_reduction_unit(
             );
         end
     endgenerate
+    wire[(`DSP_USED_OUTPUT_WIDTH)*`NUM_LDPES-1:0] reduction_output_2_stage_1;
+    wire[`NUM_LDPES-1:0] out_data_available_2_stage_1;
+
+    generate
+        for(i=1; i<=`NUM_LDPES; i=i+1) begin
+           myadder #(.INPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH),.OUTPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH)) adder_units_initial_2 (
+              .a(inp4[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH]),
+              .b(inp5[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH]),
+              .clk(clk),
+              .reset(reset_reduction_mvm[i-1]),
+              .start(start[i-1]),
+              .out_data_available(out_data_available_2_stage_1[i-1]),
+              .sum(reduction_output_2_stage_1[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH])
+            );
+        end
+    endgenerate
+    wire[(`DSP_USED_OUTPUT_WIDTH)*`NUM_LDPES-1:0] reduction_output_3_stage_1;
+    wire[`NUM_LDPES-1:0] out_data_available_3_stage_1;
+
+    generate
+        for(i=1; i<=`NUM_LDPES; i=i+1) begin
+           myadder #(.INPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH),.OUTPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH)) adder_units_initial_3 (
+              .a(inp6[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH]),
+              .b(inp7[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH]),
+              .clk(clk),
+              .reset(reset_reduction_mvm[i-1]),
+              .start(start[i-1]),
+              .out_data_available(out_data_available_3_stage_1[i-1]),
+              .sum(reduction_output_3_stage_1[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH])
+            );
+        end
+    endgenerate
+    wire[(`DSP_USED_OUTPUT_WIDTH)*`NUM_LDPES-1:0] reduction_output_4_stage_1;
+    wire[`NUM_LDPES-1:0] out_data_available_4_stage_1;
+
+    generate
+        for(i=1; i<=`NUM_LDPES; i=i+1) begin
+           myadder #(.INPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH),.OUTPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH)) adder_units_initial_4 (
+              .a(inp8[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH]),
+              .b(inp9[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH]),
+              .clk(clk),
+              .reset(reset_reduction_mvm[i-1]),
+              .start(start[i-1]),
+              .out_data_available(out_data_available_4_stage_1[i-1]),
+              .sum(reduction_output_4_stage_1[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH])
+            );
+        end
+    endgenerate
+    wire[(`DSP_USED_OUTPUT_WIDTH)*`NUM_LDPES-1:0] reduction_output_5_stage_1;
+    wire[`NUM_LDPES-1:0] out_data_available_5_stage_1;
+
+    generate
+        for(i=1; i<=`NUM_LDPES; i=i+1) begin
+           myadder #(.INPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH),.OUTPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH)) adder_units_initial_5 (
+              .a(inp10[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH]),
+              .b(inp11[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH]),
+              .clk(clk),
+              .reset(reset_reduction_mvm[i-1]),
+              .start(start[i-1]),
+              .out_data_available(out_data_available_5_stage_1[i-1]),
+              .sum(reduction_output_5_stage_1[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH])
+            );
+        end
+    endgenerate
+    wire[(`DSP_USED_OUTPUT_WIDTH)*`NUM_LDPES-1:0] reduction_output_6_stage_1;
+    wire[`NUM_LDPES-1:0] out_data_available_6_stage_1;
+
+    generate
+        for(i=1; i<=`NUM_LDPES; i=i+1) begin
+           myadder #(.INPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH),.OUTPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH)) adder_units_initial_6 (
+              .a(inp12[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH]),
+              .b(inp13[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH]),
+              .clk(clk),
+              .reset(reset_reduction_mvm[i-1]),
+              .start(start[i-1]),
+              .out_data_available(out_data_available_6_stage_1[i-1]),
+              .sum(reduction_output_6_stage_1[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH])
+            );
+        end
+    endgenerate
+    wire[(`DSP_USED_OUTPUT_WIDTH)*`NUM_LDPES-1:0] reduction_output_7_stage_1;
+    wire[`NUM_LDPES-1:0] out_data_available_7_stage_1;
+
+    generate
+        for(i=1; i<=`NUM_LDPES; i=i+1) begin
+           myadder #(.INPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH),.OUTPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH)) adder_units_initial_7 (
+              .a(inp14[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH]),
+              .b(inp15[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH]),
+              .clk(clk),
+              .reset(reset_reduction_mvm[i-1]),
+              .start(start[i-1]),
+              .out_data_available(out_data_available_7_stage_1[i-1]),
+              .sum(reduction_output_7_stage_1[i*`DSP_USED_OUTPUT_WIDTH-1:(i-1)*`DSP_USED_OUTPUT_WIDTH])
+            );
+        end
+    endgenerate
 
     wire[(`DSP_USED_OUTPUT_WIDTH)*`NUM_LDPES-1:0] reduction_output_0_stage_2;
     wire[`NUM_LDPES-1:0] out_data_available_0_stage_2;
@@ -1372,38 +1630,106 @@ module mvm_reduction_unit(
             );
         end
     endgenerate
+    wire[(`DSP_USED_OUTPUT_WIDTH)*`NUM_LDPES-1:0] reduction_output_1_stage_2;
+    wire[`NUM_LDPES-1:0] out_data_available_1_stage_2;
 
-assign result_mvm_final_stage[1*`DSP_USED_OUTPUT_WIDTH-1:0*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[1*(`DSP_USED_OUTPUT_WIDTH)-1:0*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[2*`DSP_USED_OUTPUT_WIDTH-1:1*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[2*(`DSP_USED_OUTPUT_WIDTH)-1:1*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[3*`DSP_USED_OUTPUT_WIDTH-1:2*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[3*(`DSP_USED_OUTPUT_WIDTH)-1:2*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[4*`DSP_USED_OUTPUT_WIDTH-1:3*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[4*(`DSP_USED_OUTPUT_WIDTH)-1:3*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[5*`DSP_USED_OUTPUT_WIDTH-1:4*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[5*(`DSP_USED_OUTPUT_WIDTH)-1:4*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[6*`DSP_USED_OUTPUT_WIDTH-1:5*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[6*(`DSP_USED_OUTPUT_WIDTH)-1:5*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[7*`DSP_USED_OUTPUT_WIDTH-1:6*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[7*(`DSP_USED_OUTPUT_WIDTH)-1:6*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[8*`DSP_USED_OUTPUT_WIDTH-1:7*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[8*(`DSP_USED_OUTPUT_WIDTH)-1:7*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[9*`DSP_USED_OUTPUT_WIDTH-1:8*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[9*(`DSP_USED_OUTPUT_WIDTH)-1:8*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[10*`DSP_USED_OUTPUT_WIDTH-1:9*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[10*(`DSP_USED_OUTPUT_WIDTH)-1:9*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[11*`DSP_USED_OUTPUT_WIDTH-1:10*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[11*(`DSP_USED_OUTPUT_WIDTH)-1:10*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[12*`DSP_USED_OUTPUT_WIDTH-1:11*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[12*(`DSP_USED_OUTPUT_WIDTH)-1:11*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[13*`DSP_USED_OUTPUT_WIDTH-1:12*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[13*(`DSP_USED_OUTPUT_WIDTH)-1:12*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[14*`DSP_USED_OUTPUT_WIDTH-1:13*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[14*(`DSP_USED_OUTPUT_WIDTH)-1:13*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[15*`DSP_USED_OUTPUT_WIDTH-1:14*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[15*(`DSP_USED_OUTPUT_WIDTH)-1:14*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[16*`DSP_USED_OUTPUT_WIDTH-1:15*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[16*(`DSP_USED_OUTPUT_WIDTH)-1:15*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[17*`DSP_USED_OUTPUT_WIDTH-1:16*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[17*(`DSP_USED_OUTPUT_WIDTH)-1:16*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[18*`DSP_USED_OUTPUT_WIDTH-1:17*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[18*(`DSP_USED_OUTPUT_WIDTH)-1:17*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[19*`DSP_USED_OUTPUT_WIDTH-1:18*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[19*(`DSP_USED_OUTPUT_WIDTH)-1:18*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[20*`DSP_USED_OUTPUT_WIDTH-1:19*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[20*(`DSP_USED_OUTPUT_WIDTH)-1:19*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[21*`DSP_USED_OUTPUT_WIDTH-1:20*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[21*(`DSP_USED_OUTPUT_WIDTH)-1:20*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[22*`DSP_USED_OUTPUT_WIDTH-1:21*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[22*(`DSP_USED_OUTPUT_WIDTH)-1:21*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[23*`DSP_USED_OUTPUT_WIDTH-1:22*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[23*(`DSP_USED_OUTPUT_WIDTH)-1:22*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[24*`DSP_USED_OUTPUT_WIDTH-1:23*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[24*(`DSP_USED_OUTPUT_WIDTH)-1:23*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[25*`DSP_USED_OUTPUT_WIDTH-1:24*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[25*(`DSP_USED_OUTPUT_WIDTH)-1:24*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[26*`DSP_USED_OUTPUT_WIDTH-1:25*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[26*(`DSP_USED_OUTPUT_WIDTH)-1:25*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[27*`DSP_USED_OUTPUT_WIDTH-1:26*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[27*(`DSP_USED_OUTPUT_WIDTH)-1:26*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[28*`DSP_USED_OUTPUT_WIDTH-1:27*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[28*(`DSP_USED_OUTPUT_WIDTH)-1:27*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[29*`DSP_USED_OUTPUT_WIDTH-1:28*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[29*(`DSP_USED_OUTPUT_WIDTH)-1:28*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[30*`DSP_USED_OUTPUT_WIDTH-1:29*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[30*(`DSP_USED_OUTPUT_WIDTH)-1:29*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[31*`DSP_USED_OUTPUT_WIDTH-1:30*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[31*(`DSP_USED_OUTPUT_WIDTH)-1:30*(`DSP_USED_OUTPUT_WIDTH)];
-assign result_mvm_final_stage[32*`DSP_USED_OUTPUT_WIDTH-1:31*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_2[32*(`DSP_USED_OUTPUT_WIDTH)-1:31*(`DSP_USED_OUTPUT_WIDTH)];
-assign out_data_available = out_data_available_0_stage_2;
+    generate
+        for(i=1; i<=`NUM_LDPES; i=i+1) begin
+           myadder #(.INPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH),.OUTPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH)) adder_units_1_stage_1 (
+              .a(reduction_output_2_stage_1[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)]),
+              .b(reduction_output_3_stage_1[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)]),
+              .clk(clk),
+              .reset(reset_reduction_mvm[i-1]),
+              .start(out_data_available_0_stage_1[i-1]),
+              .out_data_available(out_data_available_1_stage_2[i-1]),
+              .sum(reduction_output_1_stage_2[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)])
+            );
+        end
+    endgenerate
+    wire[(`DSP_USED_OUTPUT_WIDTH)*`NUM_LDPES-1:0] reduction_output_2_stage_2;
+    wire[`NUM_LDPES-1:0] out_data_available_2_stage_2;
+
+    generate
+        for(i=1; i<=`NUM_LDPES; i=i+1) begin
+           myadder #(.INPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH),.OUTPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH)) adder_units_2_stage_1 (
+              .a(reduction_output_4_stage_1[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)]),
+              .b(reduction_output_5_stage_1[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)]),
+              .clk(clk),
+              .reset(reset_reduction_mvm[i-1]),
+              .start(out_data_available_0_stage_1[i-1]),
+              .out_data_available(out_data_available_2_stage_2[i-1]),
+              .sum(reduction_output_2_stage_2[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)])
+            );
+        end
+    endgenerate
+    wire[(`DSP_USED_OUTPUT_WIDTH)*`NUM_LDPES-1:0] reduction_output_3_stage_2;
+    wire[`NUM_LDPES-1:0] out_data_available_3_stage_2;
+
+    generate
+        for(i=1; i<=`NUM_LDPES; i=i+1) begin
+           myadder #(.INPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH),.OUTPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH)) adder_units_3_stage_1 (
+              .a(reduction_output_6_stage_1[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)]),
+              .b(reduction_output_7_stage_1[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)]),
+              .clk(clk),
+              .reset(reset_reduction_mvm[i-1]),
+              .start(out_data_available_0_stage_1[i-1]),
+              .out_data_available(out_data_available_3_stage_2[i-1]),
+              .sum(reduction_output_3_stage_2[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)])
+            );
+        end
+    endgenerate
+    wire[(`DSP_USED_OUTPUT_WIDTH)*`NUM_LDPES-1:0] reduction_output_0_stage_3;
+    wire[`NUM_LDPES-1:0] out_data_available_0_stage_3;
+
+    generate
+        for(i=1; i<=`NUM_LDPES; i=i+1) begin
+           myadder #(.INPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH),.OUTPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH)) adder_units_0_stage_2 (
+              .a(reduction_output_0_stage_2[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)]),
+              .b(reduction_output_1_stage_2[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)]),
+              .clk(clk),
+              .reset(reset_reduction_mvm[i-1]),
+              .start(out_data_available_0_stage_2[i-1]),
+              .out_data_available(out_data_available_0_stage_3[i-1]),
+              .sum(reduction_output_0_stage_3[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)])
+            );
+        end
+    endgenerate
+    wire[(`DSP_USED_OUTPUT_WIDTH)*`NUM_LDPES-1:0] reduction_output_1_stage_3;
+    wire[`NUM_LDPES-1:0] out_data_available_1_stage_3;
+
+    generate
+        for(i=1; i<=`NUM_LDPES; i=i+1) begin
+           myadder #(.INPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH),.OUTPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH)) adder_units_1_stage_2 (
+              .a(reduction_output_2_stage_2[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)]),
+              .b(reduction_output_3_stage_2[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)]),
+              .clk(clk),
+              .reset(reset_reduction_mvm[i-1]),
+              .start(out_data_available_0_stage_2[i-1]),
+              .out_data_available(out_data_available_1_stage_3[i-1]),
+              .sum(reduction_output_1_stage_3[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)])
+            );
+        end
+    endgenerate
+    wire[(`DSP_USED_OUTPUT_WIDTH)*`NUM_LDPES-1:0] reduction_output_0_stage_4;
+    wire[`NUM_LDPES-1:0] out_data_available_0_stage_4;
+
+    generate
+        for(i=1; i<=`NUM_LDPES; i=i+1) begin
+           myadder #(.INPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH),.OUTPUT_WIDTH(`DSP_USED_OUTPUT_WIDTH)) adder_units_0_stage_3 (
+              .a(reduction_output_0_stage_3[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)]),
+              .b(reduction_output_1_stage_3[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)]),
+              .clk(clk),
+              .reset(reset_reduction_mvm[i-1]),
+              .start(out_data_available_0_stage_3[i-1]),
+              .out_data_available(out_data_available_0_stage_4[i-1]),
+              .sum(reduction_output_0_stage_4[i*(`DSP_USED_OUTPUT_WIDTH)-1:(i-1)*(`DSP_USED_OUTPUT_WIDTH)])
+            );
+        end
+    endgenerate
+
+assign result_mvm_final_stage[1*`DSP_USED_OUTPUT_WIDTH-1:0*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_4[1*(`DSP_USED_OUTPUT_WIDTH)-1:0*(`DSP_USED_OUTPUT_WIDTH)];
+assign result_mvm_final_stage[2*`DSP_USED_OUTPUT_WIDTH-1:1*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_4[2*(`DSP_USED_OUTPUT_WIDTH)-1:1*(`DSP_USED_OUTPUT_WIDTH)];
+assign result_mvm_final_stage[3*`DSP_USED_OUTPUT_WIDTH-1:2*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_4[3*(`DSP_USED_OUTPUT_WIDTH)-1:2*(`DSP_USED_OUTPUT_WIDTH)];
+assign result_mvm_final_stage[4*`DSP_USED_OUTPUT_WIDTH-1:3*`DSP_USED_OUTPUT_WIDTH] = reduction_output_0_stage_4[4*(`DSP_USED_OUTPUT_WIDTH)-1:3*(`DSP_USED_OUTPUT_WIDTH)];
+assign out_data_available = out_data_available_0_stage_4;
 endmodule

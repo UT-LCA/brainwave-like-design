@@ -1,9 +1,9 @@
 <%!
     import math
 
-    num_tiles = 4
-    num_ldpes = 32
-    num_dsp_per_ldpe = 4
+    num_tiles = 16
+    num_ldpes = 4
+    num_dsp_per_ldpe = 2
     num_reduction_stages = int(math.log2(num_tiles))
     in_precision = 16
     out_precision = 16
@@ -17,6 +17,8 @@
     mac_per_ldpe = num_dsp_per_ldpe*mac_per_dsp
     num_comparison_stages = int(math.log2(mac_per_ldpe))
 %>
+`define hard_mem
+`define complex_dsp
 
 `define NUM_TILES ${num_tiles}
 `define NUM_LDPES ${num_ldpes}

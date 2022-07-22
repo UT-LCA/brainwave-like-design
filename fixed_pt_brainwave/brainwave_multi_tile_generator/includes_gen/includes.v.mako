@@ -1,9 +1,9 @@
 <%!
     import math
 
-    num_tiles = 4 #CHANGE THIS
-    num_ldpes = 16 #CHANGE THIS
-    num_dsp_per_ldpe = 8 #CHANGE THIS
+    num_tiles = 8 #CHANGE THIS
+    num_ldpes = 4 #CHANGE THIS
+    num_dsp_per_ldpe = 4 #CHANGE THIS
     num_reduction_stages = int(math.log2(num_tiles))
     in_precision = 8
     out_precision = 8
@@ -14,6 +14,8 @@
 
     target_op_width = int(math.log2(num_ldpes*num_tiles+8)+1)
 %>
+`define hard_mem
+`define complex_dsp
 
 `define IN_PRECISION ${in_precision}
 `define OUT_PRECISION ${out_precision}
