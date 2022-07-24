@@ -59,42 +59,6 @@ module NPU(
     wire[`VRF_DWIDTH-1:0] vrf_mvu_out_3;
     wire vrf_mvu_wr_enable_3;
     wire vrf_mvu_readn_enable_3;
-    wire[`VRF_DWIDTH-1:0] vrf_mvu_out_4;
-    wire vrf_mvu_wr_enable_4;
-    wire vrf_mvu_readn_enable_4;
-    wire[`VRF_DWIDTH-1:0] vrf_mvu_out_5;
-    wire vrf_mvu_wr_enable_5;
-    wire vrf_mvu_readn_enable_5;
-    wire[`VRF_DWIDTH-1:0] vrf_mvu_out_6;
-    wire vrf_mvu_wr_enable_6;
-    wire vrf_mvu_readn_enable_6;
-    wire[`VRF_DWIDTH-1:0] vrf_mvu_out_7;
-    wire vrf_mvu_wr_enable_7;
-    wire vrf_mvu_readn_enable_7;
-    wire[`VRF_DWIDTH-1:0] vrf_mvu_out_8;
-    wire vrf_mvu_wr_enable_8;
-    wire vrf_mvu_readn_enable_8;
-    wire[`VRF_DWIDTH-1:0] vrf_mvu_out_9;
-    wire vrf_mvu_wr_enable_9;
-    wire vrf_mvu_readn_enable_9;
-    wire[`VRF_DWIDTH-1:0] vrf_mvu_out_10;
-    wire vrf_mvu_wr_enable_10;
-    wire vrf_mvu_readn_enable_10;
-    wire[`VRF_DWIDTH-1:0] vrf_mvu_out_11;
-    wire vrf_mvu_wr_enable_11;
-    wire vrf_mvu_readn_enable_11;
-    wire[`VRF_DWIDTH-1:0] vrf_mvu_out_12;
-    wire vrf_mvu_wr_enable_12;
-    wire vrf_mvu_readn_enable_12;
-    wire[`VRF_DWIDTH-1:0] vrf_mvu_out_13;
-    wire vrf_mvu_wr_enable_13;
-    wire vrf_mvu_readn_enable_13;
-    wire[`VRF_DWIDTH-1:0] vrf_mvu_out_14;
-    wire vrf_mvu_wr_enable_14;
-    wire vrf_mvu_readn_enable_14;
-    wire[`VRF_DWIDTH-1:0] vrf_mvu_out_15;
-    wire vrf_mvu_wr_enable_15;
-    wire vrf_mvu_readn_enable_15;
     
     wire done_mvm; //CHANGES THE REST STATE OF INSTR DECODER
     wire out_data_available_mvm;
@@ -123,42 +87,6 @@ module NPU(
     .vrf_data_out_tile_3(vrf_mvu_out_3), //WITH TAG
     .vrf_wr_enable_tile_3(vrf_mvu_wr_enable_3), //WITH TAG
     .vrf_readn_enable_tile_3(vrf_mvu_readn_enable_3), //WITH TAG
-    .vrf_data_out_tile_4(vrf_mvu_out_4), //WITH TAG
-    .vrf_wr_enable_tile_4(vrf_mvu_wr_enable_4), //WITH TAG
-    .vrf_readn_enable_tile_4(vrf_mvu_readn_enable_4), //WITH TAG
-    .vrf_data_out_tile_5(vrf_mvu_out_5), //WITH TAG
-    .vrf_wr_enable_tile_5(vrf_mvu_wr_enable_5), //WITH TAG
-    .vrf_readn_enable_tile_5(vrf_mvu_readn_enable_5), //WITH TAG
-    .vrf_data_out_tile_6(vrf_mvu_out_6), //WITH TAG
-    .vrf_wr_enable_tile_6(vrf_mvu_wr_enable_6), //WITH TAG
-    .vrf_readn_enable_tile_6(vrf_mvu_readn_enable_6), //WITH TAG
-    .vrf_data_out_tile_7(vrf_mvu_out_7), //WITH TAG
-    .vrf_wr_enable_tile_7(vrf_mvu_wr_enable_7), //WITH TAG
-    .vrf_readn_enable_tile_7(vrf_mvu_readn_enable_7), //WITH TAG
-    .vrf_data_out_tile_8(vrf_mvu_out_8), //WITH TAG
-    .vrf_wr_enable_tile_8(vrf_mvu_wr_enable_8), //WITH TAG
-    .vrf_readn_enable_tile_8(vrf_mvu_readn_enable_8), //WITH TAG
-    .vrf_data_out_tile_9(vrf_mvu_out_9), //WITH TAG
-    .vrf_wr_enable_tile_9(vrf_mvu_wr_enable_9), //WITH TAG
-    .vrf_readn_enable_tile_9(vrf_mvu_readn_enable_9), //WITH TAG
-    .vrf_data_out_tile_10(vrf_mvu_out_10), //WITH TAG
-    .vrf_wr_enable_tile_10(vrf_mvu_wr_enable_10), //WITH TAG
-    .vrf_readn_enable_tile_10(vrf_mvu_readn_enable_10), //WITH TAG
-    .vrf_data_out_tile_11(vrf_mvu_out_11), //WITH TAG
-    .vrf_wr_enable_tile_11(vrf_mvu_wr_enable_11), //WITH TAG
-    .vrf_readn_enable_tile_11(vrf_mvu_readn_enable_11), //WITH TAG
-    .vrf_data_out_tile_12(vrf_mvu_out_12), //WITH TAG
-    .vrf_wr_enable_tile_12(vrf_mvu_wr_enable_12), //WITH TAG
-    .vrf_readn_enable_tile_12(vrf_mvu_readn_enable_12), //WITH TAG
-    .vrf_data_out_tile_13(vrf_mvu_out_13), //WITH TAG
-    .vrf_wr_enable_tile_13(vrf_mvu_wr_enable_13), //WITH TAG
-    .vrf_readn_enable_tile_13(vrf_mvu_readn_enable_13), //WITH TAG
-    .vrf_data_out_tile_14(vrf_mvu_out_14), //WITH TAG
-    .vrf_wr_enable_tile_14(vrf_mvu_wr_enable_14), //WITH TAG
-    .vrf_readn_enable_tile_14(vrf_mvu_readn_enable_14), //WITH TAG
-    .vrf_data_out_tile_15(vrf_mvu_out_15), //WITH TAG
-    .vrf_wr_enable_tile_15(vrf_mvu_wr_enable_15), //WITH TAG
-    .vrf_readn_enable_tile_15(vrf_mvu_readn_enable_15), //WITH TAG
     
     .mrf_in(mrf_in_data),
     .mrf_we(mrf_we),  //WITH TAG 
@@ -337,42 +265,6 @@ module NPU(
     .vrf_out_data_mvu_3(vrf_mvu_out_3),               //MVU TILE VRF
     .vrf_readn_enable_mvu_3(vrf_mvu_readn_enable_3),
     .vrf_wr_enable_mvu_3(vrf_mvu_wr_enable_3),
-    .vrf_out_data_mvu_4(vrf_mvu_out_4),               //MVU TILE VRF
-    .vrf_readn_enable_mvu_4(vrf_mvu_readn_enable_4),
-    .vrf_wr_enable_mvu_4(vrf_mvu_wr_enable_4),
-    .vrf_out_data_mvu_5(vrf_mvu_out_5),               //MVU TILE VRF
-    .vrf_readn_enable_mvu_5(vrf_mvu_readn_enable_5),
-    .vrf_wr_enable_mvu_5(vrf_mvu_wr_enable_5),
-    .vrf_out_data_mvu_6(vrf_mvu_out_6),               //MVU TILE VRF
-    .vrf_readn_enable_mvu_6(vrf_mvu_readn_enable_6),
-    .vrf_wr_enable_mvu_6(vrf_mvu_wr_enable_6),
-    .vrf_out_data_mvu_7(vrf_mvu_out_7),               //MVU TILE VRF
-    .vrf_readn_enable_mvu_7(vrf_mvu_readn_enable_7),
-    .vrf_wr_enable_mvu_7(vrf_mvu_wr_enable_7),
-    .vrf_out_data_mvu_8(vrf_mvu_out_8),               //MVU TILE VRF
-    .vrf_readn_enable_mvu_8(vrf_mvu_readn_enable_8),
-    .vrf_wr_enable_mvu_8(vrf_mvu_wr_enable_8),
-    .vrf_out_data_mvu_9(vrf_mvu_out_9),               //MVU TILE VRF
-    .vrf_readn_enable_mvu_9(vrf_mvu_readn_enable_9),
-    .vrf_wr_enable_mvu_9(vrf_mvu_wr_enable_9),
-    .vrf_out_data_mvu_10(vrf_mvu_out_10),               //MVU TILE VRF
-    .vrf_readn_enable_mvu_10(vrf_mvu_readn_enable_10),
-    .vrf_wr_enable_mvu_10(vrf_mvu_wr_enable_10),
-    .vrf_out_data_mvu_11(vrf_mvu_out_11),               //MVU TILE VRF
-    .vrf_readn_enable_mvu_11(vrf_mvu_readn_enable_11),
-    .vrf_wr_enable_mvu_11(vrf_mvu_wr_enable_11),
-    .vrf_out_data_mvu_12(vrf_mvu_out_12),               //MVU TILE VRF
-    .vrf_readn_enable_mvu_12(vrf_mvu_readn_enable_12),
-    .vrf_wr_enable_mvu_12(vrf_mvu_wr_enable_12),
-    .vrf_out_data_mvu_13(vrf_mvu_out_13),               //MVU TILE VRF
-    .vrf_readn_enable_mvu_13(vrf_mvu_readn_enable_13),
-    .vrf_wr_enable_mvu_13(vrf_mvu_wr_enable_13),
-    .vrf_out_data_mvu_14(vrf_mvu_out_14),               //MVU TILE VRF
-    .vrf_readn_enable_mvu_14(vrf_mvu_readn_enable_14),
-    .vrf_wr_enable_mvu_14(vrf_mvu_wr_enable_14),
-    .vrf_out_data_mvu_15(vrf_mvu_out_15),               //MVU TILE VRF
-    .vrf_readn_enable_mvu_15(vrf_mvu_readn_enable_15),
-    .vrf_wr_enable_mvu_15(vrf_mvu_wr_enable_15),
     
     .done_mvm(done_mvm),
     .done_mfu_0(done_mfu_0),

@@ -191,18 +191,102 @@ always @(posedge clk) begin
             sigmoid_applied_data_internal[2*`DWIDTH-1:(2-1)*`DWIDTH] <= sigmoid_activation_file_output[2*`DWIDTH-1:(2-1)*`DWIDTH];
             sigmoid_applied_data_internal[3*`DWIDTH-1:(3-1)*`DWIDTH] <= sigmoid_activation_file_output[3*`DWIDTH-1:(3-1)*`DWIDTH];
             sigmoid_applied_data_internal[4*`DWIDTH-1:(4-1)*`DWIDTH] <= sigmoid_activation_file_output[4*`DWIDTH-1:(4-1)*`DWIDTH];
+            sigmoid_applied_data_internal[5*`DWIDTH-1:(5-1)*`DWIDTH] <= sigmoid_activation_file_output[5*`DWIDTH-1:(5-1)*`DWIDTH];
+            sigmoid_applied_data_internal[6*`DWIDTH-1:(6-1)*`DWIDTH] <= sigmoid_activation_file_output[6*`DWIDTH-1:(6-1)*`DWIDTH];
+            sigmoid_applied_data_internal[7*`DWIDTH-1:(7-1)*`DWIDTH] <= sigmoid_activation_file_output[7*`DWIDTH-1:(7-1)*`DWIDTH];
+            sigmoid_applied_data_internal[8*`DWIDTH-1:(8-1)*`DWIDTH] <= sigmoid_activation_file_output[8*`DWIDTH-1:(8-1)*`DWIDTH];
+            sigmoid_applied_data_internal[9*`DWIDTH-1:(9-1)*`DWIDTH] <= sigmoid_activation_file_output[9*`DWIDTH-1:(9-1)*`DWIDTH];
+            sigmoid_applied_data_internal[10*`DWIDTH-1:(10-1)*`DWIDTH] <= sigmoid_activation_file_output[10*`DWIDTH-1:(10-1)*`DWIDTH];
+            sigmoid_applied_data_internal[11*`DWIDTH-1:(11-1)*`DWIDTH] <= sigmoid_activation_file_output[11*`DWIDTH-1:(11-1)*`DWIDTH];
+            sigmoid_applied_data_internal[12*`DWIDTH-1:(12-1)*`DWIDTH] <= sigmoid_activation_file_output[12*`DWIDTH-1:(12-1)*`DWIDTH];
+            sigmoid_applied_data_internal[13*`DWIDTH-1:(13-1)*`DWIDTH] <= sigmoid_activation_file_output[13*`DWIDTH-1:(13-1)*`DWIDTH];
+            sigmoid_applied_data_internal[14*`DWIDTH-1:(14-1)*`DWIDTH] <= sigmoid_activation_file_output[14*`DWIDTH-1:(14-1)*`DWIDTH];
+            sigmoid_applied_data_internal[15*`DWIDTH-1:(15-1)*`DWIDTH] <= sigmoid_activation_file_output[15*`DWIDTH-1:(15-1)*`DWIDTH];
+            sigmoid_applied_data_internal[16*`DWIDTH-1:(16-1)*`DWIDTH] <= sigmoid_activation_file_output[16*`DWIDTH-1:(16-1)*`DWIDTH];
+            sigmoid_applied_data_internal[17*`DWIDTH-1:(17-1)*`DWIDTH] <= sigmoid_activation_file_output[17*`DWIDTH-1:(17-1)*`DWIDTH];
+            sigmoid_applied_data_internal[18*`DWIDTH-1:(18-1)*`DWIDTH] <= sigmoid_activation_file_output[18*`DWIDTH-1:(18-1)*`DWIDTH];
+            sigmoid_applied_data_internal[19*`DWIDTH-1:(19-1)*`DWIDTH] <= sigmoid_activation_file_output[19*`DWIDTH-1:(19-1)*`DWIDTH];
+            sigmoid_applied_data_internal[20*`DWIDTH-1:(20-1)*`DWIDTH] <= sigmoid_activation_file_output[20*`DWIDTH-1:(20-1)*`DWIDTH];
+            sigmoid_applied_data_internal[21*`DWIDTH-1:(21-1)*`DWIDTH] <= sigmoid_activation_file_output[21*`DWIDTH-1:(21-1)*`DWIDTH];
+            sigmoid_applied_data_internal[22*`DWIDTH-1:(22-1)*`DWIDTH] <= sigmoid_activation_file_output[22*`DWIDTH-1:(22-1)*`DWIDTH];
+            sigmoid_applied_data_internal[23*`DWIDTH-1:(23-1)*`DWIDTH] <= sigmoid_activation_file_output[23*`DWIDTH-1:(23-1)*`DWIDTH];
+            sigmoid_applied_data_internal[24*`DWIDTH-1:(24-1)*`DWIDTH] <= sigmoid_activation_file_output[24*`DWIDTH-1:(24-1)*`DWIDTH];
+            sigmoid_applied_data_internal[25*`DWIDTH-1:(25-1)*`DWIDTH] <= sigmoid_activation_file_output[25*`DWIDTH-1:(25-1)*`DWIDTH];
+            sigmoid_applied_data_internal[26*`DWIDTH-1:(26-1)*`DWIDTH] <= sigmoid_activation_file_output[26*`DWIDTH-1:(26-1)*`DWIDTH];
+            sigmoid_applied_data_internal[27*`DWIDTH-1:(27-1)*`DWIDTH] <= sigmoid_activation_file_output[27*`DWIDTH-1:(27-1)*`DWIDTH];
+            sigmoid_applied_data_internal[28*`DWIDTH-1:(28-1)*`DWIDTH] <= sigmoid_activation_file_output[28*`DWIDTH-1:(28-1)*`DWIDTH];
+            sigmoid_applied_data_internal[29*`DWIDTH-1:(29-1)*`DWIDTH] <= sigmoid_activation_file_output[29*`DWIDTH-1:(29-1)*`DWIDTH];
+            sigmoid_applied_data_internal[30*`DWIDTH-1:(30-1)*`DWIDTH] <= sigmoid_activation_file_output[30*`DWIDTH-1:(30-1)*`DWIDTH];
+            sigmoid_applied_data_internal[31*`DWIDTH-1:(31-1)*`DWIDTH] <= sigmoid_activation_file_output[31*`DWIDTH-1:(31-1)*`DWIDTH];
+            sigmoid_applied_data_internal[32*`DWIDTH-1:(32-1)*`DWIDTH] <= sigmoid_activation_file_output[32*`DWIDTH-1:(32-1)*`DWIDTH];
       end 
       else if (activation_type==1) begin
             tanh_applied_data_internal[1*`DWIDTH-1:(1-1)*`DWIDTH] <= tanh_activation_file_output[1*`DWIDTH-1:(1-1)*`DWIDTH];
             tanh_applied_data_internal[2*`DWIDTH-1:(2-1)*`DWIDTH] <= tanh_activation_file_output[2*`DWIDTH-1:(2-1)*`DWIDTH];
             tanh_applied_data_internal[3*`DWIDTH-1:(3-1)*`DWIDTH] <= tanh_activation_file_output[3*`DWIDTH-1:(3-1)*`DWIDTH];
             tanh_applied_data_internal[4*`DWIDTH-1:(4-1)*`DWIDTH] <= tanh_activation_file_output[4*`DWIDTH-1:(4-1)*`DWIDTH];
+            tanh_applied_data_internal[5*`DWIDTH-1:(5-1)*`DWIDTH] <= tanh_activation_file_output[5*`DWIDTH-1:(5-1)*`DWIDTH];
+            tanh_applied_data_internal[6*`DWIDTH-1:(6-1)*`DWIDTH] <= tanh_activation_file_output[6*`DWIDTH-1:(6-1)*`DWIDTH];
+            tanh_applied_data_internal[7*`DWIDTH-1:(7-1)*`DWIDTH] <= tanh_activation_file_output[7*`DWIDTH-1:(7-1)*`DWIDTH];
+            tanh_applied_data_internal[8*`DWIDTH-1:(8-1)*`DWIDTH] <= tanh_activation_file_output[8*`DWIDTH-1:(8-1)*`DWIDTH];
+            tanh_applied_data_internal[9*`DWIDTH-1:(9-1)*`DWIDTH] <= tanh_activation_file_output[9*`DWIDTH-1:(9-1)*`DWIDTH];
+            tanh_applied_data_internal[10*`DWIDTH-1:(10-1)*`DWIDTH] <= tanh_activation_file_output[10*`DWIDTH-1:(10-1)*`DWIDTH];
+            tanh_applied_data_internal[11*`DWIDTH-1:(11-1)*`DWIDTH] <= tanh_activation_file_output[11*`DWIDTH-1:(11-1)*`DWIDTH];
+            tanh_applied_data_internal[12*`DWIDTH-1:(12-1)*`DWIDTH] <= tanh_activation_file_output[12*`DWIDTH-1:(12-1)*`DWIDTH];
+            tanh_applied_data_internal[13*`DWIDTH-1:(13-1)*`DWIDTH] <= tanh_activation_file_output[13*`DWIDTH-1:(13-1)*`DWIDTH];
+            tanh_applied_data_internal[14*`DWIDTH-1:(14-1)*`DWIDTH] <= tanh_activation_file_output[14*`DWIDTH-1:(14-1)*`DWIDTH];
+            tanh_applied_data_internal[15*`DWIDTH-1:(15-1)*`DWIDTH] <= tanh_activation_file_output[15*`DWIDTH-1:(15-1)*`DWIDTH];
+            tanh_applied_data_internal[16*`DWIDTH-1:(16-1)*`DWIDTH] <= tanh_activation_file_output[16*`DWIDTH-1:(16-1)*`DWIDTH];
+            tanh_applied_data_internal[17*`DWIDTH-1:(17-1)*`DWIDTH] <= tanh_activation_file_output[17*`DWIDTH-1:(17-1)*`DWIDTH];
+            tanh_applied_data_internal[18*`DWIDTH-1:(18-1)*`DWIDTH] <= tanh_activation_file_output[18*`DWIDTH-1:(18-1)*`DWIDTH];
+            tanh_applied_data_internal[19*`DWIDTH-1:(19-1)*`DWIDTH] <= tanh_activation_file_output[19*`DWIDTH-1:(19-1)*`DWIDTH];
+            tanh_applied_data_internal[20*`DWIDTH-1:(20-1)*`DWIDTH] <= tanh_activation_file_output[20*`DWIDTH-1:(20-1)*`DWIDTH];
+            tanh_applied_data_internal[21*`DWIDTH-1:(21-1)*`DWIDTH] <= tanh_activation_file_output[21*`DWIDTH-1:(21-1)*`DWIDTH];
+            tanh_applied_data_internal[22*`DWIDTH-1:(22-1)*`DWIDTH] <= tanh_activation_file_output[22*`DWIDTH-1:(22-1)*`DWIDTH];
+            tanh_applied_data_internal[23*`DWIDTH-1:(23-1)*`DWIDTH] <= tanh_activation_file_output[23*`DWIDTH-1:(23-1)*`DWIDTH];
+            tanh_applied_data_internal[24*`DWIDTH-1:(24-1)*`DWIDTH] <= tanh_activation_file_output[24*`DWIDTH-1:(24-1)*`DWIDTH];
+            tanh_applied_data_internal[25*`DWIDTH-1:(25-1)*`DWIDTH] <= tanh_activation_file_output[25*`DWIDTH-1:(25-1)*`DWIDTH];
+            tanh_applied_data_internal[26*`DWIDTH-1:(26-1)*`DWIDTH] <= tanh_activation_file_output[26*`DWIDTH-1:(26-1)*`DWIDTH];
+            tanh_applied_data_internal[27*`DWIDTH-1:(27-1)*`DWIDTH] <= tanh_activation_file_output[27*`DWIDTH-1:(27-1)*`DWIDTH];
+            tanh_applied_data_internal[28*`DWIDTH-1:(28-1)*`DWIDTH] <= tanh_activation_file_output[28*`DWIDTH-1:(28-1)*`DWIDTH];
+            tanh_applied_data_internal[29*`DWIDTH-1:(29-1)*`DWIDTH] <= tanh_activation_file_output[29*`DWIDTH-1:(29-1)*`DWIDTH];
+            tanh_applied_data_internal[30*`DWIDTH-1:(30-1)*`DWIDTH] <= tanh_activation_file_output[30*`DWIDTH-1:(30-1)*`DWIDTH];
+            tanh_applied_data_internal[31*`DWIDTH-1:(31-1)*`DWIDTH] <= tanh_activation_file_output[31*`DWIDTH-1:(31-1)*`DWIDTH];
+            tanh_applied_data_internal[32*`DWIDTH-1:(32-1)*`DWIDTH] <= tanh_activation_file_output[32*`DWIDTH-1:(32-1)*`DWIDTH];
       end
       else begin // ReLU
             relu_applied_data_internal[1*`DWIDTH-1:(1-1)*`DWIDTH] <= inp_data[1*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[1*`DWIDTH-1:(1-1)*`DWIDTH];
             relu_applied_data_internal[2*`DWIDTH-1:(2-1)*`DWIDTH] <= inp_data[2*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[2*`DWIDTH-1:(2-1)*`DWIDTH];
             relu_applied_data_internal[3*`DWIDTH-1:(3-1)*`DWIDTH] <= inp_data[3*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[3*`DWIDTH-1:(3-1)*`DWIDTH];
             relu_applied_data_internal[4*`DWIDTH-1:(4-1)*`DWIDTH] <= inp_data[4*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[4*`DWIDTH-1:(4-1)*`DWIDTH];
+            relu_applied_data_internal[5*`DWIDTH-1:(5-1)*`DWIDTH] <= inp_data[5*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[5*`DWIDTH-1:(5-1)*`DWIDTH];
+            relu_applied_data_internal[6*`DWIDTH-1:(6-1)*`DWIDTH] <= inp_data[6*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[6*`DWIDTH-1:(6-1)*`DWIDTH];
+            relu_applied_data_internal[7*`DWIDTH-1:(7-1)*`DWIDTH] <= inp_data[7*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[7*`DWIDTH-1:(7-1)*`DWIDTH];
+            relu_applied_data_internal[8*`DWIDTH-1:(8-1)*`DWIDTH] <= inp_data[8*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[8*`DWIDTH-1:(8-1)*`DWIDTH];
+            relu_applied_data_internal[9*`DWIDTH-1:(9-1)*`DWIDTH] <= inp_data[9*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[9*`DWIDTH-1:(9-1)*`DWIDTH];
+            relu_applied_data_internal[10*`DWIDTH-1:(10-1)*`DWIDTH] <= inp_data[10*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[10*`DWIDTH-1:(10-1)*`DWIDTH];
+            relu_applied_data_internal[11*`DWIDTH-1:(11-1)*`DWIDTH] <= inp_data[11*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[11*`DWIDTH-1:(11-1)*`DWIDTH];
+            relu_applied_data_internal[12*`DWIDTH-1:(12-1)*`DWIDTH] <= inp_data[12*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[12*`DWIDTH-1:(12-1)*`DWIDTH];
+            relu_applied_data_internal[13*`DWIDTH-1:(13-1)*`DWIDTH] <= inp_data[13*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[13*`DWIDTH-1:(13-1)*`DWIDTH];
+            relu_applied_data_internal[14*`DWIDTH-1:(14-1)*`DWIDTH] <= inp_data[14*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[14*`DWIDTH-1:(14-1)*`DWIDTH];
+            relu_applied_data_internal[15*`DWIDTH-1:(15-1)*`DWIDTH] <= inp_data[15*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[15*`DWIDTH-1:(15-1)*`DWIDTH];
+            relu_applied_data_internal[16*`DWIDTH-1:(16-1)*`DWIDTH] <= inp_data[16*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[16*`DWIDTH-1:(16-1)*`DWIDTH];
+            relu_applied_data_internal[17*`DWIDTH-1:(17-1)*`DWIDTH] <= inp_data[17*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[17*`DWIDTH-1:(17-1)*`DWIDTH];
+            relu_applied_data_internal[18*`DWIDTH-1:(18-1)*`DWIDTH] <= inp_data[18*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[18*`DWIDTH-1:(18-1)*`DWIDTH];
+            relu_applied_data_internal[19*`DWIDTH-1:(19-1)*`DWIDTH] <= inp_data[19*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[19*`DWIDTH-1:(19-1)*`DWIDTH];
+            relu_applied_data_internal[20*`DWIDTH-1:(20-1)*`DWIDTH] <= inp_data[20*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[20*`DWIDTH-1:(20-1)*`DWIDTH];
+            relu_applied_data_internal[21*`DWIDTH-1:(21-1)*`DWIDTH] <= inp_data[21*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[21*`DWIDTH-1:(21-1)*`DWIDTH];
+            relu_applied_data_internal[22*`DWIDTH-1:(22-1)*`DWIDTH] <= inp_data[22*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[22*`DWIDTH-1:(22-1)*`DWIDTH];
+            relu_applied_data_internal[23*`DWIDTH-1:(23-1)*`DWIDTH] <= inp_data[23*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[23*`DWIDTH-1:(23-1)*`DWIDTH];
+            relu_applied_data_internal[24*`DWIDTH-1:(24-1)*`DWIDTH] <= inp_data[24*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[24*`DWIDTH-1:(24-1)*`DWIDTH];
+            relu_applied_data_internal[25*`DWIDTH-1:(25-1)*`DWIDTH] <= inp_data[25*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[25*`DWIDTH-1:(25-1)*`DWIDTH];
+            relu_applied_data_internal[26*`DWIDTH-1:(26-1)*`DWIDTH] <= inp_data[26*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[26*`DWIDTH-1:(26-1)*`DWIDTH];
+            relu_applied_data_internal[27*`DWIDTH-1:(27-1)*`DWIDTH] <= inp_data[27*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[27*`DWIDTH-1:(27-1)*`DWIDTH];
+            relu_applied_data_internal[28*`DWIDTH-1:(28-1)*`DWIDTH] <= inp_data[28*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[28*`DWIDTH-1:(28-1)*`DWIDTH];
+            relu_applied_data_internal[29*`DWIDTH-1:(29-1)*`DWIDTH] <= inp_data[29*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[29*`DWIDTH-1:(29-1)*`DWIDTH];
+            relu_applied_data_internal[30*`DWIDTH-1:(30-1)*`DWIDTH] <= inp_data[30*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[30*`DWIDTH-1:(30-1)*`DWIDTH];
+            relu_applied_data_internal[31*`DWIDTH-1:(31-1)*`DWIDTH] <= inp_data[31*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[31*`DWIDTH-1:(31-1)*`DWIDTH];
+            relu_applied_data_internal[32*`DWIDTH-1:(32-1)*`DWIDTH] <= inp_data[32*`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[32*`DWIDTH-1:(32-1)*`DWIDTH];
       end
 
       //TANH needs 1 extra cycle
@@ -413,16 +497,800 @@ module elt_wise_add(
     );
 `endif
 
+    wire [(`DWIDTH)-1:0] x_4; 
+    wire [(`DWIDTH)-1:0] y_4;
+    wire [4:0] flag_fake_4;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_4(
+       .a(x_4),
+       .b(y_4), 
+       .clk(clk),
+       .out(out_data[(5*`DWIDTH)-1:(4*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a4(
+       .result(out_data[(5*`DWIDTH)-1:(4*`DWIDTH)]),
+       .a(x_4),
+       .b(y_4), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_4)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_5; 
+    wire [(`DWIDTH)-1:0] y_5;
+    wire [4:0] flag_fake_5;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_5(
+       .a(x_5),
+       .b(y_5), 
+       .clk(clk),
+       .out(out_data[(6*`DWIDTH)-1:(5*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a5(
+       .result(out_data[(6*`DWIDTH)-1:(5*`DWIDTH)]),
+       .a(x_5),
+       .b(y_5), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_5)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_6; 
+    wire [(`DWIDTH)-1:0] y_6;
+    wire [4:0] flag_fake_6;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_6(
+       .a(x_6),
+       .b(y_6), 
+       .clk(clk),
+       .out(out_data[(7*`DWIDTH)-1:(6*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a6(
+       .result(out_data[(7*`DWIDTH)-1:(6*`DWIDTH)]),
+       .a(x_6),
+       .b(y_6), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_6)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_7; 
+    wire [(`DWIDTH)-1:0] y_7;
+    wire [4:0] flag_fake_7;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_7(
+       .a(x_7),
+       .b(y_7), 
+       .clk(clk),
+       .out(out_data[(8*`DWIDTH)-1:(7*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a7(
+       .result(out_data[(8*`DWIDTH)-1:(7*`DWIDTH)]),
+       .a(x_7),
+       .b(y_7), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_7)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_8; 
+    wire [(`DWIDTH)-1:0] y_8;
+    wire [4:0] flag_fake_8;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_8(
+       .a(x_8),
+       .b(y_8), 
+       .clk(clk),
+       .out(out_data[(9*`DWIDTH)-1:(8*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a8(
+       .result(out_data[(9*`DWIDTH)-1:(8*`DWIDTH)]),
+       .a(x_8),
+       .b(y_8), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_8)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_9; 
+    wire [(`DWIDTH)-1:0] y_9;
+    wire [4:0] flag_fake_9;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_9(
+       .a(x_9),
+       .b(y_9), 
+       .clk(clk),
+       .out(out_data[(10*`DWIDTH)-1:(9*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a9(
+       .result(out_data[(10*`DWIDTH)-1:(9*`DWIDTH)]),
+       .a(x_9),
+       .b(y_9), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_9)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_10; 
+    wire [(`DWIDTH)-1:0] y_10;
+    wire [4:0] flag_fake_10;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_10(
+       .a(x_10),
+       .b(y_10), 
+       .clk(clk),
+       .out(out_data[(11*`DWIDTH)-1:(10*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a10(
+       .result(out_data[(11*`DWIDTH)-1:(10*`DWIDTH)]),
+       .a(x_10),
+       .b(y_10), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_10)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_11; 
+    wire [(`DWIDTH)-1:0] y_11;
+    wire [4:0] flag_fake_11;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_11(
+       .a(x_11),
+       .b(y_11), 
+       .clk(clk),
+       .out(out_data[(12*`DWIDTH)-1:(11*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a11(
+       .result(out_data[(12*`DWIDTH)-1:(11*`DWIDTH)]),
+       .a(x_11),
+       .b(y_11), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_11)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_12; 
+    wire [(`DWIDTH)-1:0] y_12;
+    wire [4:0] flag_fake_12;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_12(
+       .a(x_12),
+       .b(y_12), 
+       .clk(clk),
+       .out(out_data[(13*`DWIDTH)-1:(12*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a12(
+       .result(out_data[(13*`DWIDTH)-1:(12*`DWIDTH)]),
+       .a(x_12),
+       .b(y_12), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_12)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_13; 
+    wire [(`DWIDTH)-1:0] y_13;
+    wire [4:0] flag_fake_13;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_13(
+       .a(x_13),
+       .b(y_13), 
+       .clk(clk),
+       .out(out_data[(14*`DWIDTH)-1:(13*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a13(
+       .result(out_data[(14*`DWIDTH)-1:(13*`DWIDTH)]),
+       .a(x_13),
+       .b(y_13), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_13)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_14; 
+    wire [(`DWIDTH)-1:0] y_14;
+    wire [4:0] flag_fake_14;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_14(
+       .a(x_14),
+       .b(y_14), 
+       .clk(clk),
+       .out(out_data[(15*`DWIDTH)-1:(14*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a14(
+       .result(out_data[(15*`DWIDTH)-1:(14*`DWIDTH)]),
+       .a(x_14),
+       .b(y_14), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_14)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_15; 
+    wire [(`DWIDTH)-1:0] y_15;
+    wire [4:0] flag_fake_15;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_15(
+       .a(x_15),
+       .b(y_15), 
+       .clk(clk),
+       .out(out_data[(16*`DWIDTH)-1:(15*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a15(
+       .result(out_data[(16*`DWIDTH)-1:(15*`DWIDTH)]),
+       .a(x_15),
+       .b(y_15), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_15)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_16; 
+    wire [(`DWIDTH)-1:0] y_16;
+    wire [4:0] flag_fake_16;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_16(
+       .a(x_16),
+       .b(y_16), 
+       .clk(clk),
+       .out(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a16(
+       .result(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]),
+       .a(x_16),
+       .b(y_16), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_16)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_17; 
+    wire [(`DWIDTH)-1:0] y_17;
+    wire [4:0] flag_fake_17;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_17(
+       .a(x_17),
+       .b(y_17), 
+       .clk(clk),
+       .out(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a17(
+       .result(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]),
+       .a(x_17),
+       .b(y_17), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_17)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_18; 
+    wire [(`DWIDTH)-1:0] y_18;
+    wire [4:0] flag_fake_18;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_18(
+       .a(x_18),
+       .b(y_18), 
+       .clk(clk),
+       .out(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a18(
+       .result(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]),
+       .a(x_18),
+       .b(y_18), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_18)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_19; 
+    wire [(`DWIDTH)-1:0] y_19;
+    wire [4:0] flag_fake_19;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_19(
+       .a(x_19),
+       .b(y_19), 
+       .clk(clk),
+       .out(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a19(
+       .result(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]),
+       .a(x_19),
+       .b(y_19), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_19)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_20; 
+    wire [(`DWIDTH)-1:0] y_20;
+    wire [4:0] flag_fake_20;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_20(
+       .a(x_20),
+       .b(y_20), 
+       .clk(clk),
+       .out(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a20(
+       .result(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]),
+       .a(x_20),
+       .b(y_20), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_20)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_21; 
+    wire [(`DWIDTH)-1:0] y_21;
+    wire [4:0] flag_fake_21;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_21(
+       .a(x_21),
+       .b(y_21), 
+       .clk(clk),
+       .out(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a21(
+       .result(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]),
+       .a(x_21),
+       .b(y_21), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_21)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_22; 
+    wire [(`DWIDTH)-1:0] y_22;
+    wire [4:0] flag_fake_22;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_22(
+       .a(x_22),
+       .b(y_22), 
+       .clk(clk),
+       .out(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a22(
+       .result(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]),
+       .a(x_22),
+       .b(y_22), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_22)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_23; 
+    wire [(`DWIDTH)-1:0] y_23;
+    wire [4:0] flag_fake_23;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_23(
+       .a(x_23),
+       .b(y_23), 
+       .clk(clk),
+       .out(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a23(
+       .result(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]),
+       .a(x_23),
+       .b(y_23), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_23)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_24; 
+    wire [(`DWIDTH)-1:0] y_24;
+    wire [4:0] flag_fake_24;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_24(
+       .a(x_24),
+       .b(y_24), 
+       .clk(clk),
+       .out(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a24(
+       .result(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]),
+       .a(x_24),
+       .b(y_24), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_24)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_25; 
+    wire [(`DWIDTH)-1:0] y_25;
+    wire [4:0] flag_fake_25;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_25(
+       .a(x_25),
+       .b(y_25), 
+       .clk(clk),
+       .out(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a25(
+       .result(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]),
+       .a(x_25),
+       .b(y_25), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_25)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_26; 
+    wire [(`DWIDTH)-1:0] y_26;
+    wire [4:0] flag_fake_26;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_26(
+       .a(x_26),
+       .b(y_26), 
+       .clk(clk),
+       .out(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a26(
+       .result(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]),
+       .a(x_26),
+       .b(y_26), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_26)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_27; 
+    wire [(`DWIDTH)-1:0] y_27;
+    wire [4:0] flag_fake_27;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_27(
+       .a(x_27),
+       .b(y_27), 
+       .clk(clk),
+       .out(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a27(
+       .result(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]),
+       .a(x_27),
+       .b(y_27), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_27)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_28; 
+    wire [(`DWIDTH)-1:0] y_28;
+    wire [4:0] flag_fake_28;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_28(
+       .a(x_28),
+       .b(y_28), 
+       .clk(clk),
+       .out(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a28(
+       .result(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]),
+       .a(x_28),
+       .b(y_28), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_28)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_29; 
+    wire [(`DWIDTH)-1:0] y_29;
+    wire [4:0] flag_fake_29;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_29(
+       .a(x_29),
+       .b(y_29), 
+       .clk(clk),
+       .out(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a29(
+       .result(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]),
+       .a(x_29),
+       .b(y_29), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_29)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_30; 
+    wire [(`DWIDTH)-1:0] y_30;
+    wire [4:0] flag_fake_30;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_30(
+       .a(x_30),
+       .b(y_30), 
+       .clk(clk),
+       .out(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a30(
+       .result(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]),
+       .a(x_30),
+       .b(y_30), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_30)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_31; 
+    wire [(`DWIDTH)-1:0] y_31;
+    wire [4:0] flag_fake_31;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_31(
+       .a(x_31),
+       .b(y_31), 
+       .clk(clk),
+       .out(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]) 
+    );
+
+`else
+
+    FPAddSub a31(
+       .result(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]),
+       .a(x_31),
+       .b(y_31), 
+       .clk(clk), 
+       .rst(~enable_add), 
+       .operation(add_or_sub), 
+       .flags(flag_fake_31)
+    );
+`endif
+
 
     assign x_0 = primary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign x_1 = primary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
     assign x_2 = primary_inp[(3*`DWIDTH)-1:(2*`DWIDTH)];
     assign x_3 = primary_inp[(4*`DWIDTH)-1:(3*`DWIDTH)];
+    assign x_4 = primary_inp[(5*`DWIDTH)-1:(4*`DWIDTH)];
+    assign x_5 = primary_inp[(6*`DWIDTH)-1:(5*`DWIDTH)];
+    assign x_6 = primary_inp[(7*`DWIDTH)-1:(6*`DWIDTH)];
+    assign x_7 = primary_inp[(8*`DWIDTH)-1:(7*`DWIDTH)];
+    assign x_8 = primary_inp[(9*`DWIDTH)-1:(8*`DWIDTH)];
+    assign x_9 = primary_inp[(10*`DWIDTH)-1:(9*`DWIDTH)];
+    assign x_10 = primary_inp[(11*`DWIDTH)-1:(10*`DWIDTH)];
+    assign x_11 = primary_inp[(12*`DWIDTH)-1:(11*`DWIDTH)];
+    assign x_12 = primary_inp[(13*`DWIDTH)-1:(12*`DWIDTH)];
+    assign x_13 = primary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
+    assign x_14 = primary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
+    assign x_15 = primary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
+    assign x_16 = primary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
+    assign x_17 = primary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
+    assign x_18 = primary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
+    assign x_19 = primary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
+    assign x_20 = primary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
+    assign x_21 = primary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
+    assign x_22 = primary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
+    assign x_23 = primary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
+    assign x_24 = primary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
+    assign x_25 = primary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
+    assign x_26 = primary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
+    assign x_27 = primary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
+    assign x_28 = primary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
+    assign x_29 = primary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
+    assign x_30 = primary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
+    assign x_31 = primary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
 
     assign y_0 = secondary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign y_1 = secondary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
     assign y_2 = secondary_inp[(3*`DWIDTH)-1:(2*`DWIDTH)];
     assign y_3 = secondary_inp[(4*`DWIDTH)-1:(3*`DWIDTH)];
+    assign y_4 = secondary_inp[(5*`DWIDTH)-1:(4*`DWIDTH)];
+    assign y_5 = secondary_inp[(6*`DWIDTH)-1:(5*`DWIDTH)];
+    assign y_6 = secondary_inp[(7*`DWIDTH)-1:(6*`DWIDTH)];
+    assign y_7 = secondary_inp[(8*`DWIDTH)-1:(7*`DWIDTH)];
+    assign y_8 = secondary_inp[(9*`DWIDTH)-1:(8*`DWIDTH)];
+    assign y_9 = secondary_inp[(10*`DWIDTH)-1:(9*`DWIDTH)];
+    assign y_10 = secondary_inp[(11*`DWIDTH)-1:(10*`DWIDTH)];
+    assign y_11 = secondary_inp[(12*`DWIDTH)-1:(11*`DWIDTH)];
+    assign y_12 = secondary_inp[(13*`DWIDTH)-1:(12*`DWIDTH)];
+    assign y_13 = secondary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
+    assign y_14 = secondary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
+    assign y_15 = secondary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
+    assign y_16 = secondary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
+    assign y_17 = secondary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
+    assign y_18 = secondary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
+    assign y_19 = secondary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
+    assign y_20 = secondary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
+    assign y_21 = secondary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
+    assign y_22 = secondary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
+    assign y_23 = secondary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
+    assign y_24 = secondary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
+    assign y_25 = secondary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
+    assign y_26 = secondary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
+    assign y_27 = secondary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
+    assign y_28 = secondary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
+    assign y_29 = secondary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
+    assign y_30 = secondary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
+    assign y_31 = secondary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
 
      reg[`LOG_ADD_LATENCY-1:0] state;
      always @(posedge clk) begin
@@ -546,6 +1414,678 @@ module elt_wise_mul(
     );
 `endif
 
+    wire [(`DWIDTH)-1:0] x_4; 
+    wire [(`DWIDTH)-1:0] y_4;
+    wire [4:0] flag_fake_4;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_4(
+       .a(x_4),
+       .b(y_4), 
+       .clk(clk),
+       .out(out_data[(5*`DWIDTH)-1:(4*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m4(
+       .result(out_data[(5*`DWIDTH)-1:(4*`DWIDTH)]),
+       .a(x_4),
+       .b(y_4), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_4)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_5; 
+    wire [(`DWIDTH)-1:0] y_5;
+    wire [4:0] flag_fake_5;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_5(
+       .a(x_5),
+       .b(y_5), 
+       .clk(clk),
+       .out(out_data[(6*`DWIDTH)-1:(5*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m5(
+       .result(out_data[(6*`DWIDTH)-1:(5*`DWIDTH)]),
+       .a(x_5),
+       .b(y_5), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_5)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_6; 
+    wire [(`DWIDTH)-1:0] y_6;
+    wire [4:0] flag_fake_6;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_6(
+       .a(x_6),
+       .b(y_6), 
+       .clk(clk),
+       .out(out_data[(7*`DWIDTH)-1:(6*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m6(
+       .result(out_data[(7*`DWIDTH)-1:(6*`DWIDTH)]),
+       .a(x_6),
+       .b(y_6), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_6)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_7; 
+    wire [(`DWIDTH)-1:0] y_7;
+    wire [4:0] flag_fake_7;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_7(
+       .a(x_7),
+       .b(y_7), 
+       .clk(clk),
+       .out(out_data[(8*`DWIDTH)-1:(7*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m7(
+       .result(out_data[(8*`DWIDTH)-1:(7*`DWIDTH)]),
+       .a(x_7),
+       .b(y_7), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_7)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_8; 
+    wire [(`DWIDTH)-1:0] y_8;
+    wire [4:0] flag_fake_8;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_8(
+       .a(x_8),
+       .b(y_8), 
+       .clk(clk),
+       .out(out_data[(9*`DWIDTH)-1:(8*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m8(
+       .result(out_data[(9*`DWIDTH)-1:(8*`DWIDTH)]),
+       .a(x_8),
+       .b(y_8), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_8)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_9; 
+    wire [(`DWIDTH)-1:0] y_9;
+    wire [4:0] flag_fake_9;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_9(
+       .a(x_9),
+       .b(y_9), 
+       .clk(clk),
+       .out(out_data[(10*`DWIDTH)-1:(9*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m9(
+       .result(out_data[(10*`DWIDTH)-1:(9*`DWIDTH)]),
+       .a(x_9),
+       .b(y_9), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_9)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_10; 
+    wire [(`DWIDTH)-1:0] y_10;
+    wire [4:0] flag_fake_10;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_10(
+       .a(x_10),
+       .b(y_10), 
+       .clk(clk),
+       .out(out_data[(11*`DWIDTH)-1:(10*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m10(
+       .result(out_data[(11*`DWIDTH)-1:(10*`DWIDTH)]),
+       .a(x_10),
+       .b(y_10), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_10)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_11; 
+    wire [(`DWIDTH)-1:0] y_11;
+    wire [4:0] flag_fake_11;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_11(
+       .a(x_11),
+       .b(y_11), 
+       .clk(clk),
+       .out(out_data[(12*`DWIDTH)-1:(11*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m11(
+       .result(out_data[(12*`DWIDTH)-1:(11*`DWIDTH)]),
+       .a(x_11),
+       .b(y_11), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_11)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_12; 
+    wire [(`DWIDTH)-1:0] y_12;
+    wire [4:0] flag_fake_12;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_12(
+       .a(x_12),
+       .b(y_12), 
+       .clk(clk),
+       .out(out_data[(13*`DWIDTH)-1:(12*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m12(
+       .result(out_data[(13*`DWIDTH)-1:(12*`DWIDTH)]),
+       .a(x_12),
+       .b(y_12), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_12)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_13; 
+    wire [(`DWIDTH)-1:0] y_13;
+    wire [4:0] flag_fake_13;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_13(
+       .a(x_13),
+       .b(y_13), 
+       .clk(clk),
+       .out(out_data[(14*`DWIDTH)-1:(13*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m13(
+       .result(out_data[(14*`DWIDTH)-1:(13*`DWIDTH)]),
+       .a(x_13),
+       .b(y_13), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_13)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_14; 
+    wire [(`DWIDTH)-1:0] y_14;
+    wire [4:0] flag_fake_14;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_14(
+       .a(x_14),
+       .b(y_14), 
+       .clk(clk),
+       .out(out_data[(15*`DWIDTH)-1:(14*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m14(
+       .result(out_data[(15*`DWIDTH)-1:(14*`DWIDTH)]),
+       .a(x_14),
+       .b(y_14), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_14)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_15; 
+    wire [(`DWIDTH)-1:0] y_15;
+    wire [4:0] flag_fake_15;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_15(
+       .a(x_15),
+       .b(y_15), 
+       .clk(clk),
+       .out(out_data[(16*`DWIDTH)-1:(15*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m15(
+       .result(out_data[(16*`DWIDTH)-1:(15*`DWIDTH)]),
+       .a(x_15),
+       .b(y_15), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_15)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_16; 
+    wire [(`DWIDTH)-1:0] y_16;
+    wire [4:0] flag_fake_16;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_16(
+       .a(x_16),
+       .b(y_16), 
+       .clk(clk),
+       .out(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m16(
+       .result(out_data[(17*`DWIDTH)-1:(16*`DWIDTH)]),
+       .a(x_16),
+       .b(y_16), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_16)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_17; 
+    wire [(`DWIDTH)-1:0] y_17;
+    wire [4:0] flag_fake_17;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_17(
+       .a(x_17),
+       .b(y_17), 
+       .clk(clk),
+       .out(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m17(
+       .result(out_data[(18*`DWIDTH)-1:(17*`DWIDTH)]),
+       .a(x_17),
+       .b(y_17), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_17)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_18; 
+    wire [(`DWIDTH)-1:0] y_18;
+    wire [4:0] flag_fake_18;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_18(
+       .a(x_18),
+       .b(y_18), 
+       .clk(clk),
+       .out(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m18(
+       .result(out_data[(19*`DWIDTH)-1:(18*`DWIDTH)]),
+       .a(x_18),
+       .b(y_18), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_18)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_19; 
+    wire [(`DWIDTH)-1:0] y_19;
+    wire [4:0] flag_fake_19;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_19(
+       .a(x_19),
+       .b(y_19), 
+       .clk(clk),
+       .out(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m19(
+       .result(out_data[(20*`DWIDTH)-1:(19*`DWIDTH)]),
+       .a(x_19),
+       .b(y_19), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_19)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_20; 
+    wire [(`DWIDTH)-1:0] y_20;
+    wire [4:0] flag_fake_20;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_20(
+       .a(x_20),
+       .b(y_20), 
+       .clk(clk),
+       .out(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m20(
+       .result(out_data[(21*`DWIDTH)-1:(20*`DWIDTH)]),
+       .a(x_20),
+       .b(y_20), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_20)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_21; 
+    wire [(`DWIDTH)-1:0] y_21;
+    wire [4:0] flag_fake_21;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_21(
+       .a(x_21),
+       .b(y_21), 
+       .clk(clk),
+       .out(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m21(
+       .result(out_data[(22*`DWIDTH)-1:(21*`DWIDTH)]),
+       .a(x_21),
+       .b(y_21), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_21)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_22; 
+    wire [(`DWIDTH)-1:0] y_22;
+    wire [4:0] flag_fake_22;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_22(
+       .a(x_22),
+       .b(y_22), 
+       .clk(clk),
+       .out(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m22(
+       .result(out_data[(23*`DWIDTH)-1:(22*`DWIDTH)]),
+       .a(x_22),
+       .b(y_22), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_22)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_23; 
+    wire [(`DWIDTH)-1:0] y_23;
+    wire [4:0] flag_fake_23;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_23(
+       .a(x_23),
+       .b(y_23), 
+       .clk(clk),
+       .out(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m23(
+       .result(out_data[(24*`DWIDTH)-1:(23*`DWIDTH)]),
+       .a(x_23),
+       .b(y_23), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_23)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_24; 
+    wire [(`DWIDTH)-1:0] y_24;
+    wire [4:0] flag_fake_24;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_24(
+       .a(x_24),
+       .b(y_24), 
+       .clk(clk),
+       .out(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m24(
+       .result(out_data[(25*`DWIDTH)-1:(24*`DWIDTH)]),
+       .a(x_24),
+       .b(y_24), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_24)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_25; 
+    wire [(`DWIDTH)-1:0] y_25;
+    wire [4:0] flag_fake_25;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_25(
+       .a(x_25),
+       .b(y_25), 
+       .clk(clk),
+       .out(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m25(
+       .result(out_data[(26*`DWIDTH)-1:(25*`DWIDTH)]),
+       .a(x_25),
+       .b(y_25), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_25)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_26; 
+    wire [(`DWIDTH)-1:0] y_26;
+    wire [4:0] flag_fake_26;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_26(
+       .a(x_26),
+       .b(y_26), 
+       .clk(clk),
+       .out(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m26(
+       .result(out_data[(27*`DWIDTH)-1:(26*`DWIDTH)]),
+       .a(x_26),
+       .b(y_26), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_26)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_27; 
+    wire [(`DWIDTH)-1:0] y_27;
+    wire [4:0] flag_fake_27;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_27(
+       .a(x_27),
+       .b(y_27), 
+       .clk(clk),
+       .out(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m27(
+       .result(out_data[(28*`DWIDTH)-1:(27*`DWIDTH)]),
+       .a(x_27),
+       .b(y_27), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_27)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_28; 
+    wire [(`DWIDTH)-1:0] y_28;
+    wire [4:0] flag_fake_28;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_28(
+       .a(x_28),
+       .b(y_28), 
+       .clk(clk),
+       .out(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m28(
+       .result(out_data[(29*`DWIDTH)-1:(28*`DWIDTH)]),
+       .a(x_28),
+       .b(y_28), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_28)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_29; 
+    wire [(`DWIDTH)-1:0] y_29;
+    wire [4:0] flag_fake_29;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_29(
+       .a(x_29),
+       .b(y_29), 
+       .clk(clk),
+       .out(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m29(
+       .result(out_data[(30*`DWIDTH)-1:(29*`DWIDTH)]),
+       .a(x_29),
+       .b(y_29), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_29)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_30; 
+    wire [(`DWIDTH)-1:0] y_30;
+    wire [4:0] flag_fake_30;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_30(
+       .a(x_30),
+       .b(y_30), 
+       .clk(clk),
+       .out(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m30(
+       .result(out_data[(31*`DWIDTH)-1:(30*`DWIDTH)]),
+       .a(x_30),
+       .b(y_30), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_30)
+    );
+`endif
+
+    wire [(`DWIDTH)-1:0] x_31; 
+    wire [(`DWIDTH)-1:0] y_31;
+    wire [4:0] flag_fake_31;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_31(
+       .a(x_31),
+       .b(y_31), 
+       .clk(clk),
+       .out(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]) 
+    );
+
+`else
+
+    FPMult_16 m31(
+       .result(out_data[(32*`DWIDTH)-1:(31*`DWIDTH)]),
+       .a(x_31),
+       .b(y_31), 
+       .clk(clk), 
+       .rst(~enable_mul), 
+       .flags(flag_fake_31)
+    );
+`endif
+
 
 
 
@@ -553,11 +2093,67 @@ module elt_wise_mul(
     assign x_1 = primary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
     assign x_2 = primary_inp[(3*`DWIDTH)-1:(2*`DWIDTH)];
     assign x_3 = primary_inp[(4*`DWIDTH)-1:(3*`DWIDTH)];
+    assign x_4 = primary_inp[(5*`DWIDTH)-1:(4*`DWIDTH)];
+    assign x_5 = primary_inp[(6*`DWIDTH)-1:(5*`DWIDTH)];
+    assign x_6 = primary_inp[(7*`DWIDTH)-1:(6*`DWIDTH)];
+    assign x_7 = primary_inp[(8*`DWIDTH)-1:(7*`DWIDTH)];
+    assign x_8 = primary_inp[(9*`DWIDTH)-1:(8*`DWIDTH)];
+    assign x_9 = primary_inp[(10*`DWIDTH)-1:(9*`DWIDTH)];
+    assign x_10 = primary_inp[(11*`DWIDTH)-1:(10*`DWIDTH)];
+    assign x_11 = primary_inp[(12*`DWIDTH)-1:(11*`DWIDTH)];
+    assign x_12 = primary_inp[(13*`DWIDTH)-1:(12*`DWIDTH)];
+    assign x_13 = primary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
+    assign x_14 = primary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
+    assign x_15 = primary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
+    assign x_16 = primary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
+    assign x_17 = primary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
+    assign x_18 = primary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
+    assign x_19 = primary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
+    assign x_20 = primary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
+    assign x_21 = primary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
+    assign x_22 = primary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
+    assign x_23 = primary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
+    assign x_24 = primary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
+    assign x_25 = primary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
+    assign x_26 = primary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
+    assign x_27 = primary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
+    assign x_28 = primary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
+    assign x_29 = primary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
+    assign x_30 = primary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
+    assign x_31 = primary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
 
     assign y_0 = secondary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign y_1 = secondary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
     assign y_2 = secondary_inp[(3*`DWIDTH)-1:(2*`DWIDTH)];
     assign y_3 = secondary_inp[(4*`DWIDTH)-1:(3*`DWIDTH)];
+    assign y_4 = secondary_inp[(5*`DWIDTH)-1:(4*`DWIDTH)];
+    assign y_5 = secondary_inp[(6*`DWIDTH)-1:(5*`DWIDTH)];
+    assign y_6 = secondary_inp[(7*`DWIDTH)-1:(6*`DWIDTH)];
+    assign y_7 = secondary_inp[(8*`DWIDTH)-1:(7*`DWIDTH)];
+    assign y_8 = secondary_inp[(9*`DWIDTH)-1:(8*`DWIDTH)];
+    assign y_9 = secondary_inp[(10*`DWIDTH)-1:(9*`DWIDTH)];
+    assign y_10 = secondary_inp[(11*`DWIDTH)-1:(10*`DWIDTH)];
+    assign y_11 = secondary_inp[(12*`DWIDTH)-1:(11*`DWIDTH)];
+    assign y_12 = secondary_inp[(13*`DWIDTH)-1:(12*`DWIDTH)];
+    assign y_13 = secondary_inp[(14*`DWIDTH)-1:(13*`DWIDTH)];
+    assign y_14 = secondary_inp[(15*`DWIDTH)-1:(14*`DWIDTH)];
+    assign y_15 = secondary_inp[(16*`DWIDTH)-1:(15*`DWIDTH)];
+    assign y_16 = secondary_inp[(17*`DWIDTH)-1:(16*`DWIDTH)];
+    assign y_17 = secondary_inp[(18*`DWIDTH)-1:(17*`DWIDTH)];
+    assign y_18 = secondary_inp[(19*`DWIDTH)-1:(18*`DWIDTH)];
+    assign y_19 = secondary_inp[(20*`DWIDTH)-1:(19*`DWIDTH)];
+    assign y_20 = secondary_inp[(21*`DWIDTH)-1:(20*`DWIDTH)];
+    assign y_21 = secondary_inp[(22*`DWIDTH)-1:(21*`DWIDTH)];
+    assign y_22 = secondary_inp[(23*`DWIDTH)-1:(22*`DWIDTH)];
+    assign y_23 = secondary_inp[(24*`DWIDTH)-1:(23*`DWIDTH)];
+    assign y_24 = secondary_inp[(25*`DWIDTH)-1:(24*`DWIDTH)];
+    assign y_25 = secondary_inp[(26*`DWIDTH)-1:(25*`DWIDTH)];
+    assign y_26 = secondary_inp[(27*`DWIDTH)-1:(26*`DWIDTH)];
+    assign y_27 = secondary_inp[(28*`DWIDTH)-1:(27*`DWIDTH)];
+    assign y_28 = secondary_inp[(29*`DWIDTH)-1:(28*`DWIDTH)];
+    assign y_29 = secondary_inp[(30*`DWIDTH)-1:(29*`DWIDTH)];
+    assign y_30 = secondary_inp[(31*`DWIDTH)-1:(30*`DWIDTH)];
+    assign y_31 = secondary_inp[(32*`DWIDTH)-1:(31*`DWIDTH)];
     
      reg[`LOG_MUL_LATENCY-1:0] state;
         always @(posedge clk) begin
