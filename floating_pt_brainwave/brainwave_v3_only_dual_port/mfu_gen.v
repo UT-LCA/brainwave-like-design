@@ -313,6 +313,17 @@ module elt_wise_add(
     wire [(`DWIDTH)-1:0] y_0;
     wire [4:0] flag_fake_0;
 
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_0(
+       .a(x_0),
+       .b(y_0), 
+       .clk(clk),
+       .out(out_data[(1*`DWIDTH)-1:(0*`DWIDTH)]) 
+    );
+
+`else
+
     FPAddSub a0(
        .result(out_data[(1*`DWIDTH)-1:(0*`DWIDTH)]),
        .a(x_0),
@@ -322,9 +333,22 @@ module elt_wise_add(
        .operation(add_or_sub), 
        .flags(flag_fake_0)
     );
+`endif
+
     wire [(`DWIDTH)-1:0] x_1; 
     wire [(`DWIDTH)-1:0] y_1;
     wire [4:0] flag_fake_1;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_1(
+       .a(x_1),
+       .b(y_1), 
+       .clk(clk),
+       .out(out_data[(2*`DWIDTH)-1:(1*`DWIDTH)]) 
+    );
+
+`else
 
     FPAddSub a1(
        .result(out_data[(2*`DWIDTH)-1:(1*`DWIDTH)]),
@@ -335,9 +359,22 @@ module elt_wise_add(
        .operation(add_or_sub), 
        .flags(flag_fake_1)
     );
+`endif
+
     wire [(`DWIDTH)-1:0] x_2; 
     wire [(`DWIDTH)-1:0] y_2;
     wire [4:0] flag_fake_2;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_2(
+       .a(x_2),
+       .b(y_2), 
+       .clk(clk),
+       .out(out_data[(3*`DWIDTH)-1:(2*`DWIDTH)]) 
+    );
+
+`else
 
     FPAddSub a2(
        .result(out_data[(3*`DWIDTH)-1:(2*`DWIDTH)]),
@@ -348,9 +385,22 @@ module elt_wise_add(
        .operation(add_or_sub), 
        .flags(flag_fake_2)
     );
+`endif
+
     wire [(`DWIDTH)-1:0] x_3; 
     wire [(`DWIDTH)-1:0] y_3;
     wire [4:0] flag_fake_3;
+
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_3(
+       .a(x_3),
+       .b(y_3), 
+       .clk(clk),
+       .out(out_data[(4*`DWIDTH)-1:(3*`DWIDTH)]) 
+    );
+
+`else
 
     FPAddSub a3(
        .result(out_data[(4*`DWIDTH)-1:(3*`DWIDTH)]),
@@ -361,6 +411,8 @@ module elt_wise_add(
        .operation(add_or_sub), 
        .flags(flag_fake_3)
     );
+`endif
+
 
     assign x_0 = primary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign x_1 = primary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];
@@ -401,6 +453,16 @@ module elt_wise_mul(
     wire [(`DWIDTH)-1:0] x_0; 
     wire [(`DWIDTH)-1:0] y_0;
     wire [4:0] flag_fake_0;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_0(
+       .a(x_0),
+       .b(y_0), 
+       .clk(clk),
+       .out(out_data[(1*`DWIDTH)-1:(0*`DWIDTH)]) 
+    );
+
+`else
 
     FPMult_16 m0(
        .result(out_data[(1*`DWIDTH)-1:(0*`DWIDTH)]),
@@ -410,9 +472,21 @@ module elt_wise_mul(
        .rst(~enable_mul), 
        .flags(flag_fake_0)
     );
+`endif
+
     wire [(`DWIDTH)-1:0] x_1; 
     wire [(`DWIDTH)-1:0] y_1;
     wire [4:0] flag_fake_1;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_1(
+       .a(x_1),
+       .b(y_1), 
+       .clk(clk),
+       .out(out_data[(2*`DWIDTH)-1:(1*`DWIDTH)]) 
+    );
+
+`else
 
     FPMult_16 m1(
        .result(out_data[(2*`DWIDTH)-1:(1*`DWIDTH)]),
@@ -422,9 +496,21 @@ module elt_wise_mul(
        .rst(~enable_mul), 
        .flags(flag_fake_1)
     );
+`endif
+
     wire [(`DWIDTH)-1:0] x_2; 
     wire [(`DWIDTH)-1:0] y_2;
     wire [4:0] flag_fake_2;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_2(
+       .a(x_2),
+       .b(y_2), 
+       .clk(clk),
+       .out(out_data[(3*`DWIDTH)-1:(2*`DWIDTH)]) 
+    );
+
+`else
 
     FPMult_16 m2(
        .result(out_data[(3*`DWIDTH)-1:(2*`DWIDTH)]),
@@ -434,9 +520,21 @@ module elt_wise_mul(
        .rst(~enable_mul), 
        .flags(flag_fake_2)
     );
+`endif
+
     wire [(`DWIDTH)-1:0] x_3; 
     wire [(`DWIDTH)-1:0] y_3;
     wire [4:0] flag_fake_3;
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_3(
+       .a(x_3),
+       .b(y_3), 
+       .clk(clk),
+       .out(out_data[(4*`DWIDTH)-1:(3*`DWIDTH)]) 
+    );
+
+`else
 
     FPMult_16 m3(
        .result(out_data[(4*`DWIDTH)-1:(3*`DWIDTH)]),
@@ -446,6 +544,10 @@ module elt_wise_mul(
        .rst(~enable_mul), 
        .flags(flag_fake_3)
     );
+`endif
+
+
+
 
     assign x_0 = primary_inp[(1*`DWIDTH)-1:(0*`DWIDTH)];
     assign x_1 = primary_inp[(2*`DWIDTH)-1:(1*`DWIDTH)];

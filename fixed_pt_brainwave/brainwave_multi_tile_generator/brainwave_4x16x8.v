@@ -2,6 +2,8 @@
 // THIS FILE WAS AUTOMATICALLY GENERATED FROM includes.v.mako
 // DO NOT EDIT
 ////////////////////////////////////////////////////////////////////////////////
+`define hard_mem
+`define complex_dsp
 
 `define IN_PRECISION 8
 `define OUT_PRECISION 8
@@ -7196,7 +7198,7 @@ int_sop_2 mac_component (
     .bx(bx),
     .by(by),
     .chainin(chainin),
-    .resulta(result),
+    .result(result),
     .chainout(chainout)
 );
 

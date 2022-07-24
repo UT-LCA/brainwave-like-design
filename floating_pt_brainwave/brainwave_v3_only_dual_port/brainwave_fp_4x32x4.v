@@ -2,6 +2,8 @@
 // THIS FILE WAS AUTOMATICALLY GENERATED FROM includes.v.mako
 // DO NOT EDIT
 ////////////////////////////////////////////////////////////////////////////////
+`define hard_mem
+`define complex_dsp
 
 `define NUM_TILES 4
 `define NUM_LDPES 32
@@ -20802,7 +20804,7 @@ int_sop_2 mac_component (
     .bx(bx),
     .by(by),
     .chainin(chainin),
-    .resulta(result),
+    .result(result),
     .chainout(chainout)
 );
 

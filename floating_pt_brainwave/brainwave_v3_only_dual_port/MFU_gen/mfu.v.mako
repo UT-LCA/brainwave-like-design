@@ -309,6 +309,17 @@ module elt_wise_add(
     wire [(`DWIDTH)-1:0] y_${i};
     wire [4:0] flag_fake_${i};
 
+`ifdef complex_dsp
+
+    adder_fp_clk a_hard_${i}(
+       .a(x_${i}),
+       .b(y_${i}), 
+       .clk(clk),
+       .out(out_data[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)]) 
+    );
+
+`else
+
     FPAddSub a${i}(
        .result(out_data[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)]),
        .a(x_${i}),
@@ -318,6 +329,8 @@ module elt_wise_add(
        .operation(add_or_sub), 
        .flags(flag_fake_${i})
     );
+`endif
+
 % endfor
 
 % for i in range(num_ldpes):
@@ -358,6 +371,16 @@ module elt_wise_mul(
     wire [(`DWIDTH)-1:0] x_${i}; 
     wire [(`DWIDTH)-1:0] y_${i};
     wire [4:0] flag_fake_${i};
+`ifdef complex_dsp
+
+    multiply_fp_clk m_hard_${i}(
+       .a(x_${i}),
+       .b(y_${i}), 
+       .clk(clk),
+       .out(out_data[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)]) 
+    );
+
+`else
 
     FPMult_16 m${i}(
        .result(out_data[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)]),
@@ -367,7 +390,11 @@ module elt_wise_mul(
        .rst(~enable_mul), 
        .flags(flag_fake_${i})
     );
+`endif
+
 % endfor
+
+
 
 % for i in range(num_ldpes):
     assign x_${i} = primary_inp[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)];

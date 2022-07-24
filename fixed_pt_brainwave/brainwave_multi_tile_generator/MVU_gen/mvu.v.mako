@@ -450,7 +450,7 @@ int_sop_2 mac_component (
     .bx(bx),
     .by(by),
     .chainin(chainin),
-    .resulta(result),
+    .result(result),
     .chainout(chainout)
 );
 
