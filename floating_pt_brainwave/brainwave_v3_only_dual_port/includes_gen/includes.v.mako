@@ -17,8 +17,6 @@
     mac_per_ldpe = num_dsp_per_ldpe*mac_per_dsp
     num_comparison_stages = int(math.log2(mac_per_ldpe))
 %>
-`define hard_mem
-`define complex_dsp
 
 `define NUM_TILES ${num_tiles}
 `define NUM_LDPES ${num_ldpes}

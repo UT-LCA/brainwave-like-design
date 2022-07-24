@@ -3,9 +3,6 @@
 // DO NOT EDIT
 ////////////////////////////////////////////////////////////////////////////////
 
-`define hard_mem
-`define complex_dsp
-
 `define IN_PRECISION 8
 `define OUT_PRECISION 8
 

@@ -14,8 +14,6 @@
 
     target_op_width = int(math.log2(num_ldpes*num_tiles+8)+1)
 %>
-`define hard_mem
-`define complex_dsp
 
 `define IN_PRECISION ${in_precision}
 `define OUT_PRECISION ${out_precision}
