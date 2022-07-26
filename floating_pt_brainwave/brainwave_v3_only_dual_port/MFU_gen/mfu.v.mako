@@ -1,5 +1,5 @@
 <%!
-    num_ldpes = 32
+    num_ldpes = 4
 %>
 
 
@@ -311,7 +311,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_${i}(
+    addition_fp_clk_16 a_hard_${i}(
        .a(x_${i}),
        .b(y_${i}), 
        .clk(clk),
@@ -373,7 +373,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_${i};
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_${i}(
+    mult_fp_clk_16 m_hard_${i}(
        .a(x_${i}),
        .b(y_${i}), 
        .clk(clk),

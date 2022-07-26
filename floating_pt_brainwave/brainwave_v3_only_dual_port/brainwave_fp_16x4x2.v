@@ -9816,7 +9816,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_0(
+    addition_fp_clk_16 a_hard_0(
        .a(x_0),
        .b(y_0), 
        .clk(clk),
@@ -9842,7 +9842,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_1(
+    addition_fp_clk_16 a_hard_1(
        .a(x_1),
        .b(y_1), 
        .clk(clk),
@@ -9868,7 +9868,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_2(
+    addition_fp_clk_16 a_hard_2(
        .a(x_2),
        .b(y_2), 
        .clk(clk),
@@ -9894,7 +9894,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_3(
+    addition_fp_clk_16 a_hard_3(
        .a(x_3),
        .b(y_3), 
        .clk(clk),
@@ -9956,7 +9956,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_0;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_0(
+    mult_fp_clk_16 m_hard_0(
        .a(x_0),
        .b(y_0), 
        .clk(clk),
@@ -9980,7 +9980,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_1;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_1(
+    mult_fp_clk_16 m_hard_1(
        .a(x_1),
        .b(y_1), 
        .clk(clk),
@@ -10004,7 +10004,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_2;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_2(
+    mult_fp_clk_16 m_hard_2(
        .a(x_2),
        .b(y_2), 
        .clk(clk),
@@ -10028,7 +10028,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_3;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_3(
+    mult_fp_clk_16 m_hard_3(
        .a(x_3),
        .b(y_3), 
        .clk(clk),

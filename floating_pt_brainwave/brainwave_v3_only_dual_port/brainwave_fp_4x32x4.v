@@ -21434,7 +21434,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_0(
+    addition_fp_clk_16 a_hard_0(
        .a(x_0),
        .b(y_0), 
        .clk(clk),
@@ -21460,7 +21460,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_1(
+    addition_fp_clk_16 a_hard_1(
        .a(x_1),
        .b(y_1), 
        .clk(clk),
@@ -21486,7 +21486,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_2(
+    addition_fp_clk_16 a_hard_2(
        .a(x_2),
        .b(y_2), 
        .clk(clk),
@@ -21512,7 +21512,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_3(
+    addition_fp_clk_16 a_hard_3(
        .a(x_3),
        .b(y_3), 
        .clk(clk),
@@ -21538,7 +21538,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_4(
+    addition_fp_clk_16 a_hard_4(
        .a(x_4),
        .b(y_4), 
        .clk(clk),
@@ -21564,7 +21564,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_5(
+    addition_fp_clk_16 a_hard_5(
        .a(x_5),
        .b(y_5), 
        .clk(clk),
@@ -21590,7 +21590,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_6(
+    addition_fp_clk_16 a_hard_6(
        .a(x_6),
        .b(y_6), 
        .clk(clk),
@@ -21616,7 +21616,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_7(
+    addition_fp_clk_16 a_hard_7(
        .a(x_7),
        .b(y_7), 
        .clk(clk),
@@ -21642,7 +21642,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_8(
+    addition_fp_clk_16 a_hard_8(
        .a(x_8),
        .b(y_8), 
        .clk(clk),
@@ -21668,7 +21668,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_9(
+    addition_fp_clk_16 a_hard_9(
        .a(x_9),
        .b(y_9), 
        .clk(clk),
@@ -21694,7 +21694,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_10(
+    addition_fp_clk_16 a_hard_10(
        .a(x_10),
        .b(y_10), 
        .clk(clk),
@@ -21720,7 +21720,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_11(
+    addition_fp_clk_16 a_hard_11(
        .a(x_11),
        .b(y_11), 
        .clk(clk),
@@ -21746,7 +21746,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_12(
+    addition_fp_clk_16 a_hard_12(
        .a(x_12),
        .b(y_12), 
        .clk(clk),
@@ -21772,7 +21772,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_13(
+    addition_fp_clk_16 a_hard_13(
        .a(x_13),
        .b(y_13), 
        .clk(clk),
@@ -21798,7 +21798,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_14(
+    addition_fp_clk_16 a_hard_14(
        .a(x_14),
        .b(y_14), 
        .clk(clk),
@@ -21824,7 +21824,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_15(
+    addition_fp_clk_16 a_hard_15(
        .a(x_15),
        .b(y_15), 
        .clk(clk),
@@ -21850,7 +21850,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_16(
+    addition_fp_clk_16 a_hard_16(
        .a(x_16),
        .b(y_16), 
        .clk(clk),
@@ -21876,7 +21876,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_17(
+    addition_fp_clk_16 a_hard_17(
        .a(x_17),
        .b(y_17), 
        .clk(clk),
@@ -21902,7 +21902,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_18(
+    addition_fp_clk_16 a_hard_18(
        .a(x_18),
        .b(y_18), 
        .clk(clk),
@@ -21928,7 +21928,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_19(
+    addition_fp_clk_16 a_hard_19(
        .a(x_19),
        .b(y_19), 
        .clk(clk),
@@ -21954,7 +21954,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_20(
+    addition_fp_clk_16 a_hard_20(
        .a(x_20),
        .b(y_20), 
        .clk(clk),
@@ -21980,7 +21980,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_21(
+    addition_fp_clk_16 a_hard_21(
        .a(x_21),
        .b(y_21), 
        .clk(clk),
@@ -22006,7 +22006,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_22(
+    addition_fp_clk_16 a_hard_22(
        .a(x_22),
        .b(y_22), 
        .clk(clk),
@@ -22032,7 +22032,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_23(
+    addition_fp_clk_16 a_hard_23(
        .a(x_23),
        .b(y_23), 
        .clk(clk),
@@ -22058,7 +22058,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_24(
+    addition_fp_clk_16 a_hard_24(
        .a(x_24),
        .b(y_24), 
        .clk(clk),
@@ -22084,7 +22084,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_25(
+    addition_fp_clk_16 a_hard_25(
        .a(x_25),
        .b(y_25), 
        .clk(clk),
@@ -22110,7 +22110,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_26(
+    addition_fp_clk_16 a_hard_26(
        .a(x_26),
        .b(y_26), 
        .clk(clk),
@@ -22136,7 +22136,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_27(
+    addition_fp_clk_16 a_hard_27(
        .a(x_27),
        .b(y_27), 
        .clk(clk),
@@ -22162,7 +22162,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_28(
+    addition_fp_clk_16 a_hard_28(
        .a(x_28),
        .b(y_28), 
        .clk(clk),
@@ -22188,7 +22188,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_29(
+    addition_fp_clk_16 a_hard_29(
        .a(x_29),
        .b(y_29), 
        .clk(clk),
@@ -22214,7 +22214,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_30(
+    addition_fp_clk_16 a_hard_30(
        .a(x_30),
        .b(y_30), 
        .clk(clk),
@@ -22240,7 +22240,7 @@ module elt_wise_add(
 
 `ifdef complex_dsp
 
-    adder_fp_clk a_hard_31(
+    addition_fp_clk_16 a_hard_31(
        .a(x_31),
        .b(y_31), 
        .clk(clk),
@@ -22358,7 +22358,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_0;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_0(
+    mult_fp_clk_16 m_hard_0(
        .a(x_0),
        .b(y_0), 
        .clk(clk),
@@ -22382,7 +22382,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_1;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_1(
+    mult_fp_clk_16 m_hard_1(
        .a(x_1),
        .b(y_1), 
        .clk(clk),
@@ -22406,7 +22406,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_2;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_2(
+    mult_fp_clk_16 m_hard_2(
        .a(x_2),
        .b(y_2), 
        .clk(clk),
@@ -22430,7 +22430,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_3;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_3(
+    mult_fp_clk_16 m_hard_3(
        .a(x_3),
        .b(y_3), 
        .clk(clk),
@@ -22454,7 +22454,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_4;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_4(
+    mult_fp_clk_16 m_hard_4(
        .a(x_4),
        .b(y_4), 
        .clk(clk),
@@ -22478,7 +22478,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_5;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_5(
+    mult_fp_clk_16 m_hard_5(
        .a(x_5),
        .b(y_5), 
        .clk(clk),
@@ -22502,7 +22502,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_6;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_6(
+    mult_fp_clk_16 m_hard_6(
        .a(x_6),
        .b(y_6), 
        .clk(clk),
@@ -22526,7 +22526,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_7;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_7(
+    mult_fp_clk_16 m_hard_7(
        .a(x_7),
        .b(y_7), 
        .clk(clk),
@@ -22550,7 +22550,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_8;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_8(
+    mult_fp_clk_16 m_hard_8(
        .a(x_8),
        .b(y_8), 
        .clk(clk),
@@ -22574,7 +22574,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_9;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_9(
+    mult_fp_clk_16 m_hard_9(
        .a(x_9),
        .b(y_9), 
        .clk(clk),
@@ -22598,7 +22598,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_10;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_10(
+    mult_fp_clk_16 m_hard_10(
        .a(x_10),
        .b(y_10), 
        .clk(clk),
@@ -22622,7 +22622,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_11;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_11(
+    mult_fp_clk_16 m_hard_11(
        .a(x_11),
        .b(y_11), 
        .clk(clk),
@@ -22646,7 +22646,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_12;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_12(
+    mult_fp_clk_16 m_hard_12(
        .a(x_12),
        .b(y_12), 
        .clk(clk),
@@ -22670,7 +22670,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_13;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_13(
+    mult_fp_clk_16 m_hard_13(
        .a(x_13),
        .b(y_13), 
        .clk(clk),
@@ -22694,7 +22694,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_14;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_14(
+    mult_fp_clk_16 m_hard_14(
        .a(x_14),
        .b(y_14), 
        .clk(clk),
@@ -22718,7 +22718,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_15;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_15(
+    mult_fp_clk_16 m_hard_15(
        .a(x_15),
        .b(y_15), 
        .clk(clk),
@@ -22742,7 +22742,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_16;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_16(
+    mult_fp_clk_16 m_hard_16(
        .a(x_16),
        .b(y_16), 
        .clk(clk),
@@ -22766,7 +22766,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_17;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_17(
+    mult_fp_clk_16 m_hard_17(
        .a(x_17),
        .b(y_17), 
        .clk(clk),
@@ -22790,7 +22790,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_18;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_18(
+    mult_fp_clk_16 m_hard_18(
        .a(x_18),
        .b(y_18), 
        .clk(clk),
@@ -22814,7 +22814,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_19;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_19(
+    mult_fp_clk_16 m_hard_19(
        .a(x_19),
        .b(y_19), 
        .clk(clk),
@@ -22838,7 +22838,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_20;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_20(
+    mult_fp_clk_16 m_hard_20(
        .a(x_20),
        .b(y_20), 
        .clk(clk),
@@ -22862,7 +22862,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_21;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_21(
+    mult_fp_clk_16 m_hard_21(
        .a(x_21),
        .b(y_21), 
        .clk(clk),
@@ -22886,7 +22886,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_22;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_22(
+    mult_fp_clk_16 m_hard_22(
        .a(x_22),
        .b(y_22), 
        .clk(clk),
@@ -22910,7 +22910,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_23;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_23(
+    mult_fp_clk_16 m_hard_23(
        .a(x_23),
        .b(y_23), 
        .clk(clk),
@@ -22934,7 +22934,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_24;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_24(
+    mult_fp_clk_16 m_hard_24(
        .a(x_24),
        .b(y_24), 
        .clk(clk),
@@ -22958,7 +22958,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_25;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_25(
+    mult_fp_clk_16 m_hard_25(
        .a(x_25),
        .b(y_25), 
        .clk(clk),
@@ -22982,7 +22982,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_26;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_26(
+    mult_fp_clk_16 m_hard_26(
        .a(x_26),
        .b(y_26), 
        .clk(clk),
@@ -23006,7 +23006,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_27;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_27(
+    mult_fp_clk_16 m_hard_27(
        .a(x_27),
        .b(y_27), 
        .clk(clk),
@@ -23030,7 +23030,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_28;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_28(
+    mult_fp_clk_16 m_hard_28(
        .a(x_28),
        .b(y_28), 
        .clk(clk),
@@ -23054,7 +23054,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_29;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_29(
+    mult_fp_clk_16 m_hard_29(
        .a(x_29),
        .b(y_29), 
        .clk(clk),
@@ -23078,7 +23078,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_30;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_30(
+    mult_fp_clk_16 m_hard_30(
        .a(x_30),
        .b(y_30), 
        .clk(clk),
@@ -23102,7 +23102,7 @@ module elt_wise_mul(
     wire [4:0] flag_fake_31;
 `ifdef complex_dsp
 
-    multiply_fp_clk m_hard_31(
+    mult_fp_clk_16 m_hard_31(
        .a(x_31),
        .b(y_31), 
        .clk(clk),
