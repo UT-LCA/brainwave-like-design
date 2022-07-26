@@ -2,6 +2,11 @@
 // THIS FILE WAS AUTOMATICALLY GENERATED FROM includes.v.mako
 // DO NOT EDIT
 ////////////////////////////////////////////////////////////////////////////////
+
+/* Author: Tanmay Anand, Visiting Student, UT-LCA
+Email: tanmay.anand29@gmail.com
+GItHub Username: saitama0300 */
+
 `define hard_mem
 `define complex_dsp
 

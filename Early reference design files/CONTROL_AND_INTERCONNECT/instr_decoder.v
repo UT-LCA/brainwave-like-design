@@ -1,4 +1,8 @@
-`
+
+/* Author: Tanmay Anand, Visiting Student, UT-LCA
+Email: tanmay.anand29@gmail.com
+GItHub Username: saitama0300 */
+
 `define VRF_AWIDTH 10
 `define VRF_DWIDTH 160
 `define DRAM_DWIDTH 160

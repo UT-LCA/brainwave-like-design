@@ -18,6 +18,10 @@
     num_comparison_stages = int(math.log2(mac_per_ldpe))
 %>
 
+/* Author: Tanmay Anand, Visiting Student, UT-LCA
+Email: tanmay.anand29@gmail.com
+GitHub Username: saitama0300 */
+
 `define IN_PRECISION ${in_precision}
 `define OUT_PRECISION ${out_precision}
 

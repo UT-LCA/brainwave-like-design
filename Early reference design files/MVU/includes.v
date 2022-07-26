@@ -1,5 +1,9 @@
-`define SIMULATION
 
+/* Author: Tanmay Anand, Visiting Student, UT-LCA
+Email: tanmay.anand29@gmail.com
+GItHub Username: saitama0300 */
+
+`define SIMULATION
 
 `define IN_PRECISION 8
 `define OUT_PRECISION 32

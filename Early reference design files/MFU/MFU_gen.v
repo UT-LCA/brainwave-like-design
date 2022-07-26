@@ -1,3 +1,8 @@
+
+/* Author: Tanmay Anand, Visiting Student, UT-LCA
+Email: tanmay.anand29@gmail.com
+GItHub Username: saitama0300 */
+
 `define DESIGN_SIZE 10
 `define DWIDTH 16
 `define MASK_WIDTH 8

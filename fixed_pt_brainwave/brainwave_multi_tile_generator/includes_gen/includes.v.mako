@@ -15,6 +15,11 @@
     target_op_width = int(math.log2(num_ldpes*num_tiles+8)+1)
 %>
 
+/* Author: Tanmay Anand, Visiting Student, UT-LCA
+Email: tanmay.anand29@gmail.com
+GItHub Username: saitama0300 */
+
+
 `define IN_PRECISION ${in_precision}
 `define OUT_PRECISION ${out_precision}
 

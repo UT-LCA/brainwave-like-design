@@ -18,6 +18,10 @@
     num_comparison_stages = int(math.log2(mac_per_ldpe))
 %>
 
+/* Author: Tanmay Anand, Visiting Student, UT-LCA
+Email: tanmay.anand29@gmail.com
+GItHub Username: saitama0300 */
+
 `define NUM_TILES ${num_tiles}
 `define NUM_LDPES ${num_ldpes}
 `define DSPS_PER_LDPE ${num_dsp_per_ldpe}

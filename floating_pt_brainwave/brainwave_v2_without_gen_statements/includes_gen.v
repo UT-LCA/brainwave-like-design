@@ -3,6 +3,9 @@
 // DO NOT EDIT
 ////////////////////////////////////////////////////////////////////////////////
 
+/* Author: Tanmay Anand, Visiting Student, UT-LCA
+Email: tanmay.anand29@gmail.com
+GItHub Username: saitama0300 */
 
 `timescale 1ns/1ns
 
