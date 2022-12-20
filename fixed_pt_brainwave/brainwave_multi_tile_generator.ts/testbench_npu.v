@@ -1,5 +1,3 @@
-`include "npu_gen.v"
-
 
 module testbench;
     wire[`INSTR_WIDTH-1:0] instruction;

@@ -40,7 +40,7 @@ GItHub Username: saitama0300 */
 //`define DSP_AVA_OUTPUT_WIDTH 37
 //`define LDPE_AVA_OUTPUT_WIDTH `DSP_AVA_OUTPUT_WIDTH
 
-//`define DSP_USED_INPUT_WIDTH `IN_PRECISION
+`define DSP_USED_INPUT_WIDTH `IN_PRECISION
 `define LDPE_USED_INPUT_WIDTH 32 //half of the tensor slice input width
 //`define SUB_LDPE_USED_INPUT_WIDTH (`DSP_USED_INPUT_WIDTH * `DSPS_PER_SUB_LDPE)
 //`define DSP_X_ZERO_PAD_INPUT_WIDTH (`DSP_X_AVA_INPUT_WIDTH - `DSP_USED_INPUT_WIDTH)
@@ -60,7 +60,7 @@ GItHub Username: saitama0300 */
 
 `define ORF_DWIDTH ${ts_size*out_precision*num_ldpes} //${max(out_precision*num_ldpes,vec_bram_dwidth*int(num_dsp_per_ldpe*mac_per_dsp*in_precision/vec_bram_dwidth))}
 
-`define MAX_VRF_DWIDTH 128
+`define MAX_VRF_DWIDTH ${max(out_precision*ts_size*num_ldpes,128)}
 `define DRAM_DWIDTH (`MRF_DWIDTH + `ORF_DWIDTH + `VRF_DWIDTH) //KEEP THIS LARGE TO AVOID OPTIMIZATION IN VTR 
 `define DRAM_AWIDTH `MRF_AWIDTH
 
@@ -77,7 +77,7 @@ GItHub Username: saitama0300 */
 `define OUT_BRAM_AWIDTH 10
 `define OUT_BRAM_DWIDTH 16
 `define ORF_AWIDTH `OUT_BRAM_AWIDTH
-`define OUT_DWIDTH ${out_precision*ts_size*num_ldpes}
+`define OUT_DWIDTH ${out_precision*ts_size}
 //`define ORF_DWIDTH `OUT_DWIDTH*`NUM_LDPES
 
 
