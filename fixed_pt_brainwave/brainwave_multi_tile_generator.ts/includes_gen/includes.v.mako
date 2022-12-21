@@ -35,6 +35,8 @@ GItHub Username: saitama0300 */
 
 
 `define tensor_slice_hard_block
+`define hard_mem
+`define complex_dsp
 
 `define IN_PRECISION ${in_precision}
 `define OUT_PRECISION ${out_precision}

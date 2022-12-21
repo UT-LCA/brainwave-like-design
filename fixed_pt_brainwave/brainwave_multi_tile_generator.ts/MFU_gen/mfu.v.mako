@@ -149,12 +149,19 @@ module mult(
  );
     reg [2*`DWIDTH-1:0] mult_result;
 
+`ifdef complex_dsp
+
+   int8_mul_clocked  mclk(.clk(clk), .a(x), .b(y), .out(mult_result));
+
+`else
+
     always @(posedge clk) begin 
     //$display("p '%'d a '%'d b '%'d",p,x,y);
         if(reset==0) begin
             mult_result <= x*y;
         end
     end
+`endif
     
     //GET TRUNCATED RESULT 
     assign p = mult_result[`DWIDTH-1:0];
