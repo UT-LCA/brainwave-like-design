@@ -428,13 +428,17 @@ module MRF (
 
 endmodule
 
-module dsp_block_18_18_int_sop_2 (
+module dsp_block_18_18_int_sop_4 (
     input clk,
     input aclr,
     input [`DSP_X_AVA_INPUT_WIDTH-1:0] ax,
     input [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay,
     input [`DSP_X_AVA_INPUT_WIDTH-1:0] bx,
     input [`DSP_Y_AVA_INPUT_WIDTH-1:0] by,
+    input [`DSP_X_AVA_INPUT_WIDTH-1:0] cx,
+    input [`DSP_Y_AVA_INPUT_WIDTH-1:0] cy,
+    input [`DSP_X_AVA_INPUT_WIDTH-1:0] dx,
+    input [`DSP_Y_AVA_INPUT_WIDTH-1:0] dy,
     input [`DSP_AVA_OUTPUT_WIDTH-1:0] chainin,
     output [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout,
     output [`DSP_AVA_OUTPUT_WIDTH-1:0] result
@@ -446,6 +450,10 @@ reg [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_reg;
 reg [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_reg;
 reg [`DSP_X_AVA_INPUT_WIDTH-1:0] bx_reg;
 reg [`DSP_Y_AVA_INPUT_WIDTH-1:0] by_reg;
+reg [`DSP_X_AVA_INPUT_WIDTH-1:0] cx_reg;
+reg [`DSP_Y_AVA_INPUT_WIDTH-1:0] cy_reg;
+reg [`DSP_X_AVA_INPUT_WIDTH-1:0] dx_reg;
+reg [`DSP_Y_AVA_INPUT_WIDTH-1:0] dy_reg;
 reg [`DSP_AVA_OUTPUT_WIDTH-1:0] result_reg;
 
 always @(posedge clk) begin
@@ -455,13 +463,21 @@ always @(posedge clk) begin
         ay_reg <= 0;
         bx_reg <= 0;
         by_reg <= 0;
+        cx_reg <= 0;
+        dy_reg <= 0;
+        dx_reg <= 0;
+        dy_reg <= 0;
     end
     else begin
         ax_reg <= ax;
         ay_reg <= ay;
         bx_reg <= bx;
         by_reg <= by;
-        result_reg <= (ax_reg * ay_reg) + (bx_reg * by_reg) + chainin;
+        cx_reg <= ax;
+        cy_reg <= ay;
+        dx_reg <= bx;
+        dy_reg <= by;
+        result_reg <= (ax_reg * ay_reg) + (bx_reg * by_reg) + (cx_reg * cy_reg) + (dx_reg * dy_reg) + chainin;
     end
 end
 assign chainout = result_reg;
@@ -472,7 +488,7 @@ assign result = result_reg;
 wire [10:0] mode;
 assign mode = 11'b101_0101_0011;
 
-int_sop_2 mac_component (
+int_sop_4 mac_component (
     .mode_sigs(mode),
     .clk(clk),
     .reset(aclr),
@@ -480,6 +496,10 @@ int_sop_2 mac_component (
     .ay(ay),
     .bx(bx),
     .by(by),
+    .cx(cx),
+    .cy(cy),
+    .dx(dx),
+    .dy(dy),
     .chainin(chainin),
     .result(result),
     .chainout(chainout)
