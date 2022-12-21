@@ -1,8 +1,8 @@
 <%!
     import math
 
-    num_tiles = 2 #CHANGE THIS
-    num_ldpes = 6 #CHANGE THIS
+    num_tiles = 1 #CHANGE THIS
+    num_ldpes = 12 #CHANGE THIS
     num_dsp_per_ldpe = 16 #CHANGE THIS
     num_reduction_stages = int(math.log2(num_tiles))
 %>
@@ -59,6 +59,16 @@ module MVU (
     );
 %endfor
 
+% if num_tiles==1:
+
+    assign out_data_available = out_data_available_mvu_tile_0;
+
+% for i in range(num_ldpes):
+assign mvm_result[${i+1}*`OUT_DWIDTH-1:${i}*`OUT_DWIDTH] = result_mvm_0[${i}*(`DSP_USED_OUTPUT_WIDTH)+`OUT_DWIDTH-1:${i}*(`DSP_USED_OUTPUT_WIDTH)];
+% endfor 
+
+% else:
+
     wire[`NUM_LDPES*`OUT_DWIDTH-1:0] reduction_unit_output;
     wire[`NUM_LDPES-1:0] out_data_available_reduction_tree;
 
@@ -75,6 +85,7 @@ module MVU (
     
     assign mvm_result = reduction_unit_output;
     assign out_data_available = out_data_available_reduction_tree[0];
+% endif
     
 endmodule
 
