@@ -20,6 +20,21 @@
 Email: tanmay.anand29@gmail.com
 GItHub Username: saitama0300 */
 
+`define INT16_MAT_MUL_SIZE 4
+`define INT16_DWIDTH 16
+`define DTYPE_INT8  2'b00
+`define DTYPE_INT16 2'b01
+`define DTYPE_FP16  2'b10
+`define DTYPE_BF16  2'b11
+
+`define SLICE_MODE_TENSOR 1'b0
+`define SLICE_MODE_INDIV_PE 1'b1
+`define ELTWISE_MUL 2'b01
+`define ELTWISE_ADD 2'b10
+`define ELTWISE_SUB 2'b11
+
+
+`define tensor_slice_hard_block
 
 `define IN_PRECISION ${in_precision}
 `define OUT_PRECISION ${out_precision}

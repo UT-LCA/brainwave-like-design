@@ -1,5 +1,5 @@
 <%! 
-    num_ldpes = 5 #CHANGE THIS
+    num_ldpes = 16 #CHANGE THIS
     ts_size = 8
 %>
 
@@ -229,18 +229,18 @@ always @(posedge clk) begin
       cycle_count = cycle_count + 1;
 
       for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-         if(activation_type==1) begin // tanH
-            slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_tanh[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
-            data_intercept_delayed[i*8 +: 8] <= data_intercept_tanh[i*8 +: 8];
-            intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
-         end 
-         else if(activation_type==2) begin // tanH
-            slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_sigmoid[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
-            data_intercept_delayed[i*8 +: 8] <= data_intercept_sigmoid[i*8 +: 8];
-            intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
-         end else begin // ReLU
+         //if(activation_type==1) begin // tanH
+         //   slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_tanh[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
+         //   data_intercept_delayed[i*8 +: 8] <= data_intercept_tanh[i*8 +: 8];
+         //   intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
+         //end 
+         //else if(activation_type==2) begin // tanH
+         //   slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_sigmoid[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
+         //   data_intercept_delayed[i*8 +: 8] <= data_intercept_sigmoid[i*8 +: 8];
+         //   intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
+         //end else begin // ReLU
             relu_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= inp_data[i*`DWIDTH] ? {`DWIDTH{1'b0}} : inp_data[i*`DWIDTH +:`DWIDTH];
-         end
+         //end
       end   
 
       //TANH needs 1 extra cycle
@@ -463,96 +463,40 @@ module elt_wise_mul(
     input [`DESIGN_SIZE*`DWIDTH-1:0] primary_inp,
     input [`DESIGN_SIZE*`DWIDTH-1:0] secondary_inp,
     output [`DESIGN_SIZE*`DWIDTH-1:0] out_data,
-    output output_available_mul,
+    output reg output_available_mul,
     input clk
 );
-
-% for i in range(num_ldpes):
+% for i in range(num_ldpes*ts_size):
     wire [(`DWIDTH)-1:0] x_${i}; 
     wire [(`DWIDTH)-1:0] y_${i};
     
-    //mult m${i}(.p(out_data[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)]),.x(x_${i}),.y(y_${i}), .clk(clk), .reset(~enable_mul));
-
-    wire done_tensor_slice_NC_${i};
-    wire [63:0] a_data_in_NC_${i};
-    wire [63:0] b_data_in_NC_${i};
-    wire [63:0] a_data_out_NC_${i};
-    wire [63:0] b_data_out_NC_${i};
-    wire [3:0] flags_NC_${i};
-    wire [35:0] extra_out_NC_${i};
-
-    wire reset_${i};
-    assign reset_${i} = ~in_data_available;
-
-   wire output_available_mul_${i};
-  
-
-`ifdef tensor_slice_hard_block
-    
-    tensor_slice_int8 tensor_slice_${i}(
-      .clk(clk),
-      .reset(reset_${i}),
-      .pe_reset(reset_${i}),
-      .start_mat_mul(enable_mul),
-      .done_mat_mul_port(done_tensor_slice_NC_${i}),
-      .a_data(x_${i}),         
-      .b_data(y_${i}),        
-      .a_data_in(a_data_in_NC_${i}), 
-      .b_data_in(b_data_in_NC_${i}),
-      .c_data_out(out_data[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)]), 
-      .a_data_out(a_data_out_NC_${i}),      //
-      .b_data_out(b_data_out_NC_${i}),
-      .flags_port(flags_NC_${i}),
-      .c_data_available_port(output_available_mul_${i}),
-      .validity_mask_a_rows(8'hff),
-      .validity_mask_a_cols_b_rows(8'hff),
-      .validity_mask_b_cols(8'hff),
-      .slice_mode(`SLICE_MODE_TENSOR),
-      .slice_dtype(`DTYPE_INT8),
-      .op(3'b110), //eltwise mult
-      .preload(1'b0),
-      .final_mat_mul_size(8'd8),
-      .a_loc(5'd0),
-      .b_loc(5'd0),
-      .no_rounding(1'b0),
-      .extra_out(extra_out_NC_${i})
-    );
-
-`else
-   //Just for simulation
-   assign out_data = primary_inp * secondary_inp;
-
-`endif
-
-
+    mult m${i}(.p(out_data[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)]),.x(x_${i}),.y(y_${i}), .clk(clk), .reset(~enable_mul));
 % endfor
 
-% for i in range(num_ldpes):
+% for i in range(num_ldpes*ts_size):
     assign x_${i} = primary_inp[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)];
 % endfor
 
-% for i in range(num_ldpes):           
+% for i in range(num_ldpes*ts_size):           
     assign y_${i} = secondary_inp[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)];
 % endfor
-
-    assign output_available_mul = output_available_mul_0;
     
-//     reg[`LOG_MUL_LATENCY-1:0] state;
-//        always @(posedge clk) begin
-//        if((enable_mul==1'b1) && (in_data_available==1'b1)) begin   
-//        
-//            if(state!=`MUL_LATENCY) begin 
-//                state<=state+1;
-//            end
-//            else begin
-//                output_available_mul<=1;
-//                state<=0;
-//            end
-//        end
-//        else begin
-//          output_available_mul<=0;
-//          state<=0;
-//        end
-//    end
+     reg[`LOG_MUL_LATENCY-1:0] state;
+        always @(posedge clk) begin
+        if((enable_mul==1'b1) && (in_data_available==1'b1)) begin   
+        
+            if(state!=`MUL_LATENCY) begin 
+                state<=state+1;
+            end
+            else begin
+                output_available_mul<=1;
+                state<=0;
+            end
+        end
+        else begin
+          output_available_mul<=0;
+          state<=0;
+        end
+    end
 
 endmodule
