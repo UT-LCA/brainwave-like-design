@@ -1,9 +1,9 @@
 <%!
     import math
 
-    num_tiles = 8 #CHANGE THIS
-    num_ldpes = 4 #CHANGE THIS
-    num_dsp_per_ldpe = 4 #CHANGE THIS
+    num_tiles = 2 #CHANGE THIS
+    num_ldpes = 6 #CHANGE THIS
+    num_dsp_per_ldpe = 16 #CHANGE THIS
     num_reduction_stages = int(math.log2(num_tiles))
 %>
 
@@ -202,7 +202,7 @@ module compute_unit (
 
     // Connection of VRF and LDPE wires for vector data
     // 'Y' pin is used for vector
-    assign ay_wire = vec[`LDPE_USED_INPUT_WIDTH-1:0];
+    assign ay_wire = vec[1*`LDPE_USED_INPUT_WIDTH-1:0*`LDPE_USED_INPUT_WIDTH];
     assign by_wire = vec[2*`LDPE_USED_INPUT_WIDTH-1:1*`LDPE_USED_INPUT_WIDTH];
 
     wire [`MRF_DWIDTH-1:0] mrf_in_fake;
@@ -309,7 +309,6 @@ module SUB_LDPE (
 
     assign ax_wire_${i} = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
     assign ay_wire_${i} = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
-
     assign bx_wire_${i} = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
     assign by_wire_${i} = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, by[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
 

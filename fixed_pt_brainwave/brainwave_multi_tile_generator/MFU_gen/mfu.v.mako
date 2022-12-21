@@ -1,5 +1,5 @@
 <%! 
-    num_ldpes = 4 #CHANGE THIS
+    num_ldpes = 6 #CHANGE THIS
 %>
 
 module MFU( 
@@ -228,18 +228,18 @@ always @(posedge clk) begin
       cycle_count = cycle_count + 1;
 
       for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-         if(activation_type==1) begin // tanH
-            slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_tanh[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
-            data_intercept_delayed[i*8 +: 8] <= data_intercept_tanh[i*8 +: 8];
-            intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
-         end 
-         else if(activation_type==2) begin // tanH
-            slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_sigmoid[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
-            data_intercept_delayed[i*8 +: 8] <= data_intercept_sigmoid[i*8 +: 8];
-            intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
-         end else begin // ReLU
+         //if(activation_type==1) begin // tanH
+         //   slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_tanh[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
+         //   data_intercept_delayed[i*8 +: 8] <= data_intercept_tanh[i*8 +: 8];
+         //   intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
+         //end 
+         //else if(activation_type==2) begin // tanH
+         //   slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_sigmoid[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
+         //   data_intercept_delayed[i*8 +: 8] <= data_intercept_sigmoid[i*8 +: 8];
+         //   intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
+         //end else begin // ReLU
             relu_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= inp_data[i*`DWIDTH] ? {`DWIDTH{1'b0}} : inp_data[i*`DWIDTH +:`DWIDTH];
-         end
+         //end
       end   
 
       //TANH needs 1 extra cycle

@@ -1,9 +1,9 @@
 <%!
     import math
 
-    num_tiles = 8 #CHANGE THIS
-    num_ldpes = 4 #CHANGE THIS
-    num_dsp_per_ldpe = 4 #CHANGE THIS
+    num_tiles = 2 #CHANGE THIS
+    num_ldpes = 6 #CHANGE THIS
+    num_dsp_per_ldpe = 16 #CHANGE THIS
     num_reduction_stages = int(math.log2(num_tiles))
     in_precision = 8
     out_precision = 8
@@ -19,6 +19,8 @@
 Email: tanmay.anand29@gmail.com
 GItHub Username: saitama0300 */
 
+`define complex_dsp
+`define hard_mem
 
 `define IN_PRECISION ${in_precision}
 `define OUT_PRECISION ${out_precision}
@@ -30,7 +32,7 @@ GItHub Username: saitama0300 */
 `define DSPS_PER_SUB_LDPE ${num_dsp_per_ldpe}
 `define SUB_LDPES_PER_LDPE (`DSPS_PER_LDPE/`DSPS_PER_SUB_LDPE)
 
-`define MULTS_PER_DSP 2
+`define MULTS_PER_DSP ${mac_per_dsp}
 `define DSP_X_AVA_INPUT_WIDTH 18
 `define LDPE_X_AVA_INPUT_WIDTH (`DSP_X_AVA_INPUT_WIDTH * `DSPS_PER_LDPE)
 `define DSP_Y_AVA_INPUT_WIDTH 19
