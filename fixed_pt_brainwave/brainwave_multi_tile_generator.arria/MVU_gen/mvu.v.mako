@@ -210,15 +210,11 @@ module compute_unit (
     /* If there are 4 DSPSs, bit[31:0] of mrf output contain ax values for the 4 DSPs, bit[63:32] contain bx values and so on. With a group of ax values, bit[7:0] contain ax value for DSP1, bit[15:8] contain ax value for DSP2 and so on. */
     assign ax_wire = mrf_outb_wire[1*`LDPE_USED_INPUT_WIDTH-1:0*`LDPE_USED_INPUT_WIDTH];
     assign bx_wire = mrf_outb_wire[2*`LDPE_USED_INPUT_WIDTH-1:1*`LDPE_USED_INPUT_WIDTH];
-    assign cx_wire = mrf_outb_wire[3*`LDPE_USED_INPUT_WIDTH-1:2*`LDPE_USED_INPUT_WIDTH];
-    assign dx_wire = mrf_outb_wire[4*`LDPE_USED_INPUT_WIDTH-1:3*`LDPE_USED_INPUT_WIDTH];
 
     // Connection of VRF and LDPE wires for vector data
     // 'Y' pin is used for vector
     assign ay_wire = vec[1*`LDPE_USED_INPUT_WIDTH-1:0*`LDPE_USED_INPUT_WIDTH];
     assign by_wire = vec[2*`LDPE_USED_INPUT_WIDTH-1:1*`LDPE_USED_INPUT_WIDTH];
-    assign cy_wire = vec[3*`LDPE_USED_INPUT_WIDTH-1:2*`LDPE_USED_INPUT_WIDTH];
-    assign dy_wire = vec[4*`LDPE_USED_INPUT_WIDTH-1:3*`LDPE_USED_INPUT_WIDTH];
 
     wire [`MRF_DWIDTH-1:0] mrf_in_fake;
     
@@ -241,10 +237,6 @@ module compute_unit (
         .ay(ay_wire),
         .bx(bx_wire),
         .by(by_wire),
-        .cx(ax_wire),
-        .cy(ay_wire),
-        .dx(bx_wire),
-        .dy(by_wire),
         .ldpe_result(ldpe_result)
     );
     assign result = ldpe_result;
@@ -258,10 +250,6 @@ module LDPE (
     input [`LDPE_USED_INPUT_WIDTH-1:0] ay,
     input [`LDPE_USED_INPUT_WIDTH-1:0] bx,
     input [`LDPE_USED_INPUT_WIDTH-1:0] by,
-    input [`LDPE_USED_INPUT_WIDTH-1:0] cx,
-    input [`LDPE_USED_INPUT_WIDTH-1:0] cy,
-    input [`LDPE_USED_INPUT_WIDTH-1:0] dx,
-    input [`LDPE_USED_INPUT_WIDTH-1:0] dy,
     output [`LDPE_USED_OUTPUT_WIDTH-1:0] ldpe_result
 );
 
@@ -275,10 +263,6 @@ module LDPE (
         .ay(ay[1*`SUB_LDPE_USED_INPUT_WIDTH-1:(1-1)*`SUB_LDPE_USED_INPUT_WIDTH]),
         .bx(bx[1*`SUB_LDPE_USED_INPUT_WIDTH-1:(1-1)*`SUB_LDPE_USED_INPUT_WIDTH]),
         .by(by[1*`SUB_LDPE_USED_INPUT_WIDTH-1:(1-1)*`SUB_LDPE_USED_INPUT_WIDTH]),
-        .cx(cx[1*`SUB_LDPE_USED_INPUT_WIDTH-1:(1-1)*`SUB_LDPE_USED_INPUT_WIDTH]),
-        .cy(cy[1*`SUB_LDPE_USED_INPUT_WIDTH-1:(1-1)*`SUB_LDPE_USED_INPUT_WIDTH]),
-        .dx(dx[1*`SUB_LDPE_USED_INPUT_WIDTH-1:(1-1)*`SUB_LDPE_USED_INPUT_WIDTH]),
-        .dy(dy[1*`SUB_LDPE_USED_INPUT_WIDTH-1:(1-1)*`SUB_LDPE_USED_INPUT_WIDTH]),
         .result(sub_ldpe_result[1*`DSP_USED_OUTPUT_WIDTH-1:(1-1)*`DSP_USED_OUTPUT_WIDTH])
     );
     assign ldpe_result = sub_ldpe_result[(0+1)*`DSP_USED_OUTPUT_WIDTH-1:0*`DSP_USED_OUTPUT_WIDTH];
@@ -319,54 +303,38 @@ module SUB_LDPE (
     input [`SUB_LDPE_USED_INPUT_WIDTH-1:0] ay,
     input [`SUB_LDPE_USED_INPUT_WIDTH-1:0] bx,
     input [`SUB_LDPE_USED_INPUT_WIDTH-1:0] by,
-    input [`SUB_LDPE_USED_INPUT_WIDTH-1:0] cx,
-    input [`SUB_LDPE_USED_INPUT_WIDTH-1:0] cy,
-    input [`SUB_LDPE_USED_INPUT_WIDTH-1:0] dx,
-    input [`SUB_LDPE_USED_INPUT_WIDTH-1:0] dy,
     output reg [`LDPE_USED_OUTPUT_WIDTH-1:0] result
 );
 
     wire [`DSP_USED_OUTPUT_WIDTH*`DSPS_PER_SUB_LDPE-1:0] chainin, chainout, dsp_result;
 
  
-    wire [63:0] chainout_temp_0;
-    assign chainout_temp_0 = 64'b0;
+    wire [36:0] chainout_temp_0;
+    assign chainout_temp_0 = 37'b0;
 
 % for i in range(1,num_dsp_per_ldpe+1):
     wire [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_wire_${i};
     wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_wire_${i};
     wire [`DSP_X_AVA_INPUT_WIDTH-1:0] bx_wire_${i};
     wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] by_wire_${i};
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] cx_wire_${i};
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] cy_wire_${i};
-    wire [`DSP_X_AVA_INPUT_WIDTH-1:0] dx_wire_${i};
-    wire [`DSP_Y_AVA_INPUT_WIDTH-1:0] dy_wire_${i};
 
     assign ax_wire_${i} = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, ax[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
     assign ay_wire_${i} = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, ay[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
     assign bx_wire_${i} = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
     assign by_wire_${i} = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, by[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
-    assign cx_wire_${i} = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, cx[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
-    assign cy_wire_${i} = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, cy[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
-    assign dx_wire_${i} = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, dx[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
-    assign dy_wire_${i} = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, dy[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
 
     wire [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout_temp_${i};
     wire [`DSP_AVA_OUTPUT_WIDTH-1:0] result_temp_${i};
 
     assign dsp_result[${i}*`DSP_USED_OUTPUT_WIDTH-1:(${i}-1)*`DSP_USED_OUTPUT_WIDTH] = result_temp_${i}[`DSP_USED_OUTPUT_WIDTH-1:0];
 
-    dsp_block_18_18_int_sop_4 dsp_${i} (
+    dsp_block_18_18_int_sop_2 dsp_${i} (
         .clk(clk),
         .aclr(reset),
         .ax(ax_wire_${i}),
         .ay(ay_wire_${i}),
         .bx(bx_wire_${i}),
         .by(by_wire_${i}),
-        .cx(cx_wire_${i}),
-        .cy(cy_wire_${i}),
-        .dx(dx_wire_${i}),
-        .dy(dy_wire_${i}),
         .chainin(chainout_temp_${i-1}),
         .chainout(chainout_temp_${i}),
         .result(result_temp_${i})
@@ -439,17 +407,13 @@ module MRF (
 
 endmodule
 
-module dsp_block_18_18_int_sop_4 (
+module dsp_block_18_18_int_sop_2 (
     input clk,
     input aclr,
     input [`DSP_X_AVA_INPUT_WIDTH-1:0] ax,
     input [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay,
     input [`DSP_X_AVA_INPUT_WIDTH-1:0] bx,
     input [`DSP_Y_AVA_INPUT_WIDTH-1:0] by,
-    input [`DSP_X_AVA_INPUT_WIDTH-1:0] cx,
-    input [`DSP_Y_AVA_INPUT_WIDTH-1:0] cy,
-    input [`DSP_X_AVA_INPUT_WIDTH-1:0] dx,
-    input [`DSP_Y_AVA_INPUT_WIDTH-1:0] dy,
     input [`DSP_AVA_OUTPUT_WIDTH-1:0] chainin,
     output [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout,
     output [`DSP_AVA_OUTPUT_WIDTH-1:0] result
@@ -461,10 +425,6 @@ reg [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_reg;
 reg [`DSP_Y_AVA_INPUT_WIDTH-1:0] ay_reg;
 reg [`DSP_X_AVA_INPUT_WIDTH-1:0] bx_reg;
 reg [`DSP_Y_AVA_INPUT_WIDTH-1:0] by_reg;
-reg [`DSP_X_AVA_INPUT_WIDTH-1:0] cx_reg;
-reg [`DSP_Y_AVA_INPUT_WIDTH-1:0] cy_reg;
-reg [`DSP_X_AVA_INPUT_WIDTH-1:0] dx_reg;
-reg [`DSP_Y_AVA_INPUT_WIDTH-1:0] dy_reg;
 reg [`DSP_AVA_OUTPUT_WIDTH-1:0] result_reg;
 
 always @(posedge clk) begin
@@ -474,21 +434,13 @@ always @(posedge clk) begin
         ay_reg <= 0;
         bx_reg <= 0;
         by_reg <= 0;
-        cx_reg <= 0;
-        dy_reg <= 0;
-        dx_reg <= 0;
-        dy_reg <= 0;
     end
     else begin
         ax_reg <= ax;
         ay_reg <= ay;
         bx_reg <= bx;
         by_reg <= by;
-        cx_reg <= ax;
-        cy_reg <= ay;
-        dx_reg <= bx;
-        dy_reg <= by;
-        result_reg <= (ax_reg * ay_reg) + (bx_reg * by_reg) + (cx_reg * cy_reg) + (dx_reg * dy_reg) + chainin;
+        result_reg <= (ax_reg * ay_reg) + (bx_reg * by_reg) + chainin;
     end
 end
 assign chainout = result_reg;
@@ -499,7 +451,7 @@ assign result = result_reg;
 wire [10:0] mode;
 assign mode = 11'b101_0101_0011;
 
-int_sop_4 mac_component (
+int_sop_2 mac_component (
     .mode_sigs(mode),
     .clk(clk),
     .reset(aclr),
@@ -507,10 +459,6 @@ int_sop_4 mac_component (
     .ay(ay),
     .bx(bx),
     .by(by),
-    .cx(cx),
-    .cy(cy),
-    .dx(dx),
-    .dy(dy),
     .chainin(chainin),
     .result(result),
     .chainout(chainout)
@@ -625,6 +573,7 @@ single_port_ram u_single_port_ram(
 `endif
 endmodule
 
+% if num_tiles>1:
 module mvm_reduction_unit(
 % for i in range(num_tiles):
     input[`DSP_USED_OUTPUT_WIDTH*`NUM_LDPES-1:0] inp${i},
@@ -703,3 +652,4 @@ assign result_mvm_final_stage[${i+1}*`OUT_DWIDTH-1:${i}*`OUT_DWIDTH] = reduction
 % endfor 
 assign out_data_available = out_data_available_0_stage_${num_reduction_stages};
 endmodule
+% endif

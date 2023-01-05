@@ -33,12 +33,12 @@ GItHub Username: saitama0300 */
 `define SUB_LDPES_PER_LDPE (`DSPS_PER_LDPE/`DSPS_PER_SUB_LDPE)
 
 `define MULTS_PER_DSP ${mac_per_dsp}
-`define DSP_X_AVA_INPUT_WIDTH 9
+`define DSP_X_AVA_INPUT_WIDTH 18
 `define LDPE_X_AVA_INPUT_WIDTH (`DSP_X_AVA_INPUT_WIDTH * `DSPS_PER_LDPE)
-`define DSP_Y_AVA_INPUT_WIDTH 9
+`define DSP_Y_AVA_INPUT_WIDTH 19
 `define LDPE_Y_AVA_INPUT_WIDTH (`DSP_Y_AVA_INPUT_WIDTH * `DSPS_PER_LDPE)
 
-`define DSP_AVA_OUTPUT_WIDTH 64
+`define DSP_AVA_OUTPUT_WIDTH 37
 `define LDPE_AVA_OUTPUT_WIDTH `DSP_AVA_OUTPUT_WIDTH
 
 `define DSP_USED_INPUT_WIDTH `IN_PRECISION
@@ -55,13 +55,13 @@ GItHub Username: saitama0300 */
 `define DSPS_PER_MRF (`DSPS_PER_LDPE * `LDPES_PER_MRF)
 `define MAT_BRAM_AWIDTH 10
 `define MAT_BRAM_DWIDTH ${mat_bram_dwidth}
-`define MAT_BRAMS_PER_MRF_SUBSET ${int(num_dsp_per_ldpe*mac_per_dsp*in_precision/mat_bram_dwidth)}
+`define MAT_BRAMS_PER_MRF_SUBSET ${math.ceil(num_dsp_per_ldpe*mac_per_dsp*in_precision/mat_bram_dwidth)}
 `define MRF_AWIDTH (`MAT_BRAM_AWIDTH)
 `define MRF_DWIDTH (`MAT_BRAM_DWIDTH * `MAT_BRAMS_PER_MRF_SUBSET)
 
-`define ORF_DWIDTH ${out_precision*num_ldpes} //${max(out_precision*num_ldpes,vec_bram_dwidth*int(num_dsp_per_ldpe*mac_per_dsp*in_precision/vec_bram_dwidth))}
+`define ORF_DWIDTH ${out_precision*num_ldpes} //${max(out_precision*num_ldpes,vec_bram_dwidth*math.ceil(num_dsp_per_ldpe*mac_per_dsp*in_precision/vec_bram_dwidth))}
 
-`define MAX_VRF_DWIDTH ${max(out_precision*num_ldpes,vec_bram_dwidth*int(num_dsp_per_ldpe*mac_per_dsp*in_precision/vec_bram_dwidth))}
+`define MAX_VRF_DWIDTH ${max(out_precision*num_ldpes,vec_bram_dwidth*math.ceil(num_dsp_per_ldpe*mac_per_dsp*in_precision/vec_bram_dwidth))}
 `define DRAM_DWIDTH (`MRF_DWIDTH + `ORF_DWIDTH + `VRF_DWIDTH) //KEEP THIS LARGE TO AVOID OPTIMIZATION IN VTR 
 `define DRAM_AWIDTH `MRF_AWIDTH
 
@@ -69,14 +69,14 @@ GItHub Username: saitama0300 */
 `define DSPS_PER_VRF (`DSPS_PER_LDPE * `LDPES_PER_VRF)
 `define VEC_BRAM_AWIDTH 10
 `define VEC_BRAM_DWIDTH ${vec_bram_dwidth}
-`define BRAMS_PER_VRF ${int(num_dsp_per_ldpe*mac_per_dsp*in_precision/vec_bram_dwidth)}
+`define BRAMS_PER_VRF ${math.ceil(num_dsp_per_ldpe*mac_per_dsp*in_precision/vec_bram_dwidth)}
 `define VRF_AWIDTH `VEC_BRAM_AWIDTH
 `define VRF_DWIDTH (`VEC_BRAM_DWIDTH * `BRAMS_PER_VRF)
 
 `define LDPES_PER_ORF 1
 `define OUTPUTS_PER_LDPE 1
 `define OUT_BRAM_AWIDTH 10
-`define OUT_BRAM_DWIDTH 16
+`define OUT_BRAM_DWIDTH 20
 `define ORF_AWIDTH `OUT_BRAM_AWIDTH
 `define OUT_DWIDTH ${out_precision}
 //`define ORF_DWIDTH `OUT_DWIDTH*`NUM_LDPES
