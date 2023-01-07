@@ -1,5 +1,5 @@
 <%!
-    num_tiles = 4
+    num_tiles = 1
     num_ldpes = 32
 %>
 

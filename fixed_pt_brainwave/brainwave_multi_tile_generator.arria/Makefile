@@ -2,7 +2,8 @@ export VCS_HOME /usr/local/packages/synopsys_2018/vcs-mx/O-2018.09-SP1
 
 all: compile run
 
-FILES= includes_gen.v mfu_gen.v mvu_gen.v controller_gen.v npu_gen.v testbench_npu.v
+FILES=includes_gen.v asymmetric_fifo.v mfu_gen.v mvu_gen.v controller_gen.v npu_gen.v testbench_npu.v
+#FILES=includes_gen.v asymmetric_fifo.v
 
 compile:
 	$(VCS_HOME)/bin/vcs -full64 \

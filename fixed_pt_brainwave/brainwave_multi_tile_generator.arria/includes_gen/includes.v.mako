@@ -2,11 +2,13 @@
     import math
 
     num_tiles = 1 #CHANGE THIS
-    num_ldpes = 12 #CHANGE THIS
+    num_ldpes = 32 #CHANGE THIS
     num_dsp_per_ldpe = 16 #CHANGE THIS
     num_reduction_stages = int(math.log2(num_tiles))
     in_precision = 8
     out_precision = 8
+
+    num_elems_mfu = int(num_ldpes/2)
 
     vec_bram_dwidth = 20
     mat_bram_dwidth = 20
@@ -19,8 +21,8 @@
 Email: tanmay.anand29@gmail.com
 GItHub Username: saitama0300 */
 
-`define complex_dsp
-`define hard_mem
+//`define complex_dsp
+//`define hard_mem
 
 `define IN_PRECISION ${in_precision}
 `define OUT_PRECISION ${out_precision}
@@ -59,7 +61,7 @@ GItHub Username: saitama0300 */
 `define MRF_AWIDTH (`MAT_BRAM_AWIDTH)
 `define MRF_DWIDTH (`MAT_BRAM_DWIDTH * `MAT_BRAMS_PER_MRF_SUBSET)
 
-`define ORF_DWIDTH ${out_precision*num_ldpes} //${max(out_precision*num_ldpes,vec_bram_dwidth*math.ceil(num_dsp_per_ldpe*mac_per_dsp*in_precision/vec_bram_dwidth))}
+`define ORF_DWIDTH ${int(out_precision*num_ldpes/2)} //${out_precision*num_ldpes} //${max(out_precision*num_ldpes,vec_bram_dwidth*math.ceil(num_dsp_per_ldpe*mac_per_dsp*in_precision/vec_bram_dwidth))}
 
 `define MAX_VRF_DWIDTH ${max(out_precision*num_ldpes,vec_bram_dwidth*math.ceil(num_dsp_per_ldpe*mac_per_dsp*in_precision/vec_bram_dwidth))}
 `define DRAM_DWIDTH (`MRF_DWIDTH + `ORF_DWIDTH + `VRF_DWIDTH) //KEEP THIS LARGE TO AVOID OPTIMIZATION IN VTR 
@@ -81,8 +83,8 @@ GItHub Username: saitama0300 */
 `define OUT_DWIDTH ${out_precision}
 //`define ORF_DWIDTH `OUT_DWIDTH*`NUM_LDPES
 
-
-`define DESIGN_SIZE `NUM_LDPES
+//We are halving the width from MVU to MFU
+`define DESIGN_SIZE ${int(num_ldpes/2)}
 `define DWIDTH `OUT_PRECISION
 `define MASK_WIDTH `OUT_PRECISION
 

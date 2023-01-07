@@ -2,7 +2,7 @@
     import math
 
     num_tiles = 1 #CHANGE THIS
-    num_ldpes = 12 #CHANGE THIS
+    num_ldpes = 32 #CHANGE THIS
     num_dsp_per_ldpe = 16 #CHANGE THIS
     num_reduction_stages = int(math.log2(num_tiles))
 %>
@@ -44,7 +44,7 @@ module NPU(
     //
     
     //FINAL STAGE OUTPUT SIGNALS
-    wire[`ORF_DWIDTH-1:0] result_mvm; 
+    wire[`NUM_LDPES*`OUT_DWIDTH-1:0] result_mvm; 
     //reg[`ORF_AWIDTH-1:0] result_addr_mvu_orf;
     
     //wire orf_addr_increment;
@@ -142,10 +142,21 @@ module NPU(
     wire[`ORF_AWIDTH-1:0] vrf_mfu_addr_wr_mul_1;
     
     wire[`TARGET_OP_WIDTH-1:0] dstn_id;
-    wire[`NUM_LDPES*`OUT_DWIDTH-1:0] output_mvu_stage;
+    wire[`ORF_DWIDTH-1:0] output_mvu_stage;
     //************************************************************
 
-    assign output_mvu_stage = result_mvm;
+    //Instantiate asymmetric FIFO here
+    //Converts NUM_LDPES*OUT_DWIDTH into ORF_DWIDTH
+    //assign output_mvu_stage = result_mvm;
+
+    asymmetric_fifo u_afifo (
+    .clk(clk),
+    .reset(reset_npu),
+    .in(result_mvm),
+    .out(output_mvu_stage),
+    .write_en(out_data_available_mvm),
+    .read_en(in_data_available_mfu_0)
+    );
     
     //************** INTER MFU MVU DATAPATH SIGNALS *************************************************
     reg[`ORF_DWIDTH-1:0] output_mvu_stage_buffer;
@@ -155,8 +166,8 @@ module NPU(
     wire[`ORF_DWIDTH-1:0] primary_in_data_mfu_stage_1;
     
     
-    wire[`NUM_LDPES*`OUT_DWIDTH-1:0] output_mfu_stage_0;
-    wire[`NUM_LDPES*`OUT_DWIDTH-1:0] output_mfu_stage_1;
+    wire[`ORF_DWIDTH-1:0] output_mfu_stage_0;
+    wire[`ORF_DWIDTH-1:0] output_mfu_stage_1;
     
     always@(posedge clk) begin
         if((dstn_id==`MFU_0_DSTN_ID) && done_mvm==1'b1) begin

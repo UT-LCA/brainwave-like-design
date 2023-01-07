@@ -2,7 +2,7 @@
     import math
 
     num_tiles = 1 #CHANGE THIS
-    num_ldpes = 12 #CHANGE THIS
+    num_ldpes = 32 #CHANGE THIS
     num_dsp_per_ldpe = 16 #CHANGE THIS
     num_reduction_stages = int(math.log2(num_tiles))
 %>
@@ -30,7 +30,7 @@ module MVU (
     input [`NUM_TILES*`MRF_AWIDTH*`NUM_LDPES-1:0] mrf_addr_for_dram,
     output [`NUM_TILES*`MRF_DWIDTH*`NUM_LDPES-1:0] mrf_outa_to_dram,
     
-    output [`ORF_DWIDTH-1:0] mvm_result,
+    output [`NUM_LDPES*`OUT_DWIDTH-1:0] mvm_result,
     output out_data_available
 );
 % for i in range(num_tiles):

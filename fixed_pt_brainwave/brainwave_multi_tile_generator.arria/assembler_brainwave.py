@@ -1,7 +1,7 @@
 AWIDTH = 10
 TWIDTH = 8
 num_ldpes = 32
-num_tiles = 4
+num_tiles = 1
 max_mem_to_initialize = 300
 data_width = 32
 

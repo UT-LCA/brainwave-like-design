@@ -1,5 +1,6 @@
 <%! 
-    num_ldpes = 12 #CHANGE THIS
+    num_ldpes = 32 #CHANGE THIS
+    num_elems_mfu = int(num_ldpes/2)
 %>
 
 module MFU( 
@@ -417,24 +418,24 @@ module elt_wise_add(
     input enable_add,
     input in_data_available,
     input add_or_sub,
-    input [`NUM_LDPES*`DWIDTH-1:0] primary_inp,
-    input [`NUM_LDPES*`DWIDTH-1:0] secondary_inp,
-    output [`NUM_LDPES*`DWIDTH-1:0] out_data,
+    input [`DESIGN_SIZE*`DWIDTH-1:0] primary_inp,
+    input [`DESIGN_SIZE*`DWIDTH-1:0] secondary_inp,
+    output [`DESIGN_SIZE*`DWIDTH-1:0] out_data,
     output reg output_available_add,
     input clk
 );
-% for i in range(num_ldpes):
+% for i in range(num_elems_mfu):
     wire [(`DWIDTH)-1:0] x_${i}; 
     wire [(`DWIDTH)-1:0] y_${i};
     
     add a${i}(.p(out_data[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)]),.x(x_${i}),.y(y_${i}), .clk(clk), .reset(~enable_add));
 % endfor
 
-% for i in range(num_ldpes):
+% for i in range(num_elems_mfu):
     assign x_${i} = primary_inp[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)];
 % endfor
 
-% for i in range(num_ldpes):           
+% for i in range(num_elems_mfu):           
     assign y_${i} = secondary_inp[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)];
 % endfor
 
@@ -465,18 +466,18 @@ module elt_wise_mul(
     output reg output_available_mul,
     input clk
 );
-% for i in range(num_ldpes):
+% for i in range(num_elems_mfu):
     wire [(`DWIDTH)-1:0] x_${i}; 
     wire [(`DWIDTH)-1:0] y_${i};
     
     mult m${i}(.p(out_data[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)]),.x(x_${i}),.y(y_${i}), .clk(clk), .reset(~enable_mul));
 % endfor
 
-% for i in range(num_ldpes):
+% for i in range(num_elems_mfu):
     assign x_${i} = primary_inp[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)];
 % endfor
 
-% for i in range(num_ldpes):           
+% for i in range(num_elems_mfu):           
     assign y_${i} = secondary_inp[(${i+1}*`DWIDTH)-1:(${i}*`DWIDTH)];
 % endfor
     
