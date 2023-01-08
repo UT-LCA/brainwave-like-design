@@ -1,10 +1,5 @@
 <%!
-    import math
-
-    num_tiles = 1 #CHANGE THIS
-    num_ldpes = 8 #CHANGE THIS
-    num_dsp_per_ldpe = 8 #CHANGE THIS
-    num_reduction_stages = int(math.log2(num_tiles))
+  from includes import num_tiles, num_ldpes, num_dsp_per_ldpe, num_reduction_stages
 %>
 
 module MVU (

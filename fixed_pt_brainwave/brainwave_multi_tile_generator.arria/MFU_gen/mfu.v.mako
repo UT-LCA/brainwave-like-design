@@ -1,8 +1,5 @@
 <%! 
-    num_ldpes = 8 #CHANGE THIS
-    num_elems_mfu = int(num_ldpes/2)
-    DESIGN_SIZE = int(num_ldpes/2)
-    out_precision = 8
+  from includes import num_ldpes, num_elems_mfu, DESIGN_SIZE, out_precision
 %>
 
 module MFU( 

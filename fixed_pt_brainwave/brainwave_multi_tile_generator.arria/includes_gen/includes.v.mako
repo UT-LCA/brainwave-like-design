@@ -1,20 +1,8 @@
 <%!
-    import math
-
-    num_tiles = 1 #CHANGE THIS
-    num_ldpes = 8 #CHANGE THIS
-    num_dsp_per_ldpe = 8 #CHANGE THIS
-    num_reduction_stages = int(math.log2(num_tiles))
-    in_precision = 8
-    out_precision = 8
-
-    num_elems_mfu = int(num_ldpes/2)
-
-    vec_bram_dwidth = 20
-    mat_bram_dwidth = 20
-    mac_per_dsp = 2
-
-    target_op_width = int(math.log2(num_ldpes*num_tiles+8)+1)
+  import math
+  from includes import num_tiles, num_ldpes, num_dsp_per_ldpe, \
+    num_reduction_stages, in_precision, out_precision, num_elems_mfu, \
+    vec_bram_dwidth, mat_bram_dwidth, mac_per_dsp, target_op_width
 %>
 
 /* Author: Tanmay Anand, Visiting Student, UT-LCA

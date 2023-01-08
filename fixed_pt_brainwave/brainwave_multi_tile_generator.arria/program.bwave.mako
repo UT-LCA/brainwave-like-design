@@ -1,6 +1,5 @@
 <%!
-    num_tiles = 1
-    num_ldpes = 8
+    from includes import num_tiles, num_ldpes
 %>
 
 .code
