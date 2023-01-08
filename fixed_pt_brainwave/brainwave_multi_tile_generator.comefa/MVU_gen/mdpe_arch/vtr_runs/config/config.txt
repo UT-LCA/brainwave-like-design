@@ -1,0 +1,27 @@
+#############################################
+# Configuration file for running experiments
+##############################################
+
+# Path to directory of circuits to use
+circuits_dir=/mnt/ampere2/aman/ms_brainwave/fixed_pt_brainwave/brainwave_multi_tile_generator.comefa/MVU_gen/mdpe_arch/
+
+# Path to directory of architectures to use
+archs_dir=/mnt/ampere2/aman/vtr_aman2/vtr-verilog-to-routing/vtr_flow/arch/COFFE_22nm/arch_for_paper_jun_2021
+
+# Add circuits to list to sweep.
+circuit_list_add=mdpe_arch.vtr.v
+
+# Add architectures to list to sweep
+arch_list_add=k6FracN10LB_mem20K_complexDSP_customSB_22nm.comefa.xml
+
+# Parse info and how to parse
+parse_file=vpr_standard.txt
+
+# How to parse QoR info
+qor_parse_file=qor_standard.txt
+
+# Pass requirements
+pass_requirements_file=pass_requirements.txt
+
+#Script parameters
+script_params=-track_memory_usage -crit_path_router_iterations 100 --route_chan_width 300 --timing_report_detail aggregated --sdc_file /mnt/ampere2/aman/vtr_aman2/vtr-verilog-to-routing/vtr_flow/tasks/sdc/spree.sdc
