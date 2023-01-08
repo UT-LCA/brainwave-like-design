@@ -2,8 +2,8 @@
     import math
 
     num_tiles = 1 #CHANGE THIS
-    num_ldpes = 32 #CHANGE THIS
-    num_dsp_per_ldpe = 16 #CHANGE THIS
+    num_ldpes = 8 #CHANGE THIS
+    num_dsp_per_ldpe = 8 #CHANGE THIS
     num_reduction_stages = int(math.log2(num_tiles))
     in_precision = 8
     out_precision = 8
@@ -21,8 +21,8 @@
 Email: tanmay.anand29@gmail.com
 GItHub Username: saitama0300 */
 
-//`define complex_dsp
-//`define hard_mem
+`define complex_dsp
+`define hard_mem
 
 `define IN_PRECISION ${in_precision}
 `define OUT_PRECISION ${out_precision}

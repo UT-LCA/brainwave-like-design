@@ -2,8 +2,8 @@
     import math
 
     num_tiles = 1 #CHANGE THIS
-    num_ldpes = 32 #CHANGE THIS
-    num_dsp_per_ldpe = 16 #CHANGE THIS
+    num_ldpes = 8 #CHANGE THIS
+    num_dsp_per_ldpe = 8 #CHANGE THIS
     num_reduction_stages = int(math.log2(num_tiles))
 %>
 
@@ -132,27 +132,30 @@ module MVU_tile (
         .outb(vrf_data_out) 
     );
 
-    genvar i;
-    generate
-        for (i=1; i<=`NUM_LDPES; i=i+1) begin
-            compute_unit unit (
-                .clk(clk),
-                .start(start[i-1]),
-                .reset(reset[i-1]),
-                .out_data_available(out_data_available[i-1]),
-                .vec(vrf_outa_wire),
-                .mrf_in(mrf_in[i*`MRF_DWIDTH-1:(i-1)*`MRF_DWIDTH]),
-                .mrf_we(mrf_we[i-1]),
-                .mrf_addr(mrf_addr[i*`MRF_AWIDTH-1:(i-1)*`MRF_AWIDTH]),
+    //genvar i;
+    //generate
+    //    for (i=1; i<=`NUM_LDPES; i=i+1) begin
 
-                .mrf_addr_for_dram(mrf_addr_for_dram[(i)*`MRF_AWIDTH-1:(i-1)*`MRF_AWIDTH]),
-                .mrf_outa_to_dram(mrf_outa_to_dram[(i)*`MRF_DWIDTH-1:(i-1)*`MRF_DWIDTH]),
-                .mrf_we_for_dram(mrf_we_for_dram[i-1]),
+% for i in range(1,num_ldpes+1,1):
+            compute_unit cu_${i} (
+                .clk(clk),
+                .start(start[${i-1}]),
+                .reset(reset[${i-1}]),
+                .out_data_available(out_data_available[${i-1}]),
+                .vec(vrf_outa_wire),
+                .mrf_in(mrf_in[${i}*`MRF_DWIDTH-1:${i-1}*`MRF_DWIDTH]),
+                .mrf_we(mrf_we[${i-1}]),
+                .mrf_addr(mrf_addr[${i}*`MRF_AWIDTH-1:${i-1}*`MRF_AWIDTH]),
+
+                .mrf_addr_for_dram(mrf_addr_for_dram[${i}*`MRF_AWIDTH-1:${i-1}*`MRF_AWIDTH]),
+                .mrf_outa_to_dram(mrf_outa_to_dram[${i}*`MRF_DWIDTH-1:${i-1}*`MRF_DWIDTH]),
+                .mrf_we_for_dram(mrf_we_for_dram[${i-1}]),
  
-                .result(result[i*`LDPE_USED_OUTPUT_WIDTH-1:(i-1)*`LDPE_USED_OUTPUT_WIDTH])
+                .result(result[${i}*`LDPE_USED_OUTPUT_WIDTH-1:${i-1}*`LDPE_USED_OUTPUT_WIDTH])
             );
-        end
-    endgenerate
+% endfor
+    //    end
+    //endgenerate
 
 endmodule
 
@@ -269,6 +272,8 @@ module LDPE (
 
 endmodule
 
+
+% if num_tiles > 1:
 module myadder #(
     parameter INPUT_WIDTH = `DSP_USED_INPUT_WIDTH,
     parameter OUTPUT_WIDTH = `DSP_USED_OUTPUT_WIDTH
@@ -295,6 +300,7 @@ module myadder #(
     end
 
 endmodule
+% endif
 
 module SUB_LDPE (
     input clk,
@@ -529,6 +535,7 @@ dual_port_ram u_dual_port_ram(
 `endif
 endmodule
 
+/*
 //////////////////////////////////
 // Single port RAM
 //////////////////////////////////
@@ -572,6 +579,8 @@ single_port_ram u_single_port_ram(
 
 `endif
 endmodule
+
+*/
 
 % if num_tiles>1:
 module mvm_reduction_unit(

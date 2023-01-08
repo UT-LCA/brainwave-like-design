@@ -1,6 +1,8 @@
 <%! 
-    num_ldpes = 32 #CHANGE THIS
+    num_ldpes = 8 #CHANGE THIS
     num_elems_mfu = int(num_ldpes/2)
+    DESIGN_SIZE = int(num_ldpes/2)
+    out_precision = 8
 %>
 
 module MFU( 
@@ -191,24 +193,76 @@ module activation(
     input reset
 );
 
+% for i in range(DESIGN_SIZE):
+wire out_data_available_${i};
+wire done_activation_${i};
+% endfor
+
+% for i in range(DESIGN_SIZE):
+  activation_unit u_act_${i}(
+    .activation_type(activation_type),
+    .enable_activation(enable_activation),
+    .in_data_available(in_data_available),
+    .inp_data(inp_data[${i+1}*`DWIDTH-1 : ${i}*`DWIDTH]),
+    .out_data(out_data[${i+1}*`DWIDTH-1 : ${i}*`DWIDTH]),
+    .out_data_available(out_data_available_${i}),
+    .done_activation(done_activation_${i}),
+    .clk(clk),
+    .reset(reset)
+    );
+% endfor
+
+assign out_data_available = 
+% for i in range(DESIGN_SIZE):
+  % if i==(DESIGN_SIZE-1):
+  out_data_available_${i};
+  % else:
+  out_data_available_${i} &
+  % endif
+% endfor
+
+assign done_activation = 
+% for i in range(DESIGN_SIZE):
+  % if i==(DESIGN_SIZE-1):
+  done_activation_${i};
+  % else:
+  done_activation_${i} &
+  % endif
+% endfor
+
+endmodule
+
+
+module activation_unit(
+    input[1:0] activation_type,
+    input enable_activation,
+    input in_data_available,
+    input [`DWIDTH-1:0] inp_data,
+    output [`DWIDTH-1:0] out_data,
+    output out_data_available,
+    output done_activation,
+    input clk,
+    input reset
+);
+
 reg  done_activation_internal;
 reg  out_data_available_internal;
-wire [`DESIGN_SIZE*`DWIDTH-1:0] out_data_internal;
-reg [`DESIGN_SIZE*`DWIDTH-1:0] slope_applied_data_internal;
-reg [`DESIGN_SIZE*`DWIDTH-1:0] intercept_applied_data_internal;
-reg [`DESIGN_SIZE*`DWIDTH-1:0] relu_applied_data_internal;
-integer i;
-integer cycle_count;
+wire [`DWIDTH-1:0] out_data_internal;
+reg [`DWIDTH-1:0] slope_applied_data_internal;
+reg [`DWIDTH-1:0] intercept_applied_data_internal;
+reg [`DWIDTH-1:0] relu_applied_data_internal;
+reg[31:0] i;
+reg[31:0] cycle_count;
 reg activation_in_progress;
 
-reg [(`DESIGN_SIZE*4)-1:0] address;
+reg [(4)-1:0] address;
 
-reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_slope_tanh;
-reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept_tanh;
-reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_slope_sigmoid;
-reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept_sigmoid;
+reg [(`DWIDTH)-1:0] data_slope_tanh;
+reg [(`DWIDTH)-1:0] data_intercept_tanh;
+reg [(`DWIDTH)-1:0] data_slope_sigmoid;
+reg [(`DWIDTH)-1:0] data_intercept_sigmoid;
 
-reg [(`DESIGN_SIZE*`DWIDTH)-1:0] data_intercept_delayed;
+reg [(`DWIDTH)-1:0] data_intercept_delayed;
 
 // If the activation block is not enabled, just forward the input data
 assign out_data             = enable_activation ? out_data_internal : 'bX;
@@ -228,20 +282,20 @@ always @(posedge clk) begin
    end else if(in_data_available || activation_in_progress) begin
       cycle_count = cycle_count + 1;
 
-      for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-         //if(activation_type==1) begin // tanH
-         //   slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_tanh[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
-         //   data_intercept_delayed[i*8 +: 8] <= data_intercept_tanh[i*8 +: 8];
-         //   intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
-         //end 
-         //else if(activation_type==2) begin // tanH
-         //   slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= data_slope_sigmoid[i*8 +: 8] * inp_data[i*`DWIDTH +:`DWIDTH];
-         //   data_intercept_delayed[i*8 +: 8] <= data_intercept_sigmoid[i*8 +: 8];
-         //   intercept_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= slope_applied_data_internal[i*`DWIDTH +:`DWIDTH] + data_intercept_delayed[i*8 +: 8];
-         //end else begin // ReLU
-            relu_applied_data_internal[i*`DWIDTH +:`DWIDTH] <= inp_data[i*`DWIDTH] ? {`DWIDTH{1'b0}} : inp_data[i*`DWIDTH +:`DWIDTH];
-         //end
-      end   
+      //for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
+         if(activation_type==1) begin // tanH
+            slope_applied_data_internal[`DWIDTH-1:0] <= data_slope_tanh[8-1:0] * inp_data[`DWIDTH-1:0];
+            data_intercept_delayed[8-1:0] <= data_intercept_tanh[8-1:0];
+            intercept_applied_data_internal[`DWIDTH-1:0] <= slope_applied_data_internal[`DWIDTH-1:0] + data_intercept_delayed[8-1:0];
+         end 
+         else if(activation_type==2) begin // tanH
+            slope_applied_data_internal[`DWIDTH-1:0] <= data_slope_sigmoid[8-1:0] * inp_data[`DWIDTH-1:0];
+            data_intercept_delayed[8-1:0] <= data_intercept_sigmoid[8-1:0];
+            intercept_applied_data_internal[`DWIDTH-1:0] <= slope_applied_data_internal[`DWIDTH-1:0] + data_intercept_delayed[8-1:0];
+         end else begin // ReLU
+            relu_applied_data_internal[`DWIDTH-1:0] <= inp_data[`DWIDTH-1] ? {`DWIDTH{1'b0}} : inp_data[`DWIDTH-1:0];
+         end
+      //end   
 
       //TANH needs 1 extra cycle
       if ((activation_type==1) || (activation_type==2)) begin
@@ -292,123 +346,123 @@ assign out_data_internal = (activation_type) ? intercept_applied_data_internal :
 //We store A in one LUT and B in another.
 //LUT for the slope
 always @(address) begin
-    for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-    case (address[i*4+:4])
-      4'b0000: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0001: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0010: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
-      4'b0011: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
-      4'b0100: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
-      4'b0101: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0110: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
-      4'b0111: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
-      4'b1000: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
-      4'b1001: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b1010: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      default: data_slope_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+    //for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
+    case (address[4-1:0])
+      4'b0000: data_slope_tanh[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b0001: data_slope_tanh[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b0010: data_slope_tanh[`DWIDTH-1:0] = ${out_precision}'d2;
+      4'b0011: data_slope_tanh[`DWIDTH-1:0] = ${out_precision}'d3;
+      4'b0100: data_slope_tanh[`DWIDTH-1:0] = ${out_precision}'d4;
+      4'b0101: data_slope_tanh[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b0110: data_slope_tanh[`DWIDTH-1:0] = ${out_precision}'d4;
+      4'b0111: data_slope_tanh[`DWIDTH-1:0] = ${out_precision}'d3;
+      4'b1000: data_slope_tanh[`DWIDTH-1:0] = ${out_precision}'d2;
+      4'b1001: data_slope_tanh[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b1010: data_slope_tanh[`DWIDTH-1:0] = ${out_precision}'d0;
+      default: data_slope_tanh[`DWIDTH-1:0] = ${out_precision}'d0;
     endcase  
-    end
+    //end
 end
 
 //LUT for the intercept
 always @(address) begin
-    for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-    case (address[i*4+:4])
-      4'b0000: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd127;
-      4'b0001: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd99;
-      4'b0010: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd46;
-      4'b0011: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd18;
-      4'b0100: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0101: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0110: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0111: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd18;
-      4'b1000: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd46;
-      4'b1001: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd99;
-      4'b1010: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd127;
-      default: data_intercept_tanh[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+    //for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
+    case (address[4-1:0])
+      4'b0000: data_intercept_tanh[`DWIDTH-1:0] = ${out_precision}'d127;
+      4'b0001: data_intercept_tanh[`DWIDTH-1:0] = ${out_precision}'d99;
+      4'b0010: data_intercept_tanh[`DWIDTH-1:0] = ${out_precision}'d46;
+      4'b0011: data_intercept_tanh[`DWIDTH-1:0] = ${out_precision}'d18;
+      4'b0100: data_intercept_tanh[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b0101: data_intercept_tanh[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b0110: data_intercept_tanh[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b0111: data_intercept_tanh[`DWIDTH-1:0] = -${out_precision}'d18;
+      4'b1000: data_intercept_tanh[`DWIDTH-1:0] = -${out_precision}'d46;
+      4'b1001: data_intercept_tanh[`DWIDTH-1:0] = -${out_precision}'d99;
+      4'b1010: data_intercept_tanh[`DWIDTH-1:0] = -${out_precision}'d127;
+      default: data_intercept_tanh[`DWIDTH-1:0] = ${out_precision}'d0;
     endcase  
-    end
+    //end
 end
 
 always @(address) begin
-    for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-    case (address[i*4+:4])
-      4'b0000: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0001: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0010: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
-      4'b0011: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
-      4'b0100: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
-      4'b0101: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0110: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd4;
-      4'b0111: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd3;
-      4'b1000: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd2;
-      4'b1001: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b1010: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      default: data_slope_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+    //for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
+    case (address[4-1:0])
+      4'b0000: data_slope_sigmoid[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b0001: data_slope_sigmoid[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b0010: data_slope_sigmoid[`DWIDTH-1:0] = ${out_precision}'d2;
+      4'b0011: data_slope_sigmoid[`DWIDTH-1:0] = ${out_precision}'d3;
+      4'b0100: data_slope_sigmoid[`DWIDTH-1:0] = ${out_precision}'d4;
+      4'b0101: data_slope_sigmoid[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b0110: data_slope_sigmoid[`DWIDTH-1:0] = ${out_precision}'d4;
+      4'b0111: data_slope_sigmoid[`DWIDTH-1:0] = ${out_precision}'d3;
+      4'b1000: data_slope_sigmoid[`DWIDTH-1:0] = ${out_precision}'d2;
+      4'b1001: data_slope_sigmoid[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b1010: data_slope_sigmoid[`DWIDTH-1:0] = ${out_precision}'d0;
+      default: data_slope_sigmoid[`DWIDTH-1:0] = ${out_precision}'d0;
     endcase  
-    end
+    //end
 end
 
 //LUT for the intercept
 always @(address) begin
-    for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-    case (address[i*4+:4])
-      4'b0000: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd127;
-      4'b0001: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd99;
-      4'b0010: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd46;
-      4'b0011: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd18;
-      4'b0100: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0101: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0110: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
-      4'b0111: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd18;
-      4'b1000: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd46;
-      4'b1001: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd99;
-      4'b1010: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = -`DWIDTH'd127;
-      default: data_intercept_sigmoid[i*`DWIDTH+:`DWIDTH] = `DWIDTH'd0;
+    //for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
+    case (address[4-1:0])
+      4'b0000: data_intercept_sigmoid[`DWIDTH-1:0] = ${out_precision}'d127;
+      4'b0001: data_intercept_sigmoid[`DWIDTH-1:0] = ${out_precision}'d99;
+      4'b0010: data_intercept_sigmoid[`DWIDTH-1:0] = ${out_precision}'d46;
+      4'b0011: data_intercept_sigmoid[`DWIDTH-1:0] = ${out_precision}'d18;
+      4'b0100: data_intercept_sigmoid[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b0101: data_intercept_sigmoid[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b0110: data_intercept_sigmoid[`DWIDTH-1:0] = ${out_precision}'d0;
+      4'b0111: data_intercept_sigmoid[`DWIDTH-1:0] = -${out_precision}'d18;
+      4'b1000: data_intercept_sigmoid[`DWIDTH-1:0] = -${out_precision}'d46;
+      4'b1001: data_intercept_sigmoid[`DWIDTH-1:0] = -${out_precision}'d99;
+      4'b1010: data_intercept_sigmoid[`DWIDTH-1:0] = -${out_precision}'d127;
+      default: data_intercept_sigmoid[`DWIDTH-1:0] = ${out_precision}'d0;
     endcase  
-    end
+    //end
 end
 
 //Logic to find address
 always @(inp_data) begin
-    for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
-        if((inp_data[i*`DWIDTH +:`DWIDTH])>=90) begin
-           address[i*4+:4] = 4'b0000;
+    //for (i = 0; i < `DESIGN_SIZE; i=i+1) begin
+        if((inp_data[`DWIDTH-1:0])>=90) begin
+           address[4-1:0] = 4'b0000;
         end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>=39 && (inp_data[i*`DWIDTH +:`DWIDTH])<90) begin
-           address[i*4+:4] = 4'b0001;
+        else if ((inp_data[`DWIDTH-1:0])>=39 && (inp_data[`DWIDTH-1:0])<90) begin
+           address[4-1:0] = 4'b0001;
         end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>=28 && (inp_data[i*`DWIDTH +:`DWIDTH])<39) begin
-           address[i*4+:4] = 4'b0010;
+        else if ((inp_data[`DWIDTH-1:0])>=28 && (inp_data[`DWIDTH-1:0])<39) begin
+           address[4-1:0] = 4'b0010;
         end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>=16 && (inp_data[i*`DWIDTH +:`DWIDTH])<28) begin
-           address[i*4+:4] = 4'b0011;
+        else if ((inp_data[`DWIDTH-1:0])>=16 && (inp_data[`DWIDTH-1:0])<28) begin
+           address[4-1:0] = 4'b0011;
         end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>=1 && (inp_data[i*`DWIDTH +:`DWIDTH])<16) begin
-           address[i*4+:4] = 4'b0100;
+        else if ((inp_data[`DWIDTH-1:0])>=1 && (inp_data[`DWIDTH-1:0])<16) begin
+           address[4-1:0] = 4'b0100;
         end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])==0) begin
-           address[i*4+:4] = 4'b0101;
+        else if ((inp_data[`DWIDTH-1:0])==0) begin
+           address[4-1:0] = 4'b0101;
         end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>-16 && (inp_data[i*`DWIDTH +:`DWIDTH])<=-1) begin
-           address[i*4+:4] = 4'b0110;
+        else if ((inp_data[`DWIDTH-1:0])>-16 && (inp_data[`DWIDTH-1:0])<=-1) begin
+           address[4-1:0] = 4'b0110;
         end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>-28 && (inp_data[i*`DWIDTH +:`DWIDTH])<=-16) begin
-           address[i*4+:4] = 4'b0111;
+        else if ((inp_data[`DWIDTH-1:0])>-28 && (inp_data[`DWIDTH-1:0])<=-16) begin
+           address[4-1:0] = 4'b0111;
         end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>-39 && (inp_data[i*`DWIDTH +:`DWIDTH])<=-28) begin
-           address[i*4+:4] = 4'b1000;
+        else if ((inp_data[`DWIDTH-1:0])>-39 && (inp_data[`DWIDTH-1:0])<=-28) begin
+           address[4-1:0] = 4'b1000;
         end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])>-90 && (inp_data[i*`DWIDTH +:`DWIDTH])<=-39) begin
-           address[i*4+:4] = 4'b1001;
+        else if ((inp_data[`DWIDTH-1:0])>-90 && (inp_data[`DWIDTH-1:0])<=-39) begin
+           address[4-1:0] = 4'b1001;
         end
-        else if ((inp_data[i*`DWIDTH +:`DWIDTH])<=-90) begin
-           address[i*4+:4] = 4'b1010;
+        else if ((inp_data[`DWIDTH-1:0])<=-90) begin
+           address[4-1:0] = 4'b1010;
         end
         else begin
-           address[i*4+:4] = 4'b0101;
+           address[4-1:0] = 4'b0101;
         end
-    end
+    //end
 end
 
 endmodule
