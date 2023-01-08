@@ -301,7 +301,7 @@ module fsm_mdpe_top (
         .clk(clk),
         .rst(rst),
         .start(obras_start),
-        .precision(18),
+        .precision(5'd18),
         .rd_addr(mvm_ram_unit_rd_addr),
         .adder_tree_input_valid(adder_tree_input_valid),
         .flush_adder_tree(flush_adder_tree),

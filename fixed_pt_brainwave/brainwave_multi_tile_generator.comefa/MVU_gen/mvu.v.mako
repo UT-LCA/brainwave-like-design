@@ -55,8 +55,8 @@ module MVU(
 
   MVU_ldpe u_ldpe_arch(
     .clk(clk),
-    .start({`NUM_LDPES{start}}),
-    .reset({`NUM_LDPES{reset}}),
+    .start(start),
+    .reset(reset),
     
     .vrf_wr_addr(vrf_wr_addr),
     .vrf_read_addr(vrf_read_addr),

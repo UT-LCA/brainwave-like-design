@@ -97,7 +97,7 @@ module NPU(
     ////////////////////////
     .mdpe_vec_wr_addr(vrf_addr_wr),
     .mdpe_vec_wr_data(vrf_in_data[`VRF_DWIDTH-1:0]),
-    .mdpe_vec_we(vrf_wr_enable_tile_0), //Connecting to tile0
+    .mdpe_vec_we(vrf_mvu_wr_enable_0), //Connecting to tile0
     .mdpe_group_done(mdpe_group_done),
     .mdpe_group_out_vld(mdpe_group_out_vld),
     .mdpe_group_out_data(mdpe_group_out_data)
