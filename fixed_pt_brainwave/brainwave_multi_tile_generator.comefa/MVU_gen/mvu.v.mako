@@ -32,8 +32,8 @@ module MVU(
     output out_data_available,
 
     //Add MDPE specific stuff here
-    input [`mdpe_vrf_awdith-1:0] mdpe_vec_wr_addr,
-    input [`mdpe_vrf_dwdith-1:0] mdpe_vec_wr_data,
+    input [`mdpe_vrf_awidth-1:0] mdpe_vec_wr_addr,
+    input [`mdpe_vrf_dwidth-1:0] mdpe_vec_wr_data,
     input mdpe_vec_we,
     output mdpe_group_done,
     output mdpe_group_out_vld,

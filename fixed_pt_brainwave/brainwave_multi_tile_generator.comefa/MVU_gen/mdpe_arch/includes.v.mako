@@ -85,8 +85,8 @@
 `define mdpe_fsm_src1_addr_sel_width (2*`mdpe_num_mvm_ram_per_fsm)
 
 // VRF
-`define mdpe_vrf_dwdith (2*`mdpe_num_mvm_ram_per_mdpe)
-`define mdpe_vrf_awdith 9
+`define mdpe_vrf_dwidth (2*`mdpe_num_mvm_ram_per_mdpe)
+`define mdpe_vrf_awidth 9
 `define mdpe_last_vrf_bram_used_dwidth ${includes.mdpe_last_vrf_bram_used_dwidth}
 `define mdpe_num_vrf_brams ${includes.mdpe_num_vrf_brams}
 `define mdpe_last_vrf_bram_unused_dwidth (`mdpe_bram_dwidth - `mdpe_last_vrf_bram_used_dwidth)

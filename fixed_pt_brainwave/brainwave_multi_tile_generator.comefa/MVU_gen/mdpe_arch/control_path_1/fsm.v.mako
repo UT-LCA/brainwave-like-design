@@ -8,8 +8,8 @@ module fsm_top (
     input start,
     input get_src1_addr_sel,
     input get_a0_a1_addr,
-    input [`mdpe_vrf_awdith-1:0] vec_wr_addr,
-    input [`mdpe_vrf_dwdith-1:0] wr_vec,
+    input [`mdpe_vrf_awidth-1:0] vec_wr_addr,
+    input [`mdpe_vrf_dwidth-1:0] wr_vec,
     input we,
     input layer_done,
 
@@ -18,8 +18,8 @@ module fsm_top (
     output [15:0] meta_data
 );
 
-    reg [`mdpe_vrf_awdith-1:0] vec_rd_addr;
-    wire [`mdpe_vrf_dwdith-1:0] rd_vec;
+    reg [`mdpe_vrf_awidth-1:0] vec_rd_addr;
+    wire [`mdpe_vrf_dwidth-1:0] rd_vec;
     wire get_next_vec_bit;
 
     always @(posedge clk) begin
@@ -111,12 +111,12 @@ endmodule
 
 module mdpe_vrf (
     input clk,
-    input [`mdpe_vrf_awdith-1:0] vec_wr_addr, 
-    input [`mdpe_vrf_dwdith-1:0] wr_vec,
+    input [`mdpe_vrf_awidth-1:0] vec_wr_addr, 
+    input [`mdpe_vrf_dwidth-1:0] wr_vec,
     input we,
 
-    input [`mdpe_vrf_awdith-1:0] vec_rd_addr,
-    output [`mdpe_vrf_dwdith-1:0] rd_vec
+    input [`mdpe_vrf_awidth-1:0] vec_rd_addr,
+    output [`mdpe_vrf_dwidth-1:0] rd_vec
 );
 
     wire [`mdpe_num_vrf_brams-1:0] pe_out_fake;
