@@ -10,4 +10,12 @@ python3 ./render_template.py -i ./NPU_gen/npu.v.mako -o ./npu_gen.v
 python3 ./render_template.py -i asymmetric_fifo.v.mako -o ./asymmetric_fifo.v
 python3 ./render_template.py -i program.bwave.mako -o ./program_gen.bwave
 #python3 assembler_brainwave.py 
-cat ./includes_gen.v ./asymmetric_fifo.v ./npu_gen.v ./controller_gen.v ./mvu_gen.v ./mfu_gen.v > brainwave_1x32x16.v
+cat ./includes_gen.v ./asymmetric_fifo.v ./npu_gen.v ./controller_gen.v ./mvu_gen.v ./mfu_gen.v > brainwave.v
+
+if [[ $1 == "true" ]]; then
+    if [[ $2 == "true" ]]; then
+        nohup python3 /mnt/ampere2/aman/vtr_aman2/vtr-verilog-to-routing/vtr_flow/scripts/run_vtr_task.py ./vtr_runs > nohup.log &
+    else
+        python3 /mnt/ampere2/aman/vtr_aman2/vtr-verilog-to-routing/vtr_flow/scripts/run_vtr_task.py ./vtr_runs
+    fi 
+fi

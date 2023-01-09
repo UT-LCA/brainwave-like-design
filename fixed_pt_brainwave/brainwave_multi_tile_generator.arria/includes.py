@@ -1,10 +1,10 @@
 import math
 
 num_tiles = 1 #CHANGE THIS
-num_ldpes = 8 #
+num_ldpes = 64 #
 assert(num_ldpes%4==0), "Currently only supporting multiples of 4 here"
 
-num_dsp_per_ldpe = 8 #CHANGE THIS
+num_dsp_per_ldpe = 24 #CHANGE THIS
 num_reduction_stages = int(math.log2(num_tiles))
 num_inputs = num_ldpes #every cycle we generate `num_ldpes` worth of items from the MVU
 assert(num_inputs%2==0),"Currently only supporting even number of outputs from the MVU"

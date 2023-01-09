@@ -3,7 +3,7 @@
 ##############################################
 
 # Path to directory of circuits to use
-circuits_dir=/mnt/ampere2/aman/ms_brainwave/fixed_pt_brainwave/brainwave_multi_tile_generator.comefa/
+circuits_dir=/mnt/ampere2/aman/ms_brainwave/fixed_pt_brainwave/brainwave_multi_tile_generator.arria
 
 # Path to directory of architectures to use
 archs_dir=/mnt/ampere2/aman/vtr_aman2/vtr-verilog-to-routing/vtr_flow/arch/COFFE_22nm/arch_for_paper_jun_2021
@@ -12,7 +12,7 @@ archs_dir=/mnt/ampere2/aman/vtr_aman2/vtr-verilog-to-routing/vtr_flow/arch/COFFE
 circuit_list_add=brainwave.v
 
 # Add architectures to list to sweep
-arch_list_add=k6FracN10LB_mem20K_complexDSP_customSB_22nm.comefa.fixed_layout.xml
+arch_list_add=k6FracN10LB_mem20K_complexDSP_customSB_22nm.no_compute_ram.fixed_layout.xml
 
 # Parse info and how to parse
 parse_file=vpr_standard.txt

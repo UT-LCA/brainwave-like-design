@@ -9,12 +9,12 @@ mdpe_bram_xbar_row_addr_log = 7
 # For 512,25 LSTM, num_mvm_ram_per_mdpe is 188 but we take 184 because we want to have 8 FSMs per mdpe and 188 is not divisible by 188.
 # 184 for LSTM
 # 256 for GRU 
-mdpe_num_mvm_ram_per_mdpe = 32
+mdpe_num_mvm_ram_per_mdpe = 210
 mdpe_num_adder_tree = mdpe_bram_dwidth
 adder_tree_input_size = mdpe_num_mvm_ram_per_mdpe
 # 7 for LSTM
 # 5 for GRU
-num_mdpe = 2
+num_mdpe = 4
 mdpe_num_out_ram_per_mdpe = 1 #Changed to 1. We don't want to keep the data in 4 output rams per mdpe.
 
 # 23 for LSTM
