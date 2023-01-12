@@ -310,8 +310,10 @@ module SUB_LDPE (
     wire [`DSP_USED_OUTPUT_WIDTH*`DSPS_PER_SUB_LDPE-1:0] chainin, chainout, dsp_result;
 
  
+`ifndef NO_CHAIN
     wire [36:0] chainout_temp_0;
     assign chainout_temp_0 = 37'b0;
+`endif
 
 % for i in range(1,num_dsp_per_ldpe+1):
     wire [`DSP_X_AVA_INPUT_WIDTH-1:0] ax_wire_${i};
@@ -324,6 +326,10 @@ module SUB_LDPE (
     assign bx_wire_${i} = {{`DSP_X_ZERO_PAD_INPUT_WIDTH{1'b0}}, bx[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
     assign by_wire_${i} = {{`DSP_Y_ZERO_PAD_INPUT_WIDTH{1'b0}}, by[${i}*`DSP_USED_INPUT_WIDTH-1:(${i}-1)*`DSP_USED_INPUT_WIDTH]};
 
+`ifdef NO_CHAIN
+    wire [`DSP_AVA_OUTPUT_WIDTH-1:0] chainin_temp_${i};
+    assign chainin_temp_${i} = 0;
+`endif
     wire [`DSP_AVA_OUTPUT_WIDTH-1:0] chainout_temp_${i};
     wire [`DSP_AVA_OUTPUT_WIDTH-1:0] result_temp_${i};
 
@@ -336,18 +342,47 @@ module SUB_LDPE (
         .ay(ay_wire_${i}),
         .bx(bx_wire_${i}),
         .by(by_wire_${i}),
+    `ifdef NO_CHAIN
+        .chainin(chainin_temp_${i}),
+    `else
         .chainin(chainout_temp_${i-1}),
+    `endif
         .chainout(chainout_temp_${i}),
         .result(result_temp_${i})
     );
 % endfor
-    
+
+`ifdef NO_CHAIN
+    ///////////////////////////////////////////////////////////////////
+    // NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+    // Workaround for chaining issues :
+    // Chains are broken above (under ifdef NO_CHAIN)
+    // Creating a fake result to prevent the DSPs from getting optimized.
+    // Only the LSB of this result is a "merged" version of the output of 
+    // DSPs that would have been chained. Rest of the bits come from the 
+    // last DSP in the chain.
+    ///////////////////////////////////////////////////////////////////
+
+    wire [`LDPE_USED_OUTPUT_WIDTH-1:0] fake_result_temp;
+    assign fake_result_temp[0] =
+% for ii in range(1, num_dsp_per_ldpe):
+    result_temp_${ii}[0] |
+% endfor
+    result_temp_${num_dsp_per_ldpe}[0];
+
+    assign fake_result_temp[`LDPE_USED_OUTPUT_WIDTH-1:1] = result_temp_${num_dsp_per_ldpe}[`LDPE_USED_OUTPUT_WIDTH-1:1];
+`endif   
+ 
     always @(*) begin
         if (reset) begin
             result <= {`LDPE_USED_OUTPUT_WIDTH{1'd0}};
         end
         else begin
+`ifdef NO_CHAIN
+            result <= fake_result_temp;
+`else 
             result <= dsp_result[`DSPS_PER_SUB_LDPE*`LDPE_USED_OUTPUT_WIDTH-1:(`DSPS_PER_SUB_LDPE-1)*`LDPE_USED_OUTPUT_WIDTH];
+`endif
         end
     end
 

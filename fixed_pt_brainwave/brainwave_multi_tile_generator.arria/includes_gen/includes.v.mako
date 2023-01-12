@@ -11,6 +11,7 @@ GItHub Username: saitama0300 */
 
 `define complex_dsp
 `define hard_mem
+`define NO_CHAIN
 
 `define IN_PRECISION ${in_precision}
 `define OUT_PRECISION ${out_precision}

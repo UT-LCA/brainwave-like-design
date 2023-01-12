@@ -2,6 +2,10 @@
 
 # comments start with a '#"
 
+cd ./MVU_gen/mdpe_arch/
+./cmd.sh
+cd ../../
+
 python3 ./render_template.py -i ./controller_gen/controller.v.mako -o ./controller_gen.v
 python3 ./render_template.py -i ./includes_gen/includes.v.mako -o ./includes_gen.v
 python3 ./render_template.py -i ./MFU_gen/mfu.v.mako -o ./mfu_gen.v

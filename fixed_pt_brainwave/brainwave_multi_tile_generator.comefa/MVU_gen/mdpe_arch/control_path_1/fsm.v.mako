@@ -136,7 +136,7 @@ module mdpe_vrf (
     );
 
 % endfor
-    simple_dual_port vec_mem_${ii+1} (
+    simple_dual_port vec_mem_${includes.mdpe_num_vrf_brams} (
         .write_address(vec_wr_addr),
         .write_data(last_bram_in),
         .wr_en(we),
@@ -145,9 +145,9 @@ module mdpe_vrf (
         .clk(clk)
     );
     
-    assign last_bram_in = {{`mdpe_last_vrf_bram_unused_dwidth{1'b0}}, wr_vec[(${ii+1}*`mdpe_bram_dwidth) + (`mdpe_last_vrf_bram_used_dwidth-1):${ii+1}*`mdpe_bram_dwidth]};
+    assign last_bram_in = {{`mdpe_last_vrf_bram_unused_dwidth{1'b0}}, wr_vec[(${includes.mdpe_num_vrf_brams}*`mdpe_bram_dwidth) + (`mdpe_last_vrf_bram_used_dwidth-1):${includes.mdpe_num_vrf_brams}*`mdpe_bram_dwidth]};
 
-    assign rd_vec[(${ii+1}*`mdpe_bram_dwidth) + (`mdpe_last_vrf_bram_used_dwidth-1):${ii+1}*`mdpe_bram_dwidth] = last_bram_out[`mdpe_last_vrf_bram_used_dwidth-1:0];
+    assign rd_vec[(${includes.mdpe_num_vrf_brams}*`mdpe_bram_dwidth) + (`mdpe_last_vrf_bram_used_dwidth-1):${includes.mdpe_num_vrf_brams}*`mdpe_bram_dwidth] = last_bram_out[`mdpe_last_vrf_bram_used_dwidth-1:0];
 endmodule
 
 
