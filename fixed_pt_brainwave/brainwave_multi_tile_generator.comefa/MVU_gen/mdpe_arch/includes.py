@@ -14,7 +14,7 @@ mdpe_num_adder_tree = mdpe_bram_dwidth
 adder_tree_input_size = mdpe_num_mvm_ram_per_mdpe
 # 7 for LSTM
 # 5 for GRU
-num_mdpe = 4
+num_mdpe = 2
 mdpe_num_out_ram_per_mdpe = 1 #Changed to 1. We don't want to keep the data in 4 output rams per mdpe.
 
 # 23 for LSTM

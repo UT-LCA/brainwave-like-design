@@ -3,14 +3,14 @@ import math
 #########################
 # Keep these consistent with the values in the MDPE's includes.py
 #########################
-num_mdpe=4
+num_mdpe=2
 mdpe_bram_dwidth=40
 
-num_tiles = 1 #CHANGE THIS
-num_ldpes = 80 #
+num_tiles = 1 #
+num_ldpes = 40 #
 assert(num_ldpes%4==0), "Currently only supporting multiples of 4 here"
 
-num_dsp_per_ldpe = 20 #CHANGE THIS
+num_dsp_per_ldpe = 20 #
 
 num_reduction_stages = int(math.log2(num_tiles))
 
@@ -21,7 +21,7 @@ num_outputs = int(num_inputs/4)
 
 
 precision = 8
-bram_data_width_used = 32 #Forcefully using 32 here for easy data layout
+bram_data_width_used = 40 #Forcefully using 32 here for easy data layout
 elems_in_each_ram = int(bram_data_width_used / precision)
 num_inp_rams = int(num_inputs / elems_in_each_ram)
 num_ram_outs = int(num_outputs / elems_in_each_ram)
